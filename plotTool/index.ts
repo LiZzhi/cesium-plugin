@@ -2,7 +2,8 @@ import * as Cesium from "cesium"
 import "cesium/Build/Cesium/Widgets/widgets.css"
 import "./src/Style/index.css"
 import drawShape from "./src/Func/drawShape";
-
+// token
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOTNiYjkwZi1iMzRlLTRjZWQtYWQxMy00MDVmMjk4YTc0YmMiLCJpZCI6MzY3MDksImlhdCI6MTY1NTE3OTc1N30.fv4nNIkCEEy3VqlaekWVcE1btEcge5_zCl_36AtusT0"
 // 初始化地球
 let viewer = new Cesium.Viewer('MapContainer', {
     terrainProvider: Cesium.createWorldTerrain({

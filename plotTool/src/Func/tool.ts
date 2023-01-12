@@ -123,14 +123,13 @@ export function calculateRectangle(
 ): Cartesian3[] {
     // 局部坐标系到世界坐标系的变换矩阵
     // let heading = Math.atan2(pointB.x-pointA.x, pointB.y-pointA.y)
-    let heading = getHeading(pointA, pointB)
-    let pitch = getPitch(pointA, pointB)
+    let [heading, pitch] = getHeadingPitch(pointA, pointB)
 
     let hpr = new Cesium.HeadingPitchRoll(heading, pitch, 0)
     let localToWorldMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
         pointA, hpr, e
     )
-    
+
     // 世界坐标系到局部坐标系的变换矩阵
     let worldToLocalMatrix = Cesium.Matrix4.inverse(
         localToWorldMatrix,
@@ -170,41 +169,30 @@ export function calculateRectangle(
  * 计算两点 Heading
  * @param { Cartesian3 } pointA 
  * @param { Cartesian3 } pointB 
- * @returns number
+ * @returns { number } [Heading, Pitch]
  */
-export function getHeading(pointA: Cartesian3, pointB: Cartesian3): number{
-    //建立以点A为原点，X轴为east,Y轴为north,Z轴朝上的坐标系
-    const transform = Cesium.Transforms.eastNorthUpToFixedFrame(pointA);
-    //向量AB
-    const positionvector = Cesium.Cartesian3.subtract(pointB, pointA, new Cesium.Cartesian3());
-    //因transform是将A为原点的eastNorthUp坐标系中的点转换到世界坐标系的矩阵
-    //AB为世界坐标中的向量
-    //因此将AB向量转换为A原点坐标系中的向量，需乘以transform的逆矩阵。
-    const vector = Cesium.Matrix4.multiplyByPointAsVector(Cesium.Matrix4.inverse(transform, new Cesium.Matrix4()), positionvector, new Cesium.Cartesian3());
-    //归一化
-    const direction = Cesium.Cartesian3.normalize(vector, new Cesium.Cartesian3());
-    //heading
-    const heading = Math.atan2(direction.y, direction.x) - Cesium.Math.PI_OVER_TWO;
-    return Cesium.Math.TWO_PI - Cesium.Math.zeroToTwoPi(heading);
-}
-
-/**
- * 计算两点 Pitch
- * @param { Cartesian3 } pointA 
- * @param { Cartesian3 } pointB 
- * @returns number
- */
-export function getPitch(pointA: Cartesian3, pointB: Cartesian3): number {
-    let transfrom = Cesium.Transforms.eastNorthUpToFixedFrame(pointA);
-    let vector = Cesium.Cartesian3.subtract(pointB, pointA, new Cesium.Cartesian3());
-    let direction = Cesium.Matrix4.multiplyByPointAsVector(Cesium.Matrix4.inverse(transfrom, transfrom), vector, vector);
-    Cesium.Cartesian3.normalize(direction, direction);
-
-    return Cesium.Math.PI_OVER_TWO - Cesium.Math.acosClamped(direction.z);
+export function getHeadingPitch(pointA: Cartesian3, pointB: Cartesian3): number[]{
+    // 建立以点A为原点，X轴为east,Y轴为north,Z轴朝上的坐标系
+    let transform = Cesium.Transforms.eastNorthUpToFixedFrame(pointA);
+    // 向量AB
+    let positionvector = Cesium.Cartesian3.subtract(pointB, pointA, new Cesium.Cartesian3());
+    // 因transform是将A为原点的eastNorthUp坐标系中的点转换到世界坐标系的矩阵
+    // AB为世界坐标中的向量
+    // 因此将AB向量转换为A原点坐标系中的向量，需乘以transform的逆矩阵。
+    let vector = Cesium.Matrix4.multiplyByPointAsVector(Cesium.Matrix4.inverse(transform, new Cesium.Matrix4()), positionvector, new Cesium.Cartesian3());
+    // 归一化
+    let direction = Cesium.Cartesian3.normalize(vector, new Cesium.Cartesian3());
+    // heading
+    let heading = Math.atan2(direction.y, direction.x) - Cesium.Math.PI_OVER_TWO;
+    heading = Cesium.Math.TWO_PI - Cesium.Math.zeroToTwoPi(heading)
+    // pitch
+    let pitch = Cesium.Math.PI_OVER_TWO - Cesium.Math.acosClamped(direction.z)
+    return [heading, pitch]
 }
 
 /**
  * 绘制一个小坐标轴,可绘制局部坐标系,X 轴为红色,Y 轴为蓝色,Z 轴为绿色
+ * 没有封装成类，所以要删除 Entity 得改方法,建议仅用来测试使用
  * @param { Viewer } viewer 
  * @param { Cartesian3 } center 原点,请和传入 matrix4 保持一致,若未设置 matrix4 参数,则为当前世界坐标系
  * @param { number } height (可选),坐标轴长度和离地高
