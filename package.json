@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@open-wc/webpack-import-meta-loader": "^0.4.7",
+    "babel-loader": "^9.1.2",
+    "cesium": "^1.101.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "core-js": "^3.27.1",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "turf": "^3.0.14",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "devDependencies": {
+    "@types/turf": "^3.5.32"
+  }
+}
