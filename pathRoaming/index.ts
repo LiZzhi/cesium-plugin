@@ -55,11 +55,18 @@ viewer.entities.add({
 let speed = 1
 let roam = pathRoaming.getInstance(viewer);
 
+let $roamingType = document.querySelector("#roamingType") as HTMLSelectElement
+let $height = document.querySelector("#height") as HTMLInputElement
+$height.onchange = (e) => {
+    if ($height.value !== "" && !isNaN(Number($height.value))) {
+        roam.roamHeight = parseInt($height.value);
+    }
+};
 (document.querySelector("#start1") as HTMLElement).onclick = () => {
-    roam.startRoaming(ps, 1);
+    roam.startRoaming(ps, 1, parseInt($roamingType.value!));
 };
 (document.querySelector("#start2") as HTMLElement).onclick = () => {
-    roam.startRoaming(ps, 2);
+    roam.startRoaming(ps, 2, parseInt($roamingType.value!));
 };
 (document.querySelector("#stop") as HTMLElement).onclick = () => {
     roam.stopRoaming();

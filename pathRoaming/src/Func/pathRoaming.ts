@@ -9,10 +9,10 @@ class _pathRoaming {
     #viewer: Viewer
     #CZML: any
     #roamPath: Cartographic[]
-    #czmlDataSource: DataSource|undefined
+    #czmlDataSource: DataSource | undefined
     #listener: any
-    #trackingEntity: Entity|undefined
-    #viewType: 1|2
+    #trackingEntity: Entity | undefined
+    #viewType: 1 | 2
     #isStart: boolean
     speed: number
     height: number
@@ -30,19 +30,23 @@ class _pathRoaming {
     }
 
     /**
-     * 设置基础速度,请在 startRoaming 前设置,否则不会改变当前正在漫游的速度
+     * 设置基础速度,请在设置漫游路径前使用,否则不会改变当前正在漫游的速度
      * @param { number } speed 速度
      */
-    set roamSpeed(speed: number){
+    set roamSpeed(speed: number) {
         this.#isThis();
-        this.speed = speed
+        if (!this.#isStart) {
+            this.speed = speed;
+        } else {
+            throw new Error("请在设置漫游路径前使用");
+        }
     }
 
     /**
      * 获取础速度,注意,该速度不一定为实际动画速度
      * @returns { number }
      */
-    get roamSpeed():number{
+    get roamSpeed(): number {
         this.#isThis();
         return this.speed
     }
@@ -51,29 +55,34 @@ class _pathRoaming {
      * 设置漫游速度,实际为设置 clock 运行倍速,请传入大于 0 的参数
      * @param { number } multiple 基础速度的倍数,例如 speed 为 10,要设置为 20 请传入 2
      */
-    set runSpeed(multiple:number){
+    set runSpeed(multiple: number) {
         this.#isThis();
-        if(multiple > 0){
+        if (multiple > 0) {
             this.#viewer.clock.multiplier = multiple
-        }else{
+        } else {
             throw new Error("请设置大于0的值")
         }
     }
 
     /**
-     * 设置离地高度,请在 startRoaming 前设置
+     * 设置离地高度,请在设置漫游路径前使用,否则不会改变当前正在漫游的高度
      * @param { number } height 离地高度
      */
-    set roamHeight(height: number){
+    set roamHeight(height: number) {
         this.#isThis();
-        this.height = height
+        if (!this.#isStart) {
+            this.height = height
+        } else {
+            throw new Error("请在设置漫游路径前使用");
+
+        }
     }
 
     /**
      * 获取离地表高度
      * @returns { number }
      */
-    get roamHeight():number{
+    get roamHeight(): number {
         this.#isThis();
         return this.height
     }
@@ -88,33 +97,43 @@ class _pathRoaming {
     }
 
     /**
+     * 是否已设置漫游路径
+     * @returns { boolean }
+     */
+    get isStart(): boolean {
+        this.#isThis();
+        return this.#isStart
+    }
+
+    /**
      * 开始漫游
      * @param { Cartographic[] } ps 漫游路径
      * @param { 1|2 } viewType (可选)漫游视角,默认为 1
      */
-    startRoaming(ps: Cartographic[], viewType: 1|2 = 1): void {
+    startRoaming(ps: Cartographic[], viewType: 1 | 2 = 1, roamingType: roamingType = 2): void {
         this.#isThis()
         if (ps.length === 0) {
             throw new Error("漫游路径为空");
         }
         if (this.#isStart) {    // 用于暂停后恢复
-            if(this.#viewType === 1){
+            if (this.#viewType === 1) {
                 this.#viewer.trackedEntity = this.#trackingEntity
             }
             this.#viewer.clock.shouldAnimate = true;
         } else {    // 初始化并开始漫游
             // 漫游视角 1, 2 分别对应 view1 和 view2
             this.#viewType = viewType
-            this.#buildCZML(ps);
+            this.#buildCZML(ps, roamingType);
 
             this.#viewer.dataSources.add(Cesium.CzmlDataSource.load(this.#CZML)).then((ds) => {
                 this.#czmlDataSource = ds;
                 this.#trackingEntity = ds.entities.getById('pathRoamingEntity') as Entity;
-                (this.#trackingEntity.model!.heightReference as any) = Cesium.HeightReference.RELATIVE_TO_GROUND
-
-                if(this.#viewType === 1){
+                if(this.#trackingEntity.model){
+                    (this.#trackingEntity.model.heightReference as any) = Cesium.HeightReference.RELATIVE_TO_GROUND
+                }
+                if (this.#viewType === 1) {
                     this.#view1()
-                }else{
+                } else {
                     this.#view2()
                 }
             });
@@ -136,13 +155,13 @@ class _pathRoaming {
     /**
      * 销毁
      */
-    destroy(){
+    destroy() {
         this.#viewer.clock.shouldAnimate = false;
         this.#isStart = false;
-        if(this.#listener){
+        if (this.#listener) {
             this.#viewer.scene.postRender.removeEventListener(this.#listener);
         }
-        if(this.#czmlDataSource){
+        if (this.#czmlDataSource) {
             this.#viewer.dataSources.remove(this.#czmlDataSource);
         }
         this.#viewer.trackedEntity = undefined;
@@ -217,14 +236,14 @@ class _pathRoaming {
     /**
      * 漫游视角1
      */
-    #view1(){
+    #view1() {
         this.#viewer.trackedEntity = this.#trackingEntity
     }
 
     /**
      * 漫游视角2
      */
-    #view2(){
+    #view2() {
         let prePoint: Cartesian3
         this.#listener = this.#viewer.scene.postRender.addEventListener(() => {
             if (this.#trackingEntity && this.#viewer.clock.shouldAnimate) {
@@ -258,10 +277,10 @@ class _pathRoaming {
     }
 }
 
-export default class pathRoaming{
+export default class pathRoaming {
     // _pathRoaming 实例
-    static #instance:_pathRoaming
-    constructor(){
+    static #instance: _pathRoaming
+    constructor() {
         //禁止实例化
         throw new Error("禁止实例化，请使用静态方法 < pathRoaming.getInstance >")
     }
@@ -271,10 +290,10 @@ export default class pathRoaming{
      * @param { Viewer } viewer 
      * @returns { _pathRoaming } 绘图类实例
      */
-    static getInstance(viewer: Viewer):_pathRoaming{
-        if(pathRoaming.#instance){
+    static getInstance(viewer: Viewer): _pathRoaming {
+        if (pathRoaming.#instance) {
             return pathRoaming.#instance
-        }else{
+        } else {
             pathRoaming.#instance = new _pathRoaming(viewer)
             return pathRoaming.#instance
         }

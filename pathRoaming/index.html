@@ -9,6 +9,12 @@
 <body>
     <div id="MapContainer"></div>
     <div class="btn-group">
+        <select id="roamingType">
+            <option value="1">行人漫游</option>
+            <option value="2" selected>车辆漫游</option>
+            <option value="3">飞行漫游</option>
+        </select>
+        <input id="height" type="text" placeholder="请设置离地高度,默认为0">
         <input id="start1" type="button" value="开始(视角1)">
         <input id="start2" type="button" value="开始(视角2)">
         <input id="stop" type="button" value="暂停">
