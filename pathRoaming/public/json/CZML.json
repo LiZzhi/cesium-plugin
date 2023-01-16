@@ -1,0 +1,33 @@
+[
+    {
+      "id": "document",
+      "version": "1.0"
+    },
+    {
+      "id": "pathRoamingEntity",
+      "availability": "2012-08-04T10:00:00Z/2012-08-04T20:00:00Z",
+      "model": {
+        "scale": 1,
+        "minimumPixelSize": 100,
+        "maximumScale": 20
+      },
+      "path": {
+        "material": {"solidColor": {"color": {"rgba": [255, 255, 0, 255]}}},
+        "width": [{"number": 5.0}],
+        "show": [{"boolean": false}],
+        "resolution": 5.0
+      },
+      "orientation": {
+        "velocityReference": "#position"
+      },
+      "viewFrom": {
+        "cartesian": [-2080, -1715, 779]
+      },
+      "position": {
+        "interpolationAlgorithm": "LINEAR",
+        "epoch": "2012-08-04T10:00:00Z",
+        "forwardExtrapolationType": "HOLD",
+        "cartographicDegrees": []
+      }
+    }
+  ]

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "module": "es2015",
+      "target": "es2015",
+      "strict": true, // 严格模式
+      "noEmitOnError": true,  // 错误禁止打包
+      "moduleResolution": "node", // 配置了才能找node_modules
+      // 允许 import json
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true
+    }
+}

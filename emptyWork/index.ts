@@ -1,7 +1,7 @@
 import * as Cesium from "cesium"
 import "cesium/Build/Cesium/Widgets/widgets.css"
 import "./src/Style/index.css"
-import drawShape from "./src/Func/drawShape";
+
 // token
 Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOTNiYjkwZi1iMzRlLTRjZWQtYWQxMy00MDVmMjk4YTc0YmMiLCJpZCI6MzY3MDksImlhdCI6MTY1NTE3OTc1N30.fv4nNIkCEEy3VqlaekWVcE1btEcge5_zCl_36AtusT0"
 // 初始化地球
@@ -32,35 +32,4 @@ let viewer = new Cesium.Viewer('MapContainer', {
         }
     }
 });
-viewer.scene.globe.depthTestAgainstTerrain = true;
 (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";
-let draw = drawShape.getInstance(viewer);
-
-(document.querySelector("#drawPoint") as HTMLElement).onclick = function(){
-    draw.drawPoint();
-};
-(document.querySelector("#drawPloyline") as HTMLElement).onclick = function(){
-    draw.drawPloyline();
-};
-(document.querySelector("#drawPloygon") as HTMLElement).onclick = function(){
-    draw.drawPloygon();
-};
-(document.querySelector("#drawCircle") as HTMLElement).onclick = function(){
-    draw.drawCircle();
-};
-(document.querySelector("#drawRectangle") as HTMLElement).onclick = function(){
-    draw.drawRectangle();
-};
-(document.querySelector("#revock") as HTMLElement).onclick = function(){
-    draw.revoke();
-};
-(document.querySelector("#removeAll") as HTMLElement).onclick = function(){
-    draw.removeAll();
-};
-
-
-
-
-
-
-

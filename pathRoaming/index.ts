@@ -1,7 +1,9 @@
 import * as Cesium from "cesium"
 import "cesium/Build/Cesium/Widgets/widgets.css"
 import "./src/Style/index.css"
-import drawShape from "./src/Func/drawShape";
+import pathRoaming from "./src/Func/pathRoaming"
+import { fromDegreesToCartesian3Arr } from "./src/Func/tool"
+
 // token
 Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOTNiYjkwZi1iMzRlLTRjZWQtYWQxMy00MDVmMjk4YTc0YmMiLCJpZCI6MzY3MDksImlhdCI6MTY1NTE3OTc1N30.fv4nNIkCEEy3VqlaekWVcE1btEcge5_zCl_36AtusT0"
 // 初始化地球
@@ -32,35 +34,46 @@ let viewer = new Cesium.Viewer('MapContainer', {
         }
     }
 });
-viewer.scene.globe.depthTestAgainstTerrain = true;
 (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";
-let draw = drawShape.getInstance(viewer);
 
-(document.querySelector("#drawPoint") as HTMLElement).onclick = function(){
-    draw.drawPoint();
+let ps = [
+    new Cesium.Cartographic(119.44037341293323, 35.34197106899855, 5.872732096309598),
+    new Cesium.Cartographic(119.44252948098223, 35.34223901339689, 6.31711015359973),
+    new Cesium.Cartographic(119.4560550425358, 35.34202148007459, 22.906707659456394),
+    new Cesium.Cartographic(119.45610614546445, 35.32762691608659, 3.0852594116911622)
+];
+
+viewer.entities.add({
+    polyline: {
+        positions: fromDegreesToCartesian3Arr(ps),
+        width: 4,
+        clampToGround: true,
+        arcType: Cesium.ArcType.RHUMB,
+    }
+})
+
+let speed = 1
+let roam = pathRoaming.getInstance(viewer);
+
+(document.querySelector("#start1") as HTMLElement).onclick = () => {
+    roam.startRoaming(ps, 1);
 };
-(document.querySelector("#drawPloyline") as HTMLElement).onclick = function(){
-    draw.drawPloyline();
+(document.querySelector("#start2") as HTMLElement).onclick = () => {
+    roam.startRoaming(ps, 2);
 };
-(document.querySelector("#drawPloygon") as HTMLElement).onclick = function(){
-    draw.drawPloygon();
+(document.querySelector("#stop") as HTMLElement).onclick = () => {
+    roam.stopRoaming();
 };
-(document.querySelector("#drawCircle") as HTMLElement).onclick = function(){
-    draw.drawCircle();
+(document.querySelector("#add") as HTMLElement).onclick = () => {
+    speed++
+    roam.runSpeed = speed;
 };
-(document.querySelector("#drawRectangle") as HTMLElement).onclick = function(){
-    draw.drawRectangle();
+(document.querySelector("#reduce") as HTMLElement).onclick = () => {
+    if (speed > 1) {
+        speed--
+    }
+    roam.runSpeed = speed;
 };
-(document.querySelector("#revock") as HTMLElement).onclick = function(){
-    draw.revoke();
+(document.querySelector("#destroy") as HTMLElement).onclick = () => {
+    roam.destroy();
 };
-(document.querySelector("#removeAll") as HTMLElement).onclick = function(){
-    draw.removeAll();
-};
-
-
-
-
-
-
-

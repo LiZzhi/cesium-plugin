@@ -1,8 +1,12 @@
 import * as Cesium from "cesium";
 import { Viewer, ScreenSpaceEventHandler, Cartesian3, Entity, CustomDataSource } from "cesium";
-import { calculateRectangle, calculateRectangle2 } from "./tool"
+import { calculateRectangle } from "./tool"
 
-export default class drawShape {
+/**
+ * 绘图类,因为一些特定原因,不建议创建多个实例,可能会导致 Entity 混合在一起无法撤销删除，
+ * 故请使用对外暴露的 drawShape 类,使用 drawShape.getInstance 静态方法获取单例
+ */
+class _drawShape {
     #viewer: Viewer
     #drawShapeSource: CustomDataSource
     #drawShapeEntities: Entity[]
@@ -35,20 +39,16 @@ export default class drawShape {
      * @param {Entity.ConstructorOptions} options Entity 中的 Option
      */
     drawPoint(options: Entity.ConstructorOptions = {}): void {
-        if (!(this instanceof drawShape)) {
-            // 判断 this 指向, 防止全局执行
-            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
-        }
-
+        this.#isThis()
         // 绘图前准备并获取屏幕事件句柄
-        this.#handler = this.drawStart();
+        this.#handler = this.#drawStart();
 
         this.#handler.setInputAction((e: any) => {
             // 左键点击画点
             let position = this.#viewer.scene.pickPosition(e.position);
 
             if (Cesium.defined(position)) {
-                this.drawEnd();
+                this.#drawEnd();
 
                 let properties = {
                     id: 'point-' + crypto.randomUUID(),
@@ -61,14 +61,14 @@ export default class drawShape {
                     }
                 };
                 let o = Object.assign(properties, options)
-                this.addData(o);
+                this.#addData(o);
             }
-            this.drawEnd();
+            this.#drawEnd();
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         this.#handler.setInputAction((e: any) => {
             // 右键点击提前结束
-            this.drawEnd();
+            this.#drawEnd();
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
 
@@ -77,24 +77,20 @@ export default class drawShape {
      * @param { Entity.ConstructorOptions } options Entity 中的 Option
      */
     drawPloyline(options: Entity.ConstructorOptions = {}): void {
-        if (!(this instanceof drawShape)) {
-            // 判断 this 指向, 防止全局执行
-            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
-        }
-
+        this.#isThis()
         // 绘图前准备并获取屏幕事件句柄
-        this.#handler = this.drawStart();
+        this.#handler = this.#drawStart();
         this.#handler.setInputAction((e: any) => {
             // 左键点击画折线
             let position = this.#viewer.scene.pickPosition(e.position);
 
             if (Cesium.defined(position)) {
                 // 添加节点
-                this.addTemporaryPoint(position)
+                this.#addTemporaryPoint(position)
 
                 // 添加临时绘图线
                 if (!this.#drawEntity) {
-                    this.#drawEntity = this.#viewer.entities.add({
+                    this.#drawEntity = this.#drawShapeSource.entities.add({
                         polyline: {
                             positions: new Cesium.CallbackProperty(() => {
                                 return this.#pointNodePosiArr;
@@ -142,8 +138,8 @@ export default class drawShape {
                 options.polyline.positions = p
             }
             let o = Object.assign(properties, options)
-            this.addData(o);
-            this.drawEnd();
+            this.#addData(o);
+            this.#drawEnd();
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 
     }
@@ -153,24 +149,20 @@ export default class drawShape {
      * @param { Entity.ConstructorOptions } options Entity 中的 Option
      */
     drawPloygon(options: Entity.ConstructorOptions = {}): void {
-        if (!(this instanceof drawShape)) {
-            // 判断 this 指向, 防止全局执行
-            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
-        }
-
+        this.#isThis()
         // 绘图前准备并获取屏幕事件句柄
-        this.#handler = this.drawStart();
+        this.#handler = this.#drawStart();
         this.#handler.setInputAction((e: any) => {
             // 左键点击画面
             let position = this.#viewer.scene.pickPosition(e.position);
 
             if (Cesium.defined(position)) {
                 // 添加节点
-                this.addTemporaryPoint(position)
+                this.#addTemporaryPoint(position)
 
                 // 添加临时绘图面
                 if (!this.#drawEntity) {
-                    this.#drawEntity = this.#viewer.entities.add({
+                    this.#drawEntity = this.#drawShapeSource.entities.add({
                         polyline: {
                             positions: new Cesium.CallbackProperty(() => {
                                 return this.#pointNodePosiArr;
@@ -240,8 +232,8 @@ export default class drawShape {
                 options.polygon.hierarchy = hierarchyP
             }
             let o = Object.assign(properties, options)
-            this.addData(o);
-            this.drawEnd();
+            this.#addData(o);
+            this.#drawEnd();
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
 
@@ -250,13 +242,9 @@ export default class drawShape {
      * @param { Entity.ConstructorOptions } options Entity 中的 Option
      */
     drawCircle(options: Entity.ConstructorOptions = {}): void {
-        if (!(this instanceof drawShape)) {
-            // 判断 this 指向, 防止全局执行
-            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
-        }
-
+        this.#isThis()
         // 绘图前准备并获取屏幕事件句柄
-        this.#handler = this.drawStart();
+        this.#handler = this.#drawStart();
         // 圆心
         let circleCenter: Cartesian3
         let distance: number
@@ -267,7 +255,7 @@ export default class drawShape {
             if (Cesium.defined(position)) {
                 // 添加节点
                 if (!circleCenter) {
-                    this.addTemporaryPoint(position);
+                    this.#addTemporaryPoint(position);
                     circleCenter = position;
                 }
             }
@@ -287,7 +275,7 @@ export default class drawShape {
                 distance = geodesic.surfaceDistance;
 
                 if (circleCenter && !this.#drawEntity) {
-                    this.#drawEntity = this.#viewer.entities.add({
+                    this.#drawEntity = this.#drawShapeSource.entities.add({
                         position: circleCenter,
                         ellipse: {
                             semiMinorAxis: new Cesium.CallbackProperty(() => {
@@ -324,8 +312,8 @@ export default class drawShape {
                     options.ellipse.semiMajorAxis = distance
                 }
                 let o = Object.assign(properties, options)
-                this.addData(o);
-                this.drawEnd()
+                this.#addData(o);
+                this.#drawEnd()
             }
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
@@ -335,13 +323,9 @@ export default class drawShape {
      * @param { Entity.ConstructorOptions } options Entity 中的 Option
      */
     drawRectangle(options: Entity.ConstructorOptions = {}) {
-        if (!(this instanceof drawShape)) {
-            // 判断 this 指向, 防止全局执行
-            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
-        }
-
+        this.#isThis()
         // 绘图前准备并获取屏幕事件句柄
-        this.#handler = this.drawStart();
+        this.#handler = this.#drawStart();
         // 初始两点
         let pointA: Cartesian3, pointB: Cartesian3
         this.#handler.setInputAction((e: any) => {
@@ -351,7 +335,7 @@ export default class drawShape {
             if (Cesium.defined(position)) {
                 // 添加节点
                 if (this.#pointNodeArr.length < 2) {
-                    this.addTemporaryPoint(position)
+                    this.#addTemporaryPoint(position)
                     if (!pointA) {
                         pointA = position;
                     } else if (!pointB) {
@@ -360,7 +344,7 @@ export default class drawShape {
                 }
                 // 添加临时绘图面
                 if (!this.#drawEntity) {
-                    this.#drawEntity = this.#viewer.entities.add({
+                    this.#drawEntity = this.#drawShapeSource.entities.add({
                         polyline: {
                             positions: new Cesium.CallbackProperty(() => {
                                 return this.#pointNodePosiArr.length !== 4 ? this.#pointNodePosiArr : this.#pointNodePosiArr.concat(this.#pointNodePosiArr[0]);
@@ -437,8 +421,8 @@ export default class drawShape {
                         options.polygon.hierarchy = hierarchyP
                     }
                     let o = Object.assign(properties, options)
-                    this.addData(o);
-                    this.drawEnd();
+                    this.#addData(o);
+                    this.#drawEnd();
                 }
             }
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
@@ -449,6 +433,7 @@ export default class drawShape {
      * @returns 
      */
     revoke(): boolean {
+        this.#isThis()
         if (this.#drawShapeEntities.length > 0) {
             let delFeature = this.#drawShapeEntities.pop();
             this.#drawShapeSource.entities.remove(delFeature!)
@@ -468,9 +453,10 @@ export default class drawShape {
      * 绘图前准备工作
      * @returns {ScreenSpaceEventHandler} 屏幕事件句柄
      */
-    drawStart(): ScreenSpaceEventHandler {
+    #drawStart(): ScreenSpaceEventHandler {
+        this.#isThis()
         // 开始绘图前先清除上次绘图的状态
-        this.drawEnd()
+        this.#drawEnd()
         // 修改鼠标样式
         window.document.body.style.cursor = 'crosshair';
         // 获取屏幕事件句柄
@@ -486,7 +472,8 @@ export default class drawShape {
     /**
      * 绘图完毕的清除工作
      */
-    drawEnd(): void {
+    #drawEnd(): void {
+        this.#isThis()
         // 恢复鼠标样式
         window.document.body.style.cursor = 'auto';
         // 恢复深度检测状态
@@ -498,13 +485,13 @@ export default class drawShape {
         }
         // 销毁当前临时绘图 Entity
         if (this.#drawEntity) {
-            this.#viewer.entities.remove(this.#drawEntity)
+            this.#drawShapeSource.entities.remove(this.#drawEntity)
             this.#drawEntity = null
         }
         // 销毁当前临时绘图的节点 Entity
         if (this.#pointNodeArr.length > 0) {
             this.#pointNodeArr.forEach(v => {
-                this.#viewer.entities.remove(v)
+                this.#drawShapeSource.entities.remove(v)
             })
             this.#pointNodeArr.length = 0
         }
@@ -518,7 +505,8 @@ export default class drawShape {
      * 添加 Entity
      * @param { Entity.ConstructorOptions } options 
      */
-    addData(options: Entity.ConstructorOptions) {
+    #addData(options: Entity.ConstructorOptions) {
+        this.#isThis()
         this.#drawShapeEntities.push(
             this.#drawShapeSource.entities.add(
                 new Cesium.Entity(options)
@@ -530,8 +518,9 @@ export default class drawShape {
      * 添加临时绘图节点
      * @param { Cartesian3 } position 节点坐标
      */
-    addTemporaryPoint(position: Cartesian3): void {
-        let pointEntity = this.#viewer.entities.add({
+    #addTemporaryPoint(position: Cartesian3): void {
+        this.#isThis()
+        let pointEntity = this.#drawShapeSource.entities.add({
             position: position,
             point: {
                 color: Cesium.Color.RED,
@@ -542,5 +531,38 @@ export default class drawShape {
         });
         this.#pointNodePosiArr.push(position)
         this.#pointNodeArr.push(pointEntity);
+    }
+
+    /**
+     * 判断 this 指向
+     */
+    #isThis():void{
+        if (!(this instanceof _drawShape)) {
+            // 判断 this 指向, 防止全局执行
+            throw new Error("drawShape 实例中 this 指向全局，请正确调用或修正 this 指向");
+        }
+    }
+}
+
+export default class drawShape{
+    // _drawShape 实例
+    static #instance:_drawShape
+    constructor(){
+        //禁止实例化
+        throw new Error("禁止实例化，请使用静态方法 < drawShape.getInstance >")
+    }
+
+    /**
+     * 单例模式,获取绘图类实例
+     * @param { Viewer } viewer 
+     * @returns { _drawShape } 绘图类实例
+     */
+    static getInstance(viewer: Viewer):_drawShape{
+        if(drawShape.#instance){
+            return drawShape.#instance
+        }else{
+            drawShape.#instance = new _drawShape(viewer)
+            return drawShape.#instance
+        }
     }
 }
