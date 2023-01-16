@@ -3,7 +3,7 @@
 ## 简介
 #### 目前已完成:
 * plotTool 几何编辑
-* 2.pathRoaming 路径漫游
+* pathRoaming 路径漫游
 * 持续更新中...
 
 ## 使用方法
