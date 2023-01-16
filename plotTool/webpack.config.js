@@ -12,8 +12,8 @@ const cesiumWorkers = "Workers"
 module.exports = {
     entry: "./index.ts",
     output: {
-        path: path.resolve(__dirname, "build"),
-        filename: "bundle.js",
+        path: path.resolve(__dirname, "dist"),
+        filename: "js/plotTool.js", // js输出在js/下
         environment:{
             // 是否允许webpack使用箭头函数(为了兼容IE)
             arrowFunction: true,
@@ -61,6 +61,7 @@ module.exports = {
                 use: {
                     loader: '@open-wc/webpack-import-meta-loader',
                 },
+                exclude:/node-modules/
             },
             {
                 test:/\.css$/,
