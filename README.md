@@ -1,5 +1,5 @@
 # cesium-plugin
-* 感兴趣的可以 Star 支持一下,谢谢
+感兴趣的可以 Star 支持一下,谢谢
 ## 简介
 #### 目前已完成:
 * plotTool 几何编辑
