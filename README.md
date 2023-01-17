@@ -4,6 +4,7 @@
 #### 目前已完成:
 * plotTool 几何编辑
 * pathRoaming 路径漫游
+* mapvLayer mapv可视化
 * 持续更新中...
 
 ## 使用方法
