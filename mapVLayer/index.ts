@@ -1,6 +1,7 @@
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./src/Style/index.css";
+import mapvLayer from "./src/Func/mapvLayer";
 
 // token
 Cesium.Ion.defaultAccessToken =
@@ -46,3 +47,32 @@ viewer.camera.setView({
         roll: 0,
     },
 });
+let map = new mapvLayer(viewer);
+
+(document.querySelector("#beehive") as HTMLElement).onclick = () => {
+    let o = map.beehiveOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#migrate1") as HTMLElement).onclick = () => {
+    let o = map.bigMigrateOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#heatMap") as HTMLElement).onclick = () => {
+    let o = map.heatMapOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#migrate2") as HTMLElement).onclick = () => {
+    let o = map.migrateOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#square") as HTMLElement).onclick = () => {
+    let o = map.squareGraphOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#boundary") as HTMLElement).onclick = () => {
+    let o = map.strongBoundaryOptions();
+    map.createLayer(o);
+};
+(document.querySelector("#destroy") as HTMLElement).onclick = () => {
+    map.destroy();
+};
