@@ -27,6 +27,7 @@ export default class mapVLayer {
      * @param options mapv 图层参数
      */
     createLayer(options: any[][]) {
+        this.#isThis()
         this.destroy();
         options.forEach((v) => {
             let mapVLayer = new mapv.cesiumMapLayer(this.#viewer, ...v);
@@ -93,9 +94,22 @@ export default class mapVLayer {
      * 销毁图层
      */
     destroy() {
+        this.#isThis()
         this.#Layer.forEach((element) => {
             element.destroy();
         });
         this.#Layer.length = 0;
+    }
+
+    /**
+     * 判断 this 指向
+     */
+    #isThis(): void {
+        if (!(this instanceof mapVLayer)) {
+            // 判断 this 指向, 防止全局执行
+            throw new Error(
+                "mapVLayer 实例中 this 指向全局，请正确调用或修正 this 指向"
+            );
+        }
     }
 }
