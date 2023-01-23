@@ -148,6 +148,7 @@ class _pathRoaming {
      * 暂停漫游
      */
     stopRoaming() {
+        this.#isThis()
         this.#viewer.trackedEntity = undefined;
         this.#viewer.clock.shouldAnimate = false;
     }
@@ -156,6 +157,7 @@ class _pathRoaming {
      * 销毁
      */
     destroy() {
+        this.#isThis()
         this.#viewer.clock.shouldAnimate = false;
         this.#isStart = false;
         if (this.#listener) {
@@ -176,7 +178,6 @@ class _pathRoaming {
      * @param { roamingType } roamingType (可选), 1:"行人漫游", (默认)2:"车辆漫游", 3:"飞行漫游"
      */
     #buildCZML(ps: Cartographic[], roamingType: roamingType = 2): void {
-        this.#isThis()
         if (ps.length === 0) {
             throw new Error("请传入有效漫游路径");
         }
@@ -215,7 +216,6 @@ class _pathRoaming {
      * @param { roamingType } roamingType (可选), 1:"行人漫游", (默认)2:"车辆漫游", 3:"飞行漫游"
      */
     #setRoamingType(roamingType: roamingType = 2): void {
-        this.#isThis();
         this.#CZML = JSON.parse(JSON.stringify(CZML));
         switch (roamingType) {
             case 1:

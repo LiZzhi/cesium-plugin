@@ -454,7 +454,6 @@ class _drawShape {
      * @returns {ScreenSpaceEventHandler} 屏幕事件句柄
      */
     #drawStart(): ScreenSpaceEventHandler {
-        this.#isThis()
         // 开始绘图前先清除上次绘图的状态
         this.#drawEnd()
         // 修改鼠标样式
@@ -473,7 +472,6 @@ class _drawShape {
      * 绘图完毕的清除工作
      */
     #drawEnd(): void {
-        this.#isThis()
         // 恢复鼠标样式
         window.document.body.style.cursor = 'auto';
         // 恢复深度检测状态
@@ -506,7 +504,6 @@ class _drawShape {
      * @param { Entity.ConstructorOptions } options 
      */
     #addData(options: Entity.ConstructorOptions) {
-        this.#isThis()
         this.#drawShapeEntities.push(
             this.#drawShapeSource.entities.add(
                 new Cesium.Entity(options)
@@ -519,7 +516,6 @@ class _drawShape {
      * @param { Cartesian3 } position 节点坐标
      */
     #addTemporaryPoint(position: Cartesian3): void {
-        this.#isThis()
         let pointEntity = this.#drawShapeSource.entities.add({
             position: position,
             point: {

@@ -19,7 +19,7 @@ class _linkView {
      * 打开 Cesium 二三维联动
      */
     openCesiumMapLink23d() {
-        this.#isThis()
+        this.#isThis();
         this.destroy();
         if (this.#viewer3D && !this.#viewer2D) {
             this.#viewer2D = new Cesium.Viewer(
@@ -36,7 +36,7 @@ class _linkView {
      * 销毁
      */
     destroy() {
-        this.#isThis()
+        this.#isThis();
         if (this.#camreaListener) {
             this.#viewer3D.camera.changed.removeEventListener(
                 this.#camreaListener
@@ -75,8 +75,9 @@ class _linkView {
      * @returns { Cartesian3|undefined }
      */
     get cameraFocus3d(): Cartesian3 | undefined {
-        this.#isThis()
+        this.#isThis();
         if (this.#viewer3D) {
+            // 方法一
             // canvas 中心位置为相机焦点
             let viewCenter = new Cesium.Cartesian2(
                 Math.floor(this.#viewer3D.canvas.clientWidth / 2),
@@ -89,6 +90,24 @@ class _linkView {
                 this.#viewer3D.scene.globe.ellipsoid
             );
 
+            // 方法二
+            // 构建相机射线
+            let ray = new Cesium.Ray(
+                this.#viewer3D.camera.positionWC,
+                this.#viewer3D.camera.directionWC
+            );
+            // 取得坐标,方法1
+            // let interval = Cesium.IntersectionTests.rayEllipsoid(
+            //     ray,
+            //     this.#viewer3D.scene.globe.ellipsoid
+            // );
+            // let worldPosition = Cesium.Ray.getPoint(ray, interval.start);
+
+            // 取得坐标,方法2
+            // let worldPosition = this.#viewer3D.scene.globe.pick(
+            //     ray,
+            //     this.#viewer3D.scene
+            // )
             return worldPosition;
         }
     }
@@ -118,6 +137,10 @@ class _linkView {
                     new Cesium.Cartesian3(0, 0, distance)
                 );
             }
+            // 禁止移动缩放
+            this.#viewer2D.scene.screenSpaceCameraController.enableZoom = false;
+            this.#viewer2D.scene.screenSpaceCameraController.enableTranslate =
+                false;
             // 是否开启抗锯齿
             this.#viewer2D.scene.postProcessStages.fxaa.enabled = true;
         }
@@ -172,6 +195,8 @@ class _linkView {
             this.#$container2D.style.display = "inline-block";
             this.#$container2D.style.height = "100%";
             this.#$container2D.style.width = "50%";
+            // 不加这个下面莫名出现一块空白,F12文档流里也找不到原因
+            document.body.style.overflow = "hidden";
         }
     }
 
@@ -192,10 +217,12 @@ class _linkView {
     /**
      * 判断 this 指向
      */
-    #isThis():void{
+    #isThis(): void {
         if (!(this instanceof _linkView)) {
             // 判断 this 指向, 防止全局执行
-            throw new Error("linkView 实例中 this 指向全局，请正确调用或修正 this 指向");
+            throw new Error(
+                "linkView 实例中 this 指向全局，请正确调用或修正 this 指向"
+            );
         }
     }
 }
@@ -214,7 +241,10 @@ export default class linkView {
      * @param { Viewer } viewer3D 3D 视图的 viewer
      * @returns { _linkView } 二三维视图联动类实例
      */
-    static getInstance($container3D: HTMLDivElement, viewer3D: Viewer): _linkView {
+    static getInstance(
+        $container3D: HTMLDivElement,
+        viewer3D: Viewer
+    ): _linkView {
         if (linkView.#instance) {
             return linkView.#instance;
         } else {

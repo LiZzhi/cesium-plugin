@@ -1,4 +1,4 @@
-# empty-work 路径漫游
+# empty-work 空工程
 
 ## 简介
 * 空工程，省去配置麻烦

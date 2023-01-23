@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="MapContainer"></div>
+        <div id="videoContainer">
+            <video id="video" autoplay muted controls></video>
+        </div>
+        <div class="btn-group">
+            <input id="create" type="button" value="创建" />
+            <input id="destroy" type="button" value="销毁" />
+        </div>
+        <form>
+            <p>更新位置</p>
+            <div>
+                <label for="rotationX">翻转</label>
+                <input id="rotationX" type="range" min="-180" max="180" step="1"/>
+                <span id="rotationXShow">0</span>
+            </div>
+            <div>
+                <label for="rotationY">旋转</label>
+                <input id="rotationY" type="range" min="-180" max="180" step="1"/>
+                <span id="rotationYShow">0</span>
+            </div>
+            <div>
+                <label for="fov">夹角</label>
+                <input id="fov" type="range" min="1" max="90" step="1"/>
+                <span id="fovShow">45</span>
+            </div>
+            <div>
+                <label for="frustum">投影线</label>
+                <input id="frustum" checked type="checkbox"/>
+            </div>
+        </form>
+    </body>
+</html>

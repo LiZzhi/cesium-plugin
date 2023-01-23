@@ -6,6 +6,7 @@
 * pathRoaming 路径漫游
 * mapvLayer mapv可视化
 * linkView 二三维视图联动
+* videoShed 视频投影
 * 持续更新中...
 
 ## 使用方法

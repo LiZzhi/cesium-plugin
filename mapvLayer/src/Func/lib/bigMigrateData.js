@@ -3,6 +3,102 @@ const mapv = require("../mapvAPI/mapv.js");
 let timeData = []
 
 /**
+ * 初始化图层数据
+ * @param timeData 数据
+ * @returns {*[]} 所创建的所有的mapvLayer图层
+ */
+export default function bigMigrateData() {
+    let rs = getData();
+    let items = rs.split('|');
+    let data = [];
+    timeData = [];
+    let cityBegin;
+    for (let i = 0; i < items.length; i++) {
+        let itemArr = items[i].split(/\n/);
+        for (let k = 0; k < itemArr.length; k++) {
+            if (!!itemArr[k]) {
+                let item = itemArr[k].split(/\t/);
+                if (item[0] === '起点城市' || item[0] === '迁出城市') {
+                    cityBegin = item[1];
+                }
+                if (item[0] !== '起点城市' || item[0] !== '迁出城市' && item.length > 1) {
+                    let cityCenter1 = mapv.utilCityCenter.getCenterByCityName(item[0].replace(/市|省/, ''));
+                    let cityCenter2 = mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, ''));
+                    if (cityCenter1) {
+                        if (Math.random() > 0.7) {
+                            curive(cityCenter2, cityCenter1, 50);
+                        }
+                        data.push({
+                            geometry: {
+                                type: 'LineString',
+                                coordinates: [
+                                    [cityCenter1.lng, cityCenter1.lat],
+                                    [cityCenter2.lng, cityCenter2.lat]
+                                ]
+                            },
+                            count: 100 * Math.random()
+                        });
+                    }
+                }
+            }
+        }
+    }
+    let dataSet1 = new mapv.DataSet(data)
+    let options1 = {
+        strokeStyle: 'rgba(55, 50, 250, 0.3)',
+        globalCompositeOperation: 'lighter',
+        shadowColor: 'rgba(55, 50, 250, 0.5)',
+        methods: {
+            click: function (item) {}
+        },
+        gradient: {
+            0: 'rgba(55, 50, 250, 0)',
+            1: 'rgba(55, 50, 250, 1)'
+        },
+        lineWidth: .2,
+        draw: 'intensity'
+    };
+    let dataSet2 = new mapv.DataSet(timeData)
+    let options2 = {
+        fillStyle: 'rgba(255, 250, 250, 0.9)',
+        size: .5,
+        animation: {
+            type: 'time',
+            stepsRange: {
+                start: 0,
+                end: 50
+            },
+            trails: 1,
+            duration: 5
+        },
+        draw: 'simple'
+    }
+    return [
+        [dataSet1, options1],
+        [dataSet2, options2]
+    ];
+}
+
+function curive(fromPoint, endPoint, n) {
+    let timeData = []
+    let delLng = (endPoint.lng - fromPoint.lng) / n;
+    let delLat = (endPoint.lat - fromPoint.lat) / n;
+
+    for (let i = 0; i < n; i++) {
+        let pointNLng = fromPoint.lng + delLng * i;
+        let pointNLat = fromPoint.lat + delLat * i;
+        timeData.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [pointNLng, pointNLat]
+            },
+            count: 1,
+            time: i
+        });
+    }
+}
+
+/**
  * 获取大迁徙图数据
  * @returns {string}
  */
@@ -6875,100 +6971,4 @@ function getData() {
 日喀则地区	0
 台湾	60000`;
 
-}
-
-function curive(fromPoint, endPoint, n) {
-    let timeData = []
-    let delLng = (endPoint.lng - fromPoint.lng) / n;
-    let delLat = (endPoint.lat - fromPoint.lat) / n;
-
-    for (let i = 0; i < n; i++) {
-        let pointNLng = fromPoint.lng + delLng * i;
-        let pointNLat = fromPoint.lat + delLat * i;
-        timeData.push({
-            geometry: {
-                type: 'Point',
-                coordinates: [pointNLng, pointNLat]
-            },
-            count: 1,
-            time: i
-        });
-    }
-}
-
-/**
- * 初始化图层数据
- * @param timeData 数据
- * @returns {*[]} 所创建的所有的mapvLayer图层
- */
-export default function bigMigrateData() {
-    let rs = getData();
-    let items = rs.split('|');
-    let data = [];
-    timeData = [];
-    let cityBegin;
-    for (let i = 0; i < items.length; i++) {
-        let itemArr = items[i].split(/\n/);
-        for (let k = 0; k < itemArr.length; k++) {
-            if (!!itemArr[k]) {
-                let item = itemArr[k].split(/\t/);
-                if (item[0] === '起点城市' || item[0] === '迁出城市') {
-                    cityBegin = item[1];
-                }
-                if (item[0] !== '起点城市' || item[0] !== '迁出城市' && item.length > 1) {
-                    let cityCenter1 = mapv.utilCityCenter.getCenterByCityName(item[0].replace(/市|省/, ''));
-                    let cityCenter2 = mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, ''));
-                    if (cityCenter1) {
-                        if (Math.random() > 0.7) {
-                            curive(cityCenter2, cityCenter1, 50);
-                        }
-                        data.push({
-                            geometry: {
-                                type: 'LineString',
-                                coordinates: [
-                                    [cityCenter1.lng, cityCenter1.lat],
-                                    [cityCenter2.lng, cityCenter2.lat]
-                                ]
-                            },
-                            count: 100 * Math.random()
-                        });
-                    }
-                }
-            }
-        }
-    }
-    let dataSet1 = new mapv.DataSet(data)
-    let options1 = {
-        strokeStyle: 'rgba(55, 50, 250, 0.3)',
-        globalCompositeOperation: 'lighter',
-        shadowColor: 'rgba(55, 50, 250, 0.5)',
-        methods: {
-            click: function (item) {}
-        },
-        gradient: {
-            0: 'rgba(55, 50, 250, 0)',
-            1: 'rgba(55, 50, 250, 1)'
-        },
-        lineWidth: .2,
-        draw: 'intensity'
-    };
-    let dataSet2 = new mapv.DataSet(timeData)
-    let options2 = {
-        fillStyle: 'rgba(255, 250, 250, 0.9)',
-        size: .5,
-        animation: {
-            type: 'time',
-            stepsRange: {
-                start: 0,
-                end: 50
-            },
-            trails: 1,
-            duration: 5
-        },
-        draw: 'simple'
-    }
-    return [
-        [dataSet1, options1],
-        [dataSet2, options2]
-    ];
 }
