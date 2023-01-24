@@ -2,6 +2,7 @@ import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./src/Style/index.css";
 import videoShed from "./src/Func/videoShed";
+import { drawCoordinateAxis } from "./src/Func/tool";
 
 // token
 Cesium.Ion.defaultAccessToken =
@@ -52,7 +53,8 @@ let v = new videoShed(viewer, {
     //旋转参数
     rotation: {
         heading: -145,
-        pitch: -43,
+        pitch: -45,
+        roll: 160
     },
     aspectRatio: 1,
     alpha: 1,
@@ -66,6 +68,8 @@ let $rotationX = document.querySelector("#rotationX") as HTMLElement;
 let $rotationXShow = $rotationX.nextElementSibling as HTMLElement;
 let $rotationY = document.querySelector("#rotationY") as HTMLElement;
 let $rotationYShow = $rotationY.nextElementSibling as HTMLElement;
+let $rotationZ = document.querySelector("#rotationZ") as HTMLElement;
+let $rotationZShow = $rotationZ.nextElementSibling as HTMLElement;
 let $fov = document.querySelector("#fov") as HTMLElement;
 let $fovShow = $fov.nextElementSibling as HTMLElement;
 let $frustum = document.querySelector("#frustum") as HTMLElement;
@@ -75,11 +79,14 @@ $create.onclick = function () {
     let styleOptions = v.styleOptions;
     let heading = styleOptions.rotation!.heading + "";
     let pitch = styleOptions.rotation!.pitch + "";
+    let roll = styleOptions.rotation!.roll + "";
     let fov = styleOptions.fov + "";
     $rotationX.setAttribute("value", pitch);
     $rotationXShow.innerHTML = pitch;
     $rotationY.setAttribute("value", heading);
     $rotationYShow.innerHTML = heading;
+    $rotationZ.setAttribute("value", roll);
+    $rotationZShow.innerHTML = roll;
     $fov.setAttribute("value", fov);
     $fovShow.innerHTML = fov + "";
     $form.style.display = "flex";
@@ -96,6 +103,7 @@ $rotationX.onchange = function (e) {
     let newR = {
         heading: v.styleOptions.rotation!.heading,
         pitch: pitch,
+        roll: v.styleOptions.rotation!.roll,
     };
     $rotationXShow.innerHTML = pitch + "";
     v.updateStyle({
@@ -108,9 +116,24 @@ $rotationY.onchange = function (e) {
     let heading: number = e.target.valueAsNumber;
     let newR = {
         heading: heading,
-        pitch: v.styleOptions.rotation!.pitch || 0,
+        pitch: v.styleOptions.rotation!.pitch,
+        roll: v.styleOptions.rotation!.roll,
     };
     $rotationYShow.innerHTML = heading + "";
+    v.updateStyle({
+        rotation: newR,
+    });
+};
+
+$rotationZ.onchange = function (e) {
+    // @ts-ignore
+    let roll: number = e.target.valueAsNumber;
+    let newR = {
+        heading: v.styleOptions.rotation!.heading,
+        pitch: v.styleOptions.rotation!.pitch,
+        roll: roll,
+    };
+    $rotationZShow.innerHTML = roll + "";
     v.updateStyle({
         rotation: newR,
     });

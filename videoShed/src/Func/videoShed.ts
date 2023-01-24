@@ -12,13 +12,14 @@ import {
 // @ts-ignore
 import videoShed3dShader from "../glsl/index.js";
 import { calculateHPRPosition } from "./tool";
-import type { videoShedOptions } from "../Type/type";
+import type { videoShedOptions, cameraPositionVector } from "../Type/type";
 
 export default class videoShed {
     #viewer: Viewer;
     #options: videoShedOptions;
     #position: Cartesian3;
     #orientation: Quaternion;
+    #cameraPositionVector: cameraPositionVector
     #activeVideoListener: Event.RemoveCallback | undefined;
     #videoTexture: any;
     #viewShadowMap: any;
@@ -42,6 +43,11 @@ export default class videoShed {
         );
         this.#position = new Cesium.Cartesian3();
         this.#orientation = new Cesium.Quaternion();
+        this.#cameraPositionVector = {
+            upVector: new Cesium.Cartesian3(),
+            directionVector: new Cesium.Cartesian3(),
+            rightVector: new Cesium.Cartesian3()
+        }
         this.#activeVideoListener = undefined;
         this.#videoTexture = undefined;
         this.#viewShadowMap = undefined;
@@ -107,13 +113,11 @@ export default class videoShed {
      */
     destroy() {
         this.#isThis();
-        this.#postProcess &&
-            this.#viewer.scene.postProcessStages.remove(this.#postProcess);
+        this.#postProcess && this.#viewer.scene.postProcessStages.remove(this.#postProcess);
         this.#viewer.scene.primitives.remove(this.#cameraFrustum);
-        this.#activeVideoListener &&
-            this.#viewer.clock.onTick.removeEventListener(
-                this.#activeVideoListener
-            );
+        this.#activeVideoListener && this.#viewer.clock.onTick.removeEventListener(
+            this.#activeVideoListener
+        );
         this.#videoTexture && this.#videoTexture.destroy();
         this.#postProcess = undefined;
         this.#cameraFrustum = undefined;
@@ -136,40 +140,50 @@ export default class videoShed {
         this.#viewShadowMap && frameState.shadowMaps.push(this.#viewShadowMap);
     }
 
+    /**
+     * 通过 cameraPosition 和 rotation 计算 shadowmap 位置
+     */
     #initCamera() {
         let rotation = this.#options.rotation
         if(rotation){
-            if(!rotation.heading) rotation.heading = 0
+            if(!rotation.heading) rotation.heading = 90
             if(!rotation.pitch) rotation.pitch = 0
+            if(!rotation.roll) rotation.roll = 0
         } else {
-            this.#options.rotation = { heading: 90, pitch: 0 };
+            this.#options.rotation = { heading: 90, pitch: 0, roll: 0 };
         }
-        this.#position = calculateHPRPosition(
+        let worldMapPoint:Cartesian3
+        let cameraPositionVector:cameraPositionVector
+        ({worldMapPoint, ...cameraPositionVector} = calculateHPRPosition(
             this.#options.cameraPosition,
-            new Cesium.HeadingPitchRange(
-                Cesium.Math.toRadians(
-                    rotation!.heading
-                ),
-                Cesium.Math.toRadians(
-                    rotation!.pitch
-                ),
-                this.#options.far
-            )
-        );
+            Cesium.HeadingPitchRoll.fromDegrees(
+                rotation!.heading,
+                rotation!.pitch,
+                rotation!.roll
+            ),
+            this.#options.far!
+        ));
+        this.#position = worldMapPoint
+        this.#cameraPositionVector = cameraPositionVector
     }
 
+    /**
+     * 创建纹理
+     */
     #activeVideo() {
         let video = this.#options.$video;
-        // @ts-ignore
-        let context = this.#viewer.scene.context;
         if (!video) {
             throw new Error("options 中没有 video<HTMLVideoElement> 属性");
         } else {
+            this.#activeVideoListener && this.#viewer.clock.onTick.removeEventListener(
+                this.#activeVideoListener
+            );
             this.#activeVideoListener = () => {
                 this.#videoTexture && this.#videoTexture.destroy();
                 // @ts-ignore
                 this.#videoTexture = new Cesium.Texture({
-                    context: context,
+                    // @ts-ignore
+                    context: this.#viewer.scene.context,
                     source: video,
                     width: 1,
                     height: 1,
@@ -183,36 +197,34 @@ export default class videoShed {
         }
     }
 
-    // 获取shadowmap位置
+    /**
+     * 计算视锥方向
+     * @returns 
+     */
     #getOrientation() {
-        // 相机的观看方向
-        let direction = Cesium.Cartesian3.normalize(
-            Cesium.Cartesian3.subtract(
-                this.#position,
-                this.#options.cameraPosition,
-                new Cesium.Cartesian3()
-            ),
-            new Cesium.Cartesian3()
-        );
-        // 相机的向上方向
-        let up = Cesium.Cartesian3.normalize(
-            this.#options.cameraPosition,
-            new Cesium.Cartesian3()
-        );
         let camera = new Cesium.Camera(this.#viewer.scene);
         camera.position = this.#options.cameraPosition;
-        camera.direction = direction;
-        camera.up = up;
-        direction = camera.directionWC;
-        up = camera.upWC;
+        camera.direction = this.#cameraPositionVector.directionVector;
+        camera.up = this.#cameraPositionVector.upVector;
+        camera.right = this.#cameraPositionVector.rightVector
 
-        let rightWC = Cesium.Cartesian3.negate(
+        let direction = Cesium.Cartesian3.negate(
+            camera.directionWC,
+            new Cesium.Cartesian3()
+        );
+
+        let up = Cesium.Cartesian3.negate(
+            camera.upWC,
+            new Cesium.Cartesian3()
+        )
+
+        let right = Cesium.Cartesian3.negate(
             camera.rightWC,
             new Cesium.Cartesian3()
         );
 
         let matrix3 = new Cesium.Matrix3();
-        Cesium.Matrix3.setColumn(matrix3, 0, rightWC, matrix3);
+        Cesium.Matrix3.setColumn(matrix3, 0, right, matrix3);
         Cesium.Matrix3.setColumn(matrix3, 1, up, matrix3);
         Cesium.Matrix3.setColumn(matrix3, 2, direction, matrix3);
         let orientation = Cesium.Quaternion.fromRotationMatrix(
@@ -220,34 +232,28 @@ export default class videoShed {
             new Cesium.Quaternion()
         );
         this.#orientation = orientation;
-        return orientation;
     }
 
     // 创建shadowmap
     #createShadowMap() {
         this.#shadowMapCamera = new Cesium.Camera(this.#viewer.scene);
         this.#shadowMapCamera.position = this.#options.cameraPosition;
-        //计算两个笛卡尔的组分差异。
-        this.#shadowMapCamera.direction = Cesium.Cartesian3.subtract(
-            this.#position,
-            this.#options.cameraPosition,
-            new Cesium.Cartesian3(0, 0, 0)
+        this.#shadowMapCamera.right = Cesium.Cartesian3.negate(
+            this.#cameraPositionVector.rightVector,
+            new Cesium.Cartesian3()
         );
-        // 归一化
-        this.#shadowMapCamera.up = Cesium.Cartesian3.normalize(
-            this.#options.cameraPosition,
-            new Cesium.Cartesian3(0, 0, 0)
+        this.#shadowMapCamera.direction = Cesium.Cartesian3.negate(
+            this.#cameraPositionVector.directionVector,
+            new Cesium.Cartesian3()
         );
-        let distance = Cesium.Cartesian3.distance(
-            this.#position,
-            this.#options.cameraPosition
-        );
+
+        this.#shadowMapCamera.up = this.#cameraPositionVector.upVector;
 
         this.#shadowMapCamera.frustum = new Cesium.PerspectiveFrustum({
             fov: Cesium.Math.toRadians(this.#options.fov!),
             aspectRatio: this.#options.aspectRatio,
             near: this.#options.near,
-            far: distance,
+            far: this.#options.far,
         });
         // @ts-ignore
         this.#viewShadowMap = new Cesium.ShadowMap({
@@ -259,7 +265,7 @@ export default class videoShed {
             cascadesEnabled: false,
             // @ts-ignore
             context: this.#viewer.scene.context,
-            pointLightRadius: distance,
+            pointLightRadius: this.#options.far,
         });
     }
 

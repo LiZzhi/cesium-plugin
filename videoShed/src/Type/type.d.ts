@@ -1,5 +1,11 @@
 import { Cartesian3 } from "cesium";
 
+export type cameraPositionVector = {
+    upVector: Cartesian3;
+    directionVector: Cartesian3;
+    rightVector: Cartesian3;
+};
+
 export type videoShedOptions = {
     $video: HTMLVideoElement;
     cameraPosition: Cartesian3;
@@ -14,5 +20,6 @@ export type videoShedOptions = {
 
 type rotation = {
     heading: number;
-    pitch: number
+    pitch: number;
+    roll: number;
 };
