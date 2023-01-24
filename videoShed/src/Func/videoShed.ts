@@ -16,10 +16,11 @@ import type { videoShedOptions, cameraPositionVector } from "../Type/type";
 
 export default class videoShed {
     #viewer: Viewer;
+    #$video: HTMLVideoElement;
     #options: videoShedOptions;
     #position: Cartesian3;
     #orientation: Quaternion;
-    #cameraPositionVector: cameraPositionVector
+    #cameraPositionVector: cameraPositionVector;
     #activeVideoListener: Event.RemoveCallback | undefined;
     #videoTexture: any;
     #viewShadowMap: any;
@@ -28,8 +29,13 @@ export default class videoShed {
     #postProcess: PostProcessStage | undefined;
     #curDepth: boolean;
     #isStart: boolean;
-    constructor(viewer: Viewer, options: videoShedOptions) {
+    constructor(
+        viewer: Viewer,
+        video: HTMLVideoElement,
+        options: videoShedOptions
+    ) {
         this.#viewer = viewer;
+        this.#$video = video
         this.#options = Object.assign(
             {
                 near: 0.1,
@@ -46,8 +52,8 @@ export default class videoShed {
         this.#cameraPositionVector = {
             upVector: new Cesium.Cartesian3(),
             directionVector: new Cesium.Cartesian3(),
-            rightVector: new Cesium.Cartesian3()
-        }
+            rightVector: new Cesium.Cartesian3(),
+        };
         this.#activeVideoListener = undefined;
         this.#videoTexture = undefined;
         this.#viewShadowMap = undefined;
@@ -65,7 +71,7 @@ export default class videoShed {
         this.#isThis();
         if (this.#isStart) return;
         if (!this.#options.cameraPosition) {
-            throw new Error("缺少 cameraPosition 参数"); 
+            throw new Error("缺少 cameraPosition 参数");
         }
         this.#isStart = true;
         // 不开深度检测会陷下去
@@ -80,28 +86,24 @@ export default class videoShed {
     }
 
     /**
-     * 获取当前配置参数参数
-     * @returns {videoShedOptions}
+     * 获取当前配置参数
+     * @returns { videoShedOptions }
      */
-    get styleOptions(): videoShedOptions{
-        let o = JSON.parse(JSON.stringify(this.#options))
-        return o
+    get styleOptions(): videoShedOptions {
+        return JSON.parse(JSON.stringify(this.#options));
     }
 
     /**
      * 更新当前投影位置
-     * @param {videoShedOptions} options 更新参数
+     * @param { Partial<videoShedOptions> } options 更新参数
      */
-    updateStyle(options: Partial<videoShedOptions>){
+    updateStyle(options: Partial<videoShedOptions>) {
         this.#isThis();
-        if (!this.#isStart){
-            throw new Error("请先调用实例方法 <videoShed.init>"); 
+        if (!this.#isStart) {
+            throw new Error("请先调用实例方法 <videoShed.init>");
         }
         this.#viewer.scene.primitives.remove(this.#cameraFrustum);
-        this.#options = Object.assign(
-            this.styleOptions,
-            options
-        )
+        this.#options = Object.assign(this.#options, options);
         this.#initCamera();
         this.#getOrientation();
         this.#createShadowMap();
@@ -113,11 +115,13 @@ export default class videoShed {
      */
     destroy() {
         this.#isThis();
-        this.#postProcess && this.#viewer.scene.postProcessStages.remove(this.#postProcess);
+        this.#postProcess &&
+            this.#viewer.scene.postProcessStages.remove(this.#postProcess);
         this.#viewer.scene.primitives.remove(this.#cameraFrustum);
-        this.#activeVideoListener && this.#viewer.clock.onTick.removeEventListener(
-            this.#activeVideoListener
-        );
+        this.#activeVideoListener &&
+            this.#viewer.clock.onTick.removeEventListener(
+                this.#activeVideoListener
+            );
         this.#videoTexture && this.#videoTexture.destroy();
         this.#postProcess = undefined;
         this.#cameraFrustum = undefined;
@@ -144,17 +148,17 @@ export default class videoShed {
      * 通过 cameraPosition 和 rotation 计算 shadowmap 位置
      */
     #initCamera() {
-        let rotation = this.#options.rotation
-        if(rotation){
-            if(!rotation.heading) rotation.heading = 90
-            if(!rotation.pitch) rotation.pitch = 0
-            if(!rotation.roll) rotation.roll = 0
+        let rotation = this.#options.rotation;
+        if (rotation) {
+            if (!rotation.heading) rotation.heading = 90;
+            if (!rotation.pitch) rotation.pitch = 0;
+            if (!rotation.roll) rotation.roll = 0;
         } else {
             this.#options.rotation = { heading: 90, pitch: 0, roll: 0 };
         }
-        let worldMapPoint:Cartesian3
-        let cameraPositionVector:cameraPositionVector
-        ({worldMapPoint, ...cameraPositionVector} = calculateHPRPosition(
+        let worldMapPoint: Cartesian3;
+        let cameraPositionVector: cameraPositionVector;
+        ({ worldMapPoint, ...cameraPositionVector } = calculateHPRPosition(
             this.#options.cameraPosition,
             Cesium.HeadingPitchRoll.fromDegrees(
                 rotation!.heading,
@@ -163,21 +167,22 @@ export default class videoShed {
             ),
             this.#options.far!
         ));
-        this.#position = worldMapPoint
-        this.#cameraPositionVector = cameraPositionVector
+        this.#position = worldMapPoint;
+        this.#cameraPositionVector = cameraPositionVector;
     }
 
     /**
      * 创建纹理
      */
     #activeVideo() {
-        let video = this.#options.$video;
+        let video = this.#$video;
         if (!video) {
             throw new Error("options 中没有 video<HTMLVideoElement> 属性");
         } else {
-            this.#activeVideoListener && this.#viewer.clock.onTick.removeEventListener(
-                this.#activeVideoListener
-            );
+            this.#activeVideoListener &&
+                this.#viewer.clock.onTick.removeEventListener(
+                    this.#activeVideoListener
+                );
             this.#activeVideoListener = () => {
                 this.#videoTexture && this.#videoTexture.destroy();
                 // @ts-ignore
@@ -199,24 +204,21 @@ export default class videoShed {
 
     /**
      * 计算视锥方向
-     * @returns 
+     * @returns
      */
     #getOrientation() {
         let camera = new Cesium.Camera(this.#viewer.scene);
         camera.position = this.#options.cameraPosition;
         camera.direction = this.#cameraPositionVector.directionVector;
         camera.up = this.#cameraPositionVector.upVector;
-        camera.right = this.#cameraPositionVector.rightVector
+        camera.right = this.#cameraPositionVector.rightVector;
 
         let direction = Cesium.Cartesian3.negate(
             camera.directionWC,
             new Cesium.Cartesian3()
         );
 
-        let up = Cesium.Cartesian3.negate(
-            camera.upWC,
-            new Cesium.Cartesian3()
-        )
+        let up = Cesium.Cartesian3.negate(camera.upWC, new Cesium.Cartesian3());
 
         let right = Cesium.Cartesian3.negate(
             camera.rightWC,

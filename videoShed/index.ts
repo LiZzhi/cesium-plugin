@@ -40,8 +40,7 @@ let viewer = new Cesium.Viewer("MapContainer", {
 let $video = document.querySelector("#video") as HTMLVideoElement;
 $video.src = "public/lukou.mp4";
 
-let v = new videoShed(viewer, {
-    $video,
+let v = new videoShed(viewer, $video, {
     cameraPosition: new Cesium.Cartesian3(
         -2895368.4019486615,
         4717774.458765802,

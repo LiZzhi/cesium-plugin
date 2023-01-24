@@ -7,7 +7,6 @@ export type cameraPositionVector = {
 };
 
 export type videoShedOptions = {
-    $video: HTMLVideoElement;
     cameraPosition: Cartesian3;
     near?: number; // 近平面的距离
     far?: number; // 远平面的距离
