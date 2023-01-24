@@ -53,7 +53,7 @@ export default class videoShed {
     }
 
     /**
-     * 创建
+     * 创建投影
      */
     init() {
         this.#isThis();
@@ -73,11 +73,19 @@ export default class videoShed {
         this.#viewer.scene.primitives.add(this);
     }
 
+    /**
+     * 获取当前配置参数参数
+     * @returns {videoShedOptions}
+     */
     get styleOptions(): videoShedOptions{
         let o = JSON.parse(JSON.stringify(this.#options))
         return o
     }
 
+    /**
+     * 更新当前投影位置
+     * @param {videoShedOptions} options 更新参数
+     */
     updateStyle(options: Partial<videoShedOptions>){
         this.#isThis();
         if (!this.#isStart){
@@ -119,9 +127,9 @@ export default class videoShed {
     }
 
     /**
-     * 实现Primitive接口,供Cesium内部在每一帧中调用,不要调用。
-     * 因为此类本质为自定义primitive,故要实现 update 接口,
-     * Cesium 每一帧都会调用一次
+     * 【不要调用】实现Primitive接口,供Cesium内部在每一帧中调用。
+     * 因为此类本质为自定义primitive,故要实现 update 接口,Cesium
+     * 每一帧都会调用一次
      * @param { Cesium.FrameState } frameState
      */
     update(frameState: any) {
@@ -129,14 +137,21 @@ export default class videoShed {
     }
 
     #initCamera() {
+        let rotation = this.#options.rotation
+        if(rotation){
+            if(!rotation.heading) rotation.heading = 0
+            if(!rotation.pitch) rotation.pitch = 0
+        } else {
+            this.#options.rotation = { heading: 90, pitch: 0 };
+        }
         this.#position = calculateHPRPosition(
             this.#options.cameraPosition,
             new Cesium.HeadingPitchRange(
                 Cesium.Math.toRadians(
-                    this.#options.rotation ? this.#options.rotation.heading : 0
+                    rotation!.heading
                 ),
                 Cesium.Math.toRadians(
-                    this.#options.rotation ? this.#options.rotation.pitch : 0
+                    rotation!.pitch
                 ),
                 this.#options.far
             )

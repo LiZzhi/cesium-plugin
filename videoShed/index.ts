@@ -51,8 +51,8 @@ let v = new videoShed(viewer, {
     fov: 12,
     //旋转参数
     rotation: {
-        heading: 210,
-        pitch: -50,
+        heading: -145,
+        pitch: -43,
     },
     aspectRatio: 1,
     alpha: 1,
@@ -72,20 +72,29 @@ let $frustum = document.querySelector("#frustum") as HTMLElement;
 
 $create.onclick = function () {
     v.init();
-    $form.style.display = "flex"
+    let styleOptions = v.styleOptions;
+    let heading = styleOptions.rotation!.heading + "";
+    let pitch = styleOptions.rotation!.pitch + "";
+    let fov = styleOptions.fov + "";
+    $rotationX.setAttribute("value", pitch);
+    $rotationXShow.innerHTML = pitch;
+    $rotationY.setAttribute("value", heading);
+    $rotationYShow.innerHTML = heading;
+    $fov.setAttribute("value", fov);
+    $fovShow.innerHTML = fov + "";
+    $form.style.display = "flex";
 };
 
 $destroy.onclick = function () {
     v.destroy();
-    $form.style.display = "none"
+    $form.style.display = "none";
 };
 
 $rotationX.onchange = function (e) {
-    let rotation = v.styleOptions.rotation;
     // @ts-ignore
     let pitch: number = e.target.valueAsNumber;
     let newR = {
-        heading: rotation ? rotation.heading : 0,
+        heading: v.styleOptions.rotation!.heading,
         pitch: pitch,
     };
     $rotationXShow.innerHTML = pitch + "";
@@ -95,12 +104,11 @@ $rotationX.onchange = function (e) {
 };
 
 $rotationY.onchange = function (e) {
-    let rotation = v.styleOptions.rotation;
     // @ts-ignore
     let heading: number = e.target.valueAsNumber;
     let newR = {
         heading: heading,
-        pitch: rotation ? rotation.pitch : 0,
+        pitch: v.styleOptions.rotation!.pitch || 0,
     };
     $rotationYShow.innerHTML = heading + "";
     v.updateStyle({
@@ -119,10 +127,10 @@ $fov.onchange = function (e) {
 
 $frustum.onclick = function (e) {
     // @ts-ignore
-    let checked: boolean = e.target.checked
+    let checked: boolean = e.target.checked;
     v.updateStyle({
-        debugFrustum: checked
-    })
+        debugFrustum: checked,
+    });
 };
 
 viewer.camera.setView({
