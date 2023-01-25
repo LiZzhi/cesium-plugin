@@ -1,6 +1,6 @@
 import { Cartesian3 } from "cesium";
 
-export type cameraPositionVector = {
+export type cameraOrientationVector = {
     upVector: Cartesian3;
     directionVector: Cartesian3;
     rightVector: Cartesian3;

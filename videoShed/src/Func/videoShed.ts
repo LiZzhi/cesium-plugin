@@ -12,7 +12,7 @@ import {
 // @ts-ignore
 import videoShed3dShader from "../glsl/index.js";
 import { calculateHPRPosition } from "./tool";
-import type { videoShedOptions, cameraPositionVector } from "../Type/type";
+import type { videoShedOptions, cameraOrientationVector } from "../Type/type";
 
 export default class videoShed {
     #viewer: Viewer;
@@ -20,7 +20,7 @@ export default class videoShed {
     #options: videoShedOptions;
     #position: Cartesian3;
     #orientation: Quaternion;
-    #cameraPositionVector: cameraPositionVector;
+    #cameraOrientationVector: cameraOrientationVector;
     #activeVideoListener: Event.RemoveCallback | undefined;
     #videoTexture: any;
     #viewShadowMap: any;
@@ -29,6 +29,12 @@ export default class videoShed {
     #postProcess: PostProcessStage | undefined;
     #curDepth: boolean;
     #isStart: boolean;
+    /**
+     * 构造函数
+     * @param { Viewer } viewer 
+     * @param { HTMLVideoElement } video video DOM
+     * @param { videoShedOptions } options 投影参数
+     */
     constructor(
         viewer: Viewer,
         video: HTMLVideoElement,
@@ -36,6 +42,7 @@ export default class videoShed {
     ) {
         this.#viewer = viewer;
         this.#$video = video
+        // 默认参数
         this.#options = Object.assign(
             {
                 near: 0.1,
@@ -47,14 +54,19 @@ export default class videoShed {
             },
             options
         );
+        // shadowMap Cartesian3 坐标
         this.#position = new Cesium.Cartesian3();
+        // 视锥方向参数
         this.#orientation = new Cesium.Quaternion();
-        this.#cameraPositionVector = {
+        // 相机方向向量
+        this.#cameraOrientationVector = {
             upVector: new Cesium.Cartesian3(),
             directionVector: new Cesium.Cartesian3(),
             rightVector: new Cesium.Cartesian3(),
         };
+        // clock 监听事件,随video源修改纹理
         this.#activeVideoListener = undefined;
+        // 纹理
         this.#videoTexture = undefined;
         this.#viewShadowMap = undefined;
         this.#cameraFrustum = undefined;
@@ -65,7 +77,9 @@ export default class videoShed {
     }
 
     /**
-     * 创建投影
+     * 开启视频投影,大概流程:
+     * 创建Camera→创建Texture→创建ShadowMap→创建PostProcessStage→创建Frustum
+     * 然后把不同类型的Texture传给ShadowMap
      */
     init() {
         this.#isThis();
@@ -157,8 +171,8 @@ export default class videoShed {
             this.#options.rotation = { heading: 90, pitch: 0, roll: 0 };
         }
         let worldMapPoint: Cartesian3;
-        let cameraPositionVector: cameraPositionVector;
-        ({ worldMapPoint, ...cameraPositionVector } = calculateHPRPosition(
+        let cameraOrientationVector: cameraOrientationVector;
+        ({ worldMapPoint, ...cameraOrientationVector } = calculateHPRPosition(
             this.#options.cameraPosition,
             Cesium.HeadingPitchRoll.fromDegrees(
                 rotation!.heading,
@@ -168,7 +182,7 @@ export default class videoShed {
             this.#options.far!
         ));
         this.#position = worldMapPoint;
-        this.#cameraPositionVector = cameraPositionVector;
+        this.#cameraOrientationVector = cameraOrientationVector;
     }
 
     /**
@@ -204,14 +218,13 @@ export default class videoShed {
 
     /**
      * 计算视锥方向
-     * @returns
      */
     #getOrientation() {
         let camera = new Cesium.Camera(this.#viewer.scene);
         camera.position = this.#options.cameraPosition;
-        camera.direction = this.#cameraPositionVector.directionVector;
-        camera.up = this.#cameraPositionVector.upVector;
-        camera.right = this.#cameraPositionVector.rightVector;
+        camera.direction = this.#cameraOrientationVector.directionVector;
+        camera.up = this.#cameraOrientationVector.upVector;
+        camera.right = this.#cameraOrientationVector.rightVector;
 
         let direction = Cesium.Cartesian3.negate(
             camera.directionWC,
@@ -236,20 +249,24 @@ export default class videoShed {
         this.#orientation = orientation;
     }
 
-    // 创建shadowmap
+    /**
+     * 创建shadowmap
+     * 阴影贴图支持不同的纹理,那么我们要做的就是创建一个ShadowMap,
+     * 然后把不同类型的Texture传给他就可以了
+     */
     #createShadowMap() {
         this.#shadowMapCamera = new Cesium.Camera(this.#viewer.scene);
         this.#shadowMapCamera.position = this.#options.cameraPosition;
         this.#shadowMapCamera.right = Cesium.Cartesian3.negate(
-            this.#cameraPositionVector.rightVector,
+            this.#cameraOrientationVector.rightVector,
             new Cesium.Cartesian3()
         );
         this.#shadowMapCamera.direction = Cesium.Cartesian3.negate(
-            this.#cameraPositionVector.directionVector,
+            this.#cameraOrientationVector.directionVector,
             new Cesium.Cartesian3()
         );
 
-        this.#shadowMapCamera.up = this.#cameraPositionVector.upVector;
+        this.#shadowMapCamera.up = this.#cameraOrientationVector.upVector;
 
         this.#shadowMapCamera.frustum = new Cesium.PerspectiveFrustum({
             fov: Cesium.Math.toRadians(this.#options.fov!),
@@ -271,7 +288,9 @@ export default class videoShed {
         });
     }
 
-    //创建视锥
+    /**
+     * 创建视锥
+     */
     #addCameraFrustum() {
         this.#cameraFrustum = new Cesium.Primitive({
             geometryInstances: new Cesium.GeometryInstance({
@@ -299,7 +318,9 @@ export default class videoShed {
         this.#viewer.scene.primitives.add(this.#cameraFrustum);
     }
 
-    //添加后处理程序
+    /**
+     * 添加后处理程序,向shader中传入uniforms参数
+     */
     #addPostProcess() {
         let bias = this.#viewShadowMap._isPointLight
             ? this.#viewShadowMap._pointBias
