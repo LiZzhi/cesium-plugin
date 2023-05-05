@@ -47,22 +47,27 @@ viewer.camera.setView({
         roll: 0,
     },
 });
-let win:any = window
-win.viewer = viewer;
 
 viewer.imageryLayers.removeAll()
 
+// 创建左侧窗口
 let splitLayerL = Cesium.createWorldImagery({
     style: Cesium.IonWorldImageryStyle.AERIAL_WITH_LABELS
 })
+let left = new layerSplit(viewer, splitLayerL, Cesium.SplitDirection.LEFT)
 
+// 创建右侧窗口
 let splitLayerR = new Cesium.UrlTemplateImageryProvider({
     url: 'http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', // 3857 的切片方案
     tilingScheme: new Cesium.WebMercatorTilingScheme(),
     // fileExtension: 'png'
 });
+let right = new layerSplit(viewer, splitLayerR, Cesium.SplitDirection.RIGHT)
 
-new layerSplit(viewer, splitLayerL, Cesium.SplitDirection.LEFT)
-new layerSplit(viewer, splitLayerR, Cesium.SplitDirection.RIGHT)
-
-
+// 将影像添加至左侧窗口
+let singleLayerL = viewer.imageryLayers.addImageryProvider(
+    new Cesium.SingleTileImageryProvider({
+        url: 'public/2006FVCmax.jpg', rectangle: Cesium.Rectangle.fromDegrees(95.20, 30, 115, 40)
+    })
+)
+left.changeLayer(singleLayerL)

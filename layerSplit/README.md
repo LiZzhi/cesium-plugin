@@ -1,7 +1,7 @@
-# empty-work 空工程
+# layer-split 空工程
 
 ## 简介
-* 空工程，省去配置麻烦
+* 卷帘分析
 
 ## demo 使用方法
 * npm run start 热启动

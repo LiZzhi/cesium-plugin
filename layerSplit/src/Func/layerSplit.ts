@@ -3,21 +3,23 @@ import { Viewer, ImageryLayer, ImageryProvider, SplitDirection, ScreenSpaceEvent
 
 export default class layerSplit {
     #viewer: Viewer;
-    #splitLayer: ImageryLayer|null; // 初始图层
+    #baseLayer: ImageryLayer|null; // 初始图层
     #slider: HTMLElement;   // 卷帘滑动块
+    #splitDirection: SplitDirection;    // 窗口方向
     #handler: ScreenSpaceEventHandler|null;
     #isInit: boolean;
 
     /**
      * 创建卷帘图层
      * @param {Viewer} viewer
-     * @param {ImageryProvider} splitLayer 初始图层
+     * @param {ImageryProvider} baseLayer 初始图层
      * @param {SplitDirection} splitDirection 卷帘窗口
      */
-    constructor(viewer: Viewer, splitLayer: ImageryProvider, splitDirection: SplitDirection) {
+    constructor(viewer: Viewer, baseLayer: ImageryProvider, splitDirection: SplitDirection) {
         this.#viewer = viewer;
-        this.#splitLayer = viewer.imageryLayers.addImageryProvider(splitLayer);
-        this.#splitLayer.splitDirection = splitDirection;
+        this.#splitDirection = splitDirection
+        this.#baseLayer = viewer.imageryLayers.addImageryProvider(baseLayer);
+        this.#baseLayer.splitDirection = splitDirection;
         this.#slider = document.createElement("div");
         this.#handler = null;
         this.initSlider();
@@ -55,7 +57,7 @@ export default class layerSplit {
 
     /**
      * 卷帘左右滑动事件
-     * @param slider
+     * @param slider 
      */
     #registEvent(slider: HTMLElement):void {
         let handler = new Cesium.ScreenSpaceEventHandler(slider as HTMLCanvasElement);
@@ -82,12 +84,52 @@ export default class layerSplit {
         this.#handler = handler;
     }
 
+    /**
+     * 将图层更改至当前窗口中
+     * @param {ImageryLayer} layer 图层
+     * @returns 修改后的图层
+     */
+    changeLayer(layer: ImageryLayer){
+        layer.splitDirection = this.#splitDirection
+        return layer
+    }
+
+    /**
+     * 获取当前窗口方向
+     * @returns {SplitDirection} 窗口方向
+     */
+    get splitDirection(): SplitDirection{
+        return this.#splitDirection
+    }
+
+    /**
+     * 获取当前窗口底图
+     * @returns {ImageryLayer|null} 底图
+     */
+    get baseLayer(): ImageryLayer|null{
+        return this.#baseLayer
+    }
+
+    /**
+     * 获取当前窗口中所有的图层
+     * @returns {ImageryLayer[]} 图层数组
+     */
+    get layerCollection():ImageryLayer[]{
+        // @ts-ignore
+        let layers: ImageryLayer[] = this.#viewer.imageryLayers._layers
+        let splitLayers = layers.filter(v => v.splitDirection === this.#splitDirection)
+        return splitLayers
+    }
+
+    /**
+     * 销毁
+     */
     destory():void {
         if (!this.#isInit) return;
 
-        if (this.#splitLayer) {
-            this.#viewer.imageryLayers.remove(this.#splitLayer);
-            this.#splitLayer = null;
+        if (this.#baseLayer) {
+            this.#viewer.imageryLayers.remove(this.#baseLayer);
+            this.#baseLayer = null;
         }
 
         if (this.#slider) {
