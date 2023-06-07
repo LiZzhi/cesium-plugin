@@ -3,6 +3,7 @@
     "@babel/preset-env": "^7.20.2",
     "@open-wc/webpack-import-meta-loader": "^0.4.7",
     "@types/cesium": "^1.70.0",
+    "@types/latlon-geohash": "^2.0.0",
     "@types/turf": "^3.5.32",
     "babel-loader": "^9.1.2",
     "babel-preset-env": "^1.7.0",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "cesium": "^1.101.0",
+    "latlon-geohash": "^2.0.0",
     "turf": "^3.0.14"
   }
 }
