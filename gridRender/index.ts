@@ -2,6 +2,7 @@ import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./src/Style/index.css";
 import imageryGrid from "./src/Func/imageryGrid";
+import geoHashGrid from "./src/Func/geoHashGrid";
 
 // token
 Cesium.Ion.defaultAccessToken =
@@ -48,5 +49,21 @@ viewer.camera.setView({
     },
 });
 
-let grid = new imageryGrid(viewer)
-grid.init()
+const imgGrid = new imageryGrid(viewer);
+const geoGrid = new geoHashGrid(viewer);
+(document.querySelector("#imageryGrid") as HTMLElement).onclick = function () {
+    imgGrid.remove();
+    geoGrid.remove();
+    imgGrid.init();
+};
+(document.querySelector("#geoHashGrid") as HTMLElement).onclick = function () {
+    imgGrid.remove();
+    geoGrid.remove();
+    geoGrid.init();
+};
+(document.querySelector("#destroy") as HTMLElement).onclick = function () {
+    imgGrid.remove();
+    geoGrid.remove();
+};
+
+

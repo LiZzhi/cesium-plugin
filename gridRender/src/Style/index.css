@@ -4,3 +4,8 @@ html,body,#MapContainer{
     margin: 0;
     padding: 0;
 }
+.btn-group {
+    position: absolute;
+    top: 2%;
+    left: 1%;
+}
