@@ -6,6 +6,9 @@ let win: any = window;
 win.Cesium = Cesium;
 
 const mapv = require("./mapvAPI/mapv.js");
+win.mapv = mapv;
+
+const cesiumMapLayer = require("./mapvAPI/MapVLayer.js").default;
 const beehiveData = require("./lib/beehiveData.js").default;
 const bigMigrateData = require("./lib/bigMigrateData.js").default;
 const heatMapData = require("./lib/heatMapData.js").default;
@@ -30,7 +33,7 @@ export default class mapVLayer {
         this.#isThis()
         this.destroy();
         options.forEach((v) => {
-            let mapVLayer = new mapv.cesiumMapLayer(this.#viewer, ...v);
+            let mapVLayer = new cesiumMapLayer(this.#viewer, ...v);
             this.#Layer.push(mapVLayer);
         });
     }
