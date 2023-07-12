@@ -94,6 +94,13 @@ module.exports = {
                 {
                     from: path.resolve("../", cesiumSource, "ThirdParty/Workers"),
                     to: "ThirdParty/Workers",
+                },
+                {
+                    from: path.resolve(__dirname, 'public'),
+                    // 把复制的文件存放到dist里面
+                    to: path.resolve(__dirname, 'dist/public'),
+                    // 防止空目录报错
+                    noErrorOnMissing: true
                 }
             ]
         }),

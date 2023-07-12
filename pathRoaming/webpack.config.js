@@ -96,10 +96,11 @@ module.exports = {
                     to: "ThirdParty/Workers",
                 },
                 {
-                    // 从public中复制文件,注意空目录会报错
                     from: path.resolve(__dirname, 'public'),
                     // 把复制的文件存放到dist里面
-                    to: path.resolve(__dirname, 'dist/public')
+                    to: path.resolve(__dirname, 'dist/public'),
+                    // 防止空目录报错
+                    noErrorOnMissing: true
                 }
             ]
         }),
