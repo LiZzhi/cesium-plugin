@@ -1,0 +1,83 @@
+@keyframes dynamic-dynamic-divlabel-animate1 {
+    0%,
+    100% {
+        clip: rect(0px, var(--clip-width-1), 2px, 0px);
+    }
+    25% {
+        clip: rect(0px, 2px, var(--clip-height-1), 0px);
+    }
+    50% {
+        clip: rect( var(--clip-height-2), var(--clip-width-1), var(--clip-width-1), 0px);
+    }
+    75% {
+        clip: rect( 0px, var(--clip-width-1), var(--clip-height-1), var(--clip-width-2));
+    }
+}
+
+.dynamic-divlabel-container {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.dynamic-divlabel-container1 {
+    --boder-height: 30px;
+    --clip-height-1: 40px;
+    --clip-height-2: 38px;
+    /* --border-color: rgb(24, 144, 255);
+    --box-shadow-color: rgba(24, 144, 255, 0.73); */
+    --text-color: #ccc;
+    --border-color: rgb(21, 209, 242);
+    --box-shadow-color: rgba(21, 209, 242, 0.56);
+    --text-font-size: 14px;
+    --clip-width-1: 165px;
+    --clip-width-2: 163px;
+    --boder-width: 150px;
+    --text-left-position: -75px;
+    --animation-name: dynamic-dynamic-divlabel-animate1;
+}
+
+.sz-component-animate-marker__boder {
+    width: var(--boder-width);
+    height: var(--boder-height);
+    margin: auto;
+    color: var(--border-color);
+    box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+}
+
+.sz-component-animate-marker__text {
+    color: var(--text-color);
+    font-size: var(--text-font-size);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    user-select: none;
+    cursor: pointer;
+}
+
+.sz-component-animate-marker__boder,
+.sz-component-animate-marker__boder::before,
+.sz-component-animate-marker__boder::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.sz-component-animate-marker__boder::before,
+.sz-component-animate-marker__boder::after {
+    content: "";
+    margin: -5%;
+    box-shadow: inset 0 0 0 2px;
+    animation: var(--animation-name) 8s linear infinite;
+}
+
+.sz-component-animate-marker__boder::before {
+    animation-delay: -4s;
+}

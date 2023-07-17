@@ -1,11 +1,10 @@
 import * as Cesium from "cesium";
-import { Cartesian3, Viewer } from "cesium";
+import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
-import type { worldDegreesType } from "../Type";
-import "../Style/divPoint.css";
+import type { worldDegreesType } from "../../Type";
+import "../../Style/divPoint.css";
 
 export default class divPoint extends domPointBase {
-    #position: Cartesian3;
     #contextDom: HTMLElement;
     constructor(
         viewer: Viewer,
@@ -13,7 +12,6 @@ export default class divPoint extends domPointBase {
         contextDom: HTMLElement
     ) {
         super(viewer, worldDegrees);
-        this.#position = new Cesium.Cartesian3();
         this.#contextDom = contextDom;
     }
 
@@ -27,10 +25,11 @@ export default class divPoint extends domPointBase {
             this.$container.style.display = "none";
             this.#addDom();
             this.#addPostRender();
-            this.#position = await this.computePosition(
+            this.position = await this.computePosition(
                 this.viewer,
                 this.worldDegrees
             );
+            this.$container.style.display = "block";
         }
     }
 
@@ -42,11 +41,19 @@ export default class divPoint extends domPointBase {
         if (this.start && !this.isDestroy) {
             this.isDestroy = true;
             this.viewer.scene.postRender.removeEventListener(
-                this.postRender,
+                this.postRenderFunc,
                 this
             ); //移除事件监听
             this.$container.remove();
         }
+    }
+
+    /**
+     * @description: 获取当前点位
+     * @return { Cartesian3 }
+     */
+    get getPosition() {
+        return this.position;
     }
 
     /**
@@ -83,6 +90,7 @@ export default class divPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.viewer.scene.postRender.addEventListener(this.postRender, this);
+        this.postRender();
+        this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }

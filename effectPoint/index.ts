@@ -1,7 +1,7 @@
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./src/Style/index.css";
-
+import divPoint from "./src/Func/domPoint/divPoint";
 
 // token
 Cesium.Ion.defaultAccessToken =
@@ -47,3 +47,21 @@ viewer.camera.setView({
         roll: 0,
     },
 });
+
+let dom = document.createElement("div");
+dom.innerHTML = "<div>测试div</div>";
+
+const point1 = new divPoint(
+    viewer,
+    {
+        lon: 108.42533733304246,
+        lat: 30.722983346052956,
+    },
+    dom
+);
+
+point1.init()
+
+viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(108.42533733304246, 30.722983346052956, 1000)
+})
