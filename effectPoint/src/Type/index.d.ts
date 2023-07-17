@@ -4,3 +4,10 @@ export type worldDegreesType = {
     lat: number;
     height?: number;
 }
+
+export type domRenderType = {
+    directionX?: "left" | "center" | "right";
+    directionY?: "bottom" | "middle" | "top";
+    maxHeight?: number;
+    callback?: () => any
+}

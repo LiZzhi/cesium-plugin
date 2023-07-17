@@ -1,12 +1,14 @@
 import * as Cesium from "cesium";
-import { Cartesian3, Viewer } from "cesium";
-import { getTerrainMostDetailedHeight } from "../tool";
-import type { worldDegreesType } from "../../Type";
+import { Cartesian3, Viewer, Entity } from "cesium";
+import { getTerrainMostDetailedHeight } from "../../Utils/tool";
+import type { worldDegreesType, domRenderType } from "../../Type";
 
 export default class domPointBase {
     protected viewer: Viewer;
     protected worldDegrees: worldDegreesType;
     protected position: Cartesian3;
+    protected pointEntity: Entity;
+    protected showPointEntiy: boolean;
     protected postRenderFunc: (...args: any[]) => void;
     protected $container: HTMLElement;
     protected start: boolean; // 是否调用了init
@@ -15,14 +17,21 @@ export default class domPointBase {
      * @description: dom点基类,不要实例化
      * @param {Viewer} viewer viewer
      * @param {worldDegreesType} worldDegrees 点经纬度坐标
+     * @param {boolean} showPointEntiy (可选)是否显示点的Entity,默认不显示
      * @return {*}
      */
-    constructor(viewer: Viewer, worldDegrees: worldDegreesType) {
+    constructor(
+        viewer: Viewer,
+        worldDegrees: worldDegreesType,
+        showPointEntiy: boolean = false
+    ) {
         this.viewer = viewer;
-        this.worldDegrees = worldDegrees;   // 经纬度高组成的位置
-        this.position = new Cesium.Cartesian3();    // 算上地形的高
+        this.worldDegrees = worldDegrees; // 经纬度高组成的位置
+        this.position = new Cesium.Cartesian3(); // 算上地形的高
+        this.pointEntity = new Cesium.Entity(); // 点Entity
+        this.showPointEntiy = showPointEntiy; // 是否显示点Entity
         this.postRenderFunc = () => {}; // postRender事件传入的方法，注册和删除时使用
-        this.$container = document.createElement("div");    // 根DOM
+        this.$container = document.createElement("div"); // 根DOM
         this.start = false; // 点位是否创建
         this.isDestroy = false; // 点位是否销毁
     }
@@ -38,9 +47,8 @@ export default class domPointBase {
      */
     destroy() {}
 
-
     /**
-     * @description: 控制点位显隐
+     * @description: 控制DOM显隐
      * @param {boolean} visible 是否显示
      * @return {*}
      */
@@ -48,13 +56,28 @@ export default class domPointBase {
         this.$container.style.display = visible ? "block" : "none";
     }
 
-
     /**
-     * @description: 获取当前显隐状态
+     * @description: 获取当前DOM显隐状态
      * @return { boolean } 是否显示
      */
-    getVisible(){
-        return this.$container.style.display === "none"? false : true
+    getVisible() {
+        return this.$container.style.display === "none" ? false : true;
+    }
+
+    /**
+     * @description: 添加点实体
+     * @return {*}
+     */
+    protected addPoint() {
+        this.pointEntity = this.viewer.entities.add({
+            position: this.position,
+            point: new Cesium.PointGraphics({
+                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                pixelSize: 10,
+                disableDepthTestDistance: Number.POSITIVE_INFINITY,
+                color: Cesium.Color.RED,
+            }),
+        });
     }
 
     /**
@@ -63,7 +86,10 @@ export default class domPointBase {
      * @param {function} callback (可选)回调函数，在默认场景渲染事件之后执行，默认无
      * @return {*}
      */
-    postRender(maxHeight?: number, callback?: () => any) {
+    protected postRender(domRender: domRenderType = {}) {
+        if (this.showPointEntiy) {
+            this.addPoint();
+        }
         let that = this;
         this.postRenderFunc = () => {
             if (!that.$container) return;
@@ -75,22 +101,65 @@ export default class domPointBase {
                 windowPosition
             );
             that.$container.style.position = "absolute";
-            that.$container.style.bottom = canvasHeight - windowPosition.y + "px";
-            that.$container.style.left = windowPosition.x + "px";
-            if (maxHeight) {
+
+            // X方向位置
+            // @ts-ignore
+            const elWidth = that.$container.firstElementChild.offsetWidth;
+            switch (domRender.directionX) {
+                case "left":
+                    that.$container.style.left = windowPosition.x + "px";
+                    break;
+                case "right":
+                    that.$container.style.left =
+                        windowPosition.x - elWidth + "px";
+                    break;
+                case "center":
+                    that.$container.style.left =
+                        windowPosition.x - elWidth / 2 + "px";
+                    break;
+                default:
+                    that.$container.style.left = windowPosition.x + "px";
+                    break;
+            }
+
+            // Y方向位置
+            // @ts-ignore
+            const elHeight = this.$container.firstElementChild.offsetHeight;
+            switch (domRender.directionY) {
+                case "bottom":
+                    that.$container.style.top = windowPosition.y + "px";
+                    break;
+                case "top":
+                    that.$container.style.top =
+                        windowPosition.y + elHeight + "px";
+                    break;
+                case "middle":
+                    that.$container.style.top =
+                        windowPosition.y + elHeight / 2 + "px";
+                    break;
+                default:
+                    that.$container.style.top = windowPosition.y + "px";
+                    break;
+            }
+
+            if (domRender.maxHeight) {
                 if (
-                    that.viewer.camera.positionCartographic.height > maxHeight
+                    that.viewer.camera.positionCartographic.height >
+                    domRender.maxHeight
                 ) {
                     that.$container.style.display = "none";
                 } else {
                     that.$container.style.display = "block";
                 }
             }
-            if (callback && typeof callback === "function") {
-                callback();
+            if (
+                domRender.callback &&
+                typeof domRender.callback === "function"
+            ) {
+                domRender.callback();
             }
         };
-        return this.postRenderFunc
+        return this.postRenderFunc;
     }
 
     /**

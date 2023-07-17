@@ -1,20 +1,18 @@
 import * as Cesium from "cesium";
-import { Entity, Viewer } from "cesium";
+import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
 import "../../Style/DynamicLabelPoint.css";
 
 export default class dynamicLabelPoint extends domPointBase {
     #contextLabel: string;
-    #pointEntity: Entity;
     constructor(
         viewer: Viewer,
         worldDegrees: worldDegreesType,
         contextLabel: string
     ) {
-        super(viewer, worldDegrees);
+        super(viewer, worldDegrees, true);
         this.#contextLabel = contextLabel;
-        this.#pointEntity = new Cesium.Entity();
     }
 
     /**
@@ -24,14 +22,13 @@ export default class dynamicLabelPoint extends domPointBase {
     public async init() {
         if (!this.isDestroy && !this.start) {
             this.start = true;
-            this.$container.style.display = "none";
-            this.#addDom();
-            this.#addPostRender();
             this.position = await this.computePosition(
                 this.viewer,
                 this.worldDegrees
             );
-            this.#addPoint();
+            this.$container.style.display = "none";
+            this.#addDom();
+            this.#addPostRender();
             this.$container.style.display = "block";
         }
     }
@@ -48,6 +45,7 @@ export default class dynamicLabelPoint extends domPointBase {
                 this
             ); //移除事件监听
             this.$container.remove();
+            this.viewer.entities.remove(this.pointEntity);
         }
     }
 
@@ -73,22 +71,8 @@ export default class dynamicLabelPoint extends domPointBase {
 
         $label.innerHTML = this.#contextLabel;
         $body.appendChild($label);
+        this.$container.appendChild($body);
         this.viewer.cesiumWidget.container.appendChild(this.$container);
-    }
-
-        /**
-     * 添加点图元
-     */
-    #addPoint() {
-        this.#pointEntity = this.viewer.entities.add({
-            position: this.position,
-            point: new Cesium.PointGraphics({
-                pixelSize: 10,
-                disableDepthTestDistance: Number.POSITIVE_INFINITY,
-                color: Cesium.Color.RED
-            })
-        });
-
     }
 
     /**
@@ -96,7 +80,7 @@ export default class dynamicLabelPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.postRender();
+        this.postRender({ directionX: "center", directionY: "bottom" });
         this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }

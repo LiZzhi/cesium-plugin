@@ -1,7 +1,7 @@
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./src/Style/index.css";
-import divPoint from "./src/Func/domPoint/divPoint";
+import effectPoint from "./src/Func";
 
 // token
 Cesium.Ion.defaultAccessToken =
@@ -48,20 +48,31 @@ viewer.camera.setView({
     },
 });
 
-let dom = document.createElement("div");
-dom.innerHTML = "<div>测试div</div>";
+let dom1 = document.createElement("div");
+dom1.innerHTML = "<div>测试div</div>";
 
-const point1 = new divPoint(
+const point1 = new effectPoint.domPoint.divPoint(
     viewer,
     {
         lon: 108.42533733304246,
         lat: 30.722983346052956,
     },
-    dom
+    dom1
 );
 
 point1.init()
 
+const point2 = new effectPoint.domPoint.dynamicLabelPoint(
+    viewer,
+    {
+        lon: 108,
+        lat: 30,
+    },
+    "动态文本点"
+);
+
+point2.init()
+
 viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(108.42533733304246, 30.722983346052956, 1000)
+    destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 })

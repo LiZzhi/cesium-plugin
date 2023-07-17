@@ -11,7 +11,7 @@ export default class divPoint extends domPointBase {
         worldDegrees: worldDegreesType,
         contextDom: HTMLElement
     ) {
-        super(viewer, worldDegrees);
+        super(viewer, worldDegrees, true);
         this.#contextDom = contextDom;
     }
 
@@ -22,13 +22,13 @@ export default class divPoint extends domPointBase {
     public async init() {
         if (!this.isDestroy && !this.start) {
             this.start = true;
-            this.$container.style.display = "none";
-            this.#addDom();
-            this.#addPostRender();
             this.position = await this.computePosition(
                 this.viewer,
                 this.worldDegrees
             );
+            this.$container.style.display = "none";
+            this.#addDom();
+            this.#addPostRender();
             this.$container.style.display = "block";
         }
     }
@@ -45,6 +45,7 @@ export default class divPoint extends domPointBase {
                 this
             ); //移除事件监听
             this.$container.remove();
+            this.viewer.entities.remove(this.pointEntity);
         }
     }
 
@@ -90,7 +91,7 @@ export default class divPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.postRender();
+        this.postRender({ directionX: "center", directionY: "bottom" });
         this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }
