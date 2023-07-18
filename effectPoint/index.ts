@@ -49,7 +49,7 @@ viewer.camera.setView({
 });
 
 let dom1 = document.createElement("div");
-dom1.innerHTML = "<div>测试div</div>";
+dom1.innerHTML = "测试div";
 
 const point1 = new effectPoint.domPoint.divPoint(
     viewer,
@@ -83,6 +83,20 @@ const point3 = new effectPoint.domPoint.erectLabelPoint(
 );
 
 point3.init()
+
+let dom4 = document.createElement("div");
+dom4.innerHTML = "测试div";
+
+const point4 = new effectPoint.domPoint.gradientLabelPoint(
+    viewer,
+    {
+        lon: 107,
+        lat: 29,
+    },
+    dom4
+);
+
+point4.init()
 
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)

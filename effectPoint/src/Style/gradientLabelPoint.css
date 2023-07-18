@@ -1,0 +1,35 @@
+.gradient-label-point-container {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    pointer-events: none;
+    display: block;
+}
+
+.gradient-label {
+    text-align: center;
+    position: relative;
+    padding: 5px 20px;
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(rgb(7 10 203 / 75%), rgb(16 238 220));
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 100px;
+    height: 23px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.gradient-label-line {
+    position: relative;
+    bottom: 0px;
+    left: calc(50% - 1.5px);
+    display: block;
+    width: 3px;
+    height: 60px;
+    background-color: #2bcdbb;
+}
