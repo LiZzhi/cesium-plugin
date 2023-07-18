@@ -57,8 +57,7 @@ const point1 = new effectPoint.domPoint.divPoint(
         lon: 108.42533733304246,
         lat: 30.722983346052956,
     },
-    dom1,
-    true
+    dom1
 );
 
 point1.init()
@@ -69,11 +68,21 @@ const point2 = new effectPoint.domPoint.dynamicLabelPoint(
         lon: 108,
         lat: 30,
     },
-    "动态文本点",
-    true
+    "动态文本点"
 );
 
 point2.init()
+
+const point3 = new effectPoint.domPoint.erectLabelPoint(
+    viewer,
+    {
+        lon: 107.5,
+        lat: 29.5,
+    },
+    "竖立文本点",
+);
+
+point3.init()
 
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
