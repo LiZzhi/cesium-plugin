@@ -132,15 +132,15 @@ export default class domPointBase {
                         canvasHeight - windowPosition.y + "px";
                     break;
                 case "top":
-                    that.$container.style.top =
+                    that.$container.style.bottom =
                         canvasHeight - windowPosition.y - elHeight + "px";
                     break;
                 case "middle":
-                    that.$container.style.top =
+                    that.$container.style.bottom =
                         canvasHeight - windowPosition.y - elHeight / 2 + "px";
                     break;
                 default:
-                    that.$container.style.top = canvasHeight - windowPosition.y + "px";
+                    that.$container.style.bottom = canvasHeight - windowPosition.y + "px";
                     break;
             }
 
