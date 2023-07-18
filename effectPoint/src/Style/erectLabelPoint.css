@@ -1,14 +1,27 @@
+.erect-label-point-container {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    pointer-events: none;
+    display: block;
+}
+
 .is-shulie {
-    width: 15px;
-    text-align: center;
-    background: transparent;
+    width: 30px;
+    /* text-align: center; */
+    /* background: transparent; */
     font-size: 9px;
     font-weight: 600;
     color: white;
-    font-family: "Microsoft YaHei", "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans GB", "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    position: absolute;
-    display: block;
-    box-sizing: border-box;
+    font-family: "Microsoft YaHei", "Helvetica Neue For Number", -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans GB",
+        "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* box-sizing: border-box; */
     pointer-events: none;
 }
 
@@ -22,8 +35,8 @@
     display: block;
     height: 100px;
     width: 1px;
-    margin-left: calc(50% + 2px);
-    margin-top: 3px;
+    /* margin-left: calc(50% + 2px);
+    margin-top: 3px; */
     background-color: #fff;
 }
 

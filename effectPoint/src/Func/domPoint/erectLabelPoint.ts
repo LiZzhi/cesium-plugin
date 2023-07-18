@@ -71,10 +71,14 @@ export default class erectLabelPoint extends domPointBase {
      * @return {*}
      */
     #addDom() {
-        this.$container.classList.add("is-shulie");
+        // this.$container.classList.add("is-shulie");
         this.$container.innerHTML = `
-            <div class="is-shulie-item"></div>
-            <div class="pre-topCard-list-item-line"></div>
+            <div class="erect-label-point-container">
+                <div class="is-shulie">
+                    <div class="is-shulie-item"></div>
+                    <div class="pre-topCard-list-item-line"></div>
+                </div>
+            </div>
         `;
         // 带一个dom点
         // this.$container.innerHTML = `
