@@ -57,7 +57,8 @@ const point1 = new effectPoint.domPoint.divPoint(
         lon: 108.42533733304246,
         lat: 30.722983346052956,
     },
-    dom1
+    dom1,
+    true
 );
 
 point1.init()
@@ -68,7 +69,8 @@ const point2 = new effectPoint.domPoint.dynamicLabelPoint(
         lon: 108,
         lat: 30,
     },
-    "动态文本点"
+    "动态文本点",
+    true
 );
 
 point2.init()

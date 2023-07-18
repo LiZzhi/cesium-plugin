@@ -6,12 +6,21 @@ import "../../Style/DynamicLabelPoint.css";
 
 export default class dynamicLabelPoint extends domPointBase {
     #contextLabel: string;
+    /**
+     * @description: 动态文本点，显示为可插入文本的动态框
+     * @param {Viewer} viewer viewer实例
+     * @param {worldDegreesType} worldDegrees 位置，经纬度和高
+     * @param {HTMLElement} contextDom 插入的文本
+     * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为false
+     * @return {*}
+     */
     constructor(
         viewer: Viewer,
         worldDegrees: worldDegreesType,
-        contextLabel: string
+        contextLabel: string,
+        showEntityPoint: boolean = false
     ) {
-        super(viewer, worldDegrees, true);
+        super(viewer, worldDegrees, showEntityPoint);
         this.#contextLabel = contextLabel;
     }
 
@@ -64,14 +73,11 @@ export default class dynamicLabelPoint extends domPointBase {
     #addDom() {
         this.$container.classList.add('dynamic-divlabel-container');
         this.$container.classList.add('dynamic-divlabel-container1');
-        let $body = document.createElement('div');
-        $body.classList.add('sz-component-animate-marker__boder');
-        let $label = document.createElement('span');
-        $label.classList.add('sz-component-animate-marker__text');
-
-        $label.innerHTML = this.#contextLabel;
-        $body.appendChild($label);
-        this.$container.appendChild($body);
+        this.$container.innerHTML = `
+            <div class="sz-component-animate-marker__boder">
+                <span class="sz-component-animate-marker__text">${this.#contextLabel}</span>
+            </div>
+        `
         this.viewer.cesiumWidget.container.appendChild(this.$container);
     }
 
@@ -80,7 +86,7 @@ export default class dynamicLabelPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.postRender({ directionX: "center", directionY: "bottom" });
+        this.postRender({ directionX: "center", directionY: "top" });
         this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }

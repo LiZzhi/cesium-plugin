@@ -93,7 +93,7 @@ export default class domPointBase {
         let that = this;
         this.postRenderFunc = () => {
             if (!that.$container) return;
-            const canvasHeight = that.viewer.scene.canvas.height;
+            // const canvasHeight = that.viewer.scene.canvas.height;
             const windowPosition = new Cesium.Cartesian2();
             Cesium.SceneTransforms.wgs84ToWindowCoordinates(
                 that.viewer.scene,
@@ -102,7 +102,7 @@ export default class domPointBase {
             );
             that.$container.style.position = "absolute";
 
-            // X方向位置
+            // X方向位置(默认left)
             // @ts-ignore
             const elWidth = that.$container.firstElementChild.offsetWidth;
             switch (domRender.directionX) {
@@ -121,8 +121,9 @@ export default class domPointBase {
                     that.$container.style.left = windowPosition.x + "px";
                     break;
             }
+            console.log(elWidth);
 
-            // Y方向位置
+            // Y方向位置(默认bottom)
             // @ts-ignore
             const elHeight = this.$container.firstElementChild.offsetHeight;
             switch (domRender.directionY) {
@@ -141,6 +142,7 @@ export default class domPointBase {
                     that.$container.style.top = windowPosition.y + "px";
                     break;
             }
+            console.log(elHeight);
 
             if (domRender.maxHeight) {
                 if (
