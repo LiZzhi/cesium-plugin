@@ -71,11 +71,13 @@ export default class dynamicLabelPoint extends domPointBase {
      * @return {*}
      */
     #addDom() {
-        this.$container.classList.add('dynamic-divlabel-container');
-        this.$container.classList.add('dynamic-divlabel-container1');
         this.$container.innerHTML = `
-            <div class="sz-component-animate-marker__boder">
-                <span class="sz-component-animate-marker__text">${this.#contextLabel}</span>
+            <div class="dynamic-label-point-container">
+                <div class="dynamic-divlabel-container dynamic-divlabel-container1">
+                    <div class="sz-component-animate-marker__boder">
+                        <span class="sz-component-animate-marker__text">${this.#contextLabel}</span>
+                    </div>
+                </div>
             </div>
         `
         this.viewer.cesiumWidget.container.appendChild(this.$container);

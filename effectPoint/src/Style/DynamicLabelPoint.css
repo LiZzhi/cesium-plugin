@@ -14,15 +14,13 @@
     }
 }
 
-.dynamic-divlabel-container {
+.dynamic-label-point-container {
     position: absolute;
     left: 0px;
     bottom: 0px;
     pointer-events: none;
-    cursor: pointer;
-}
+    display: block;
 
-.dynamic-divlabel-container1 {
     --boder-height: 30px;
     --clip-height-1: 40px;
     --clip-height-2: 38px;
@@ -39,11 +37,18 @@
     --animation-name: dynamic-dynamic-divlabel-animate1;
 }
 
-.sz-component-animate-marker__boder {
+.dynamic-divlabel-container {
+    position: relative;
     width: var(--boder-width);
     height: var(--boder-height);
-    /* 抵消height带来的偏移效果，修改margin可以做到类似offest的效果 */
-    margin-top: -30px;
+    left: 0px;
+    bottom: 0px;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.sz-component-animate-marker__boder {
+    /* margin-top: -30px; */
     color: var(--border-color);
     box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 }
