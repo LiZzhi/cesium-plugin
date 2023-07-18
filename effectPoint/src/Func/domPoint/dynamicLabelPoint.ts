@@ -10,7 +10,7 @@ export default class dynamicLabelPoint extends domPointBase {
      * @description: 动态文本点，显示为可插入文本的动态框
      * @param {Viewer} viewer viewer实例
      * @param {worldDegreesType} worldDegrees 位置，经纬度和高
-     * @param {HTMLElement} contextDom 插入的文本
+     * @param {string} contextLabel 插入的文本
      * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为false
      * @return {*}
      */
