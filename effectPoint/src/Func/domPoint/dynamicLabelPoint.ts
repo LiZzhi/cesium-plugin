@@ -18,7 +18,7 @@ export default class dynamicLabelPoint extends domPointBase {
         viewer: Viewer,
         worldDegrees: worldDegreesType,
         contextLabel: string,
-        showEntityPoint: boolean = false
+        showEntityPoint: boolean = true
     ) {
         super(viewer, worldDegrees, showEntityPoint);
         this.#contextLabel = contextLabel;
