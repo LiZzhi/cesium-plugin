@@ -86,7 +86,7 @@ export default class dynamicLabelPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.postRender({ directionX: "center", directionY: "top" });
+        this.postRender({ directionX: "center", directionY: "bottom" });
         this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }

@@ -72,7 +72,7 @@ export default class domPointBase {
         this.pointEntity = this.viewer.entities.add({
             position: this.position,
             point: new Cesium.PointGraphics({
-                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                // heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
                 pixelSize: 10,
                 disableDepthTestDistance: Number.POSITIVE_INFINITY,
                 color: Cesium.Color.RED,
@@ -121,7 +121,6 @@ export default class domPointBase {
                     that.$container.style.left = windowPosition.x + "px";
                     break;
             }
-            console.log(elWidth);
 
             // Y方向位置(默认bottom)
             // @ts-ignore
@@ -142,7 +141,6 @@ export default class domPointBase {
                     that.$container.style.top = windowPosition.y + "px";
                     break;
             }
-            console.log(elHeight);
 
             if (domRender.maxHeight) {
                 if (

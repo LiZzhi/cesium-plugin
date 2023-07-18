@@ -42,7 +42,8 @@
 .sz-component-animate-marker__boder {
     width: var(--boder-width);
     height: var(--boder-height);
-    /* margin: auto; */
+    /* 抵消height带来的偏移效果，修改margin可以做到类似offest的效果 */
+    margin-top: -30px;
     color: var(--border-color);
     box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 }
