@@ -93,7 +93,7 @@ export default class domPointBase {
         let that = this;
         this.postRenderFunc = () => {
             if (!that.$container) return;
-            // const canvasHeight = that.viewer.scene.canvas.height;
+            const canvasHeight = that.viewer.scene.canvas.height;
             const windowPosition = new Cesium.Cartesian2();
             Cesium.SceneTransforms.wgs84ToWindowCoordinates(
                 that.viewer.scene,
@@ -127,18 +127,20 @@ export default class domPointBase {
             const elHeight = this.$container.firstElementChild.offsetHeight;
             switch (domRender.directionY) {
                 case "bottom":
-                    that.$container.style.top = windowPosition.y + "px";
+                    // 用bottom可以更好的定位底端在点上，比较符合常理
+                    that.$container.style.bottom =
+                        canvasHeight - windowPosition.y + "px";
                     break;
                 case "top":
                     that.$container.style.top =
-                        windowPosition.y + elHeight + "px";
+                        canvasHeight - windowPosition.y - elHeight + "px";
                     break;
                 case "middle":
                     that.$container.style.top =
-                        windowPosition.y + elHeight / 2 + "px";
+                        canvasHeight - windowPosition.y - elHeight / 2 + "px";
                     break;
                 default:
-                    that.$container.style.top = windowPosition.y + "px";
+                    that.$container.style.top = canvasHeight - windowPosition.y + "px";
                     break;
             }
 
