@@ -2,7 +2,7 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../assest/css/DynamicLabelPoint.css";
+import "../../assets/css/DynamicLabelPoint.css";
 
 export default class dynamicLabelPoint extends domPointBase {
     #contextLabel: string;

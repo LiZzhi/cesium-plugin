@@ -2,7 +2,7 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../assest/css/erectLabelPoint.css";
+import "../../assets/css/erectLabelPoint.css";
 
 export default class erectLabelPoint extends domPointBase {
     #contextLabel: string;
