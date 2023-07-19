@@ -32,6 +32,7 @@ export default class domPointBase {
         this.showPointEntiy = showPointEntiy; // 是否显示点Entity
         this.postRenderFunc = () => {}; // postRender事件传入的方法，注册和删除时使用
         this.$container = document.createElement("div"); // 根DOM
+        this.$container.style.position = "absolute";
         this.start = false; // 点位是否创建
         this.isDestroy = false; // 点位是否销毁
     }
@@ -93,6 +94,16 @@ export default class domPointBase {
         let that = this;
         this.postRenderFunc = () => {
             if (!that.$container) return;
+
+            // 判断是否在地球背面
+            // @ts-ignore
+            let cameraOccluder = new Cesium.EllipsoidalOccluder(Cesium.Ellipsoid.WGS84, that.viewer.camera.position);
+            let viewerVisible = cameraOccluder.isPointVisible(that.position);
+            if(!viewerVisible){
+                that.$container.style.display = "none";
+                return;
+            }
+
             const canvasHeight = that.viewer.scene.canvas.height;
             const windowPosition = new Cesium.Cartesian2();
             Cesium.SceneTransforms.wgs84ToWindowCoordinates(
@@ -100,7 +111,7 @@ export default class domPointBase {
                 that.position,
                 windowPosition
             );
-            that.$container.style.position = "absolute";
+            that.$container.style.display = "block";
 
             // X方向位置(默认left)
             // @ts-ignore
