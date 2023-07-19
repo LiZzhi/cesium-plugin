@@ -4,6 +4,7 @@ import erectLabelPoint from "./erectLabelPoint";
 import gradientLabelPoint from "./gradientLabelPoint";
 import hotSpotBoardPoint from "./hotSpotBoardPoint";
 import ledLabelPoint from "./ledLabelPoint";
+import sampleLabelPoint from "./sampleLabelPoint";
 
 export default {
     divPoint,
@@ -12,4 +13,5 @@ export default {
     gradientLabelPoint,
     hotSpotBoardPoint,
     ledLabelPoint,
+    sampleLabelPoint,
 };

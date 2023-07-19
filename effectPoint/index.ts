@@ -123,6 +123,20 @@ const point6 = new effectPoint.domPoint.ledLabelPoint(
 
 point6.init()
 
+let dom7 = document.createElement("div");
+dom7.innerHTML = "测试div";
+
+const point7 = new effectPoint.domPoint.sampleLabelPoint(
+    viewer,
+    {
+        lon: 108.42533733304246,
+        lat: 28.5,
+    },
+    dom7
+);
+
+point7.init()
+
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 })
