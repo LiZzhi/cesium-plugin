@@ -2,7 +2,7 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../Style/gradientLabelPoint.css";
+import "../../assest/css/gradientLabelPoint.css";
 
 export default class gradientLabelPoint extends domPointBase {
     #contextDom: HTMLElement;

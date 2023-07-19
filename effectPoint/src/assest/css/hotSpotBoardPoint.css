@@ -1,0 +1,156 @@
+.hot-spot {
+    user-select: none;
+    z-index: 999;
+    width: 70px;
+    height: 44px;
+    background-size: cover;
+    left: 0px;
+    bottom: 0px;
+    font-family: "PingFang-SC-Regular", "Helvetica Neue", "PingFang SC", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.hot-spot,
+.hot-spot .hot-spot-board {
+    position: absolute;
+    background-repeat: no-repeat;
+}
+
+.hot-spot .hot-spot-board {
+    top: -240px;
+    transform: translateX(-30%);
+    width: 180px;
+    height: 52px;
+    padding: 15px 0;
+    background-position: 50%;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.hot-spot .hot-spot-board-medium {
+    top: -200px;
+}
+
+.hot-spot .hot-spot-line {
+    position: absolute;
+    top: -158px;
+    left: 35px;
+    width: 2px;
+    height: 180px;
+    background: linear-gradient(180deg, #38c9ff, transparent);
+}
+
+.hot-spot .hot-spot-line:after {
+    height: 60%;
+    left: -5px;
+    animation: rise 3s linear infinite;
+    -webkit-animation: rise 3s linear infinite;
+    -moz-animation: rise 3s linear infinite;
+    -ms-animation: rise 3s linear infinite;
+    -o-animation: rise 3s linear infinite;
+}
+
+.hot-spot .hot-spot-line:after,
+.hot-spot .hot-spot-line:before {
+    content: "";
+    display: block;
+    width: 1px;
+    background: linear-gradient(180deg, #38c9ff, transparent);
+    position: absolute;
+    cursor: pointer;
+}
+
+.hot-spot .hot-spot-line:before {
+    height: 40%;
+    left: 6px;
+    animation: rise 3s linear 1s infinite;
+    -webkit-animation: rise 3s linear 1s infinite;
+    -moz-animation: rise 3s linear 1s infinite;
+    -ms-animation: rise 3s linear 1s infinite;
+    -o-animation: rise 3s linear 1s infinite;
+}
+
+.hot-spot .hot-spot-line-medium {
+    height: 140px;
+    top: -118px;
+}
+
+.hot-spot h5 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.hot-spot h5,
+.hot-spot p {
+    width: 100%;
+    text-align: center;
+    line-height: 24px;
+    color: #beedff;
+}
+
+.hot-spot p {
+    font-size: 12px;
+}
+
+.hot-spot:hover {
+    background-position: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.hot-spot:hover h5,
+.hot-spot:hover p {
+    color: #fff;
+}
+
+.hot-spot:hover .hot-spot-line {
+    background: linear-gradient(180deg, #ff7a21, transparent);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.hot-spot:hover .hot-spot-line:after,
+.hot-spot:hover .hot-spot-line:before {
+    background: linear-gradient(180deg, #ff7a21, transparent);
+}
+
+@-webkit-keyframes rise {
+    0% {
+        opacity: 0;
+        top: 75%;
+    }
+    50% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        top: 0;
+    }
+}
+
+@keyframes rise {
+    0% {
+        opacity: 0;
+        top: 75%;
+    }
+    50% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        top: 0;
+    }
+}
+
+.board {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40px;
+    line-height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+}

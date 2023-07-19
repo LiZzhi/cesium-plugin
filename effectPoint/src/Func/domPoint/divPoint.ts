@@ -2,7 +2,7 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../Style/divPoint.css";
+import "../../assest/css/divPoint.css";
 
 export default class divPoint extends domPointBase {
     #contextDom: HTMLElement;

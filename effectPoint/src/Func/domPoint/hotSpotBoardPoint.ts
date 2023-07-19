@@ -2,26 +2,26 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../assest/css/erectLabelPoint.css";
+import "../../assest/css/gradientLabelPoint.css";
 
-export default class erectLabelPoint extends domPointBase {
-    #contextLabel: string;
+export default class hotSpotBoardPoint extends domPointBase {
+    #contextDom: HTMLElement;
     /**
-     * @description: 竖立文本点，显示为可展示文本的文本点
+     * @description: 热点面板点，显示为可插入DOM的热点面板点
      * @param {Viewer} viewer viewer实例
      * @param {worldDegreesType} worldDegrees 位置，经纬度和高
-     * @param {string} contextLabel 插入的文本
-     * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为true
+     * @param {HTMLElement} contextDom 插入的DOM元素
+     * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为false
      * @return {*}
      */
     constructor(
         viewer: Viewer,
         worldDegrees: worldDegreesType,
-        contextLabel: string,
-        showEntityPoint: boolean = true
+        contextDom: HTMLElement,
+        showEntityPoint: boolean = false
     ) {
         super(viewer, worldDegrees, showEntityPoint);
-        this.#contextLabel = contextLabel;
+        this.#contextDom = contextDom;
     }
 
     /**
@@ -71,23 +71,15 @@ export default class erectLabelPoint extends domPointBase {
      * @return {*}
      */
     #addDom() {
-        // this.$container.classList.add("is-shulie");
         this.$container.innerHTML = `
-            <div class="erect-label-point-container">
-                <div class="is-shulie">
-                    <div class="is-shulie-item"></div>
-                    <div class="pre-topCard-list-item-line"></div>
-                </div>
+            <div class="gradient-label-point-container">
+                <div class="gradient-label"></div>
+                <div class="gradient-label-line"></div>
             </div>
+
         `;
-        // 带一个dom点
-        // this.$container.innerHTML = `
-        //     <div class="is-shulie-item"></div>
-        //     <div class="pre-topCard-list-item-line"></div>
-        //     <div class="pre-topCard-list-item-circle"></div>
-        // `;
-        const shulie = this.$container.querySelector(".is-shulie-item");
-        shulie!.innerHTML = this.#contextLabel;
+        const gradientLabel = this.$container.querySelector(".gradient-label");
+        gradientLabel!.appendChild(this.#contextDom);
         this.viewer.cesiumWidget.container.appendChild(this.$container);
     }
 
@@ -97,9 +89,6 @@ export default class erectLabelPoint extends domPointBase {
      */
     #addPostRender() {
         this.postRender({ directionX: "center", directionY: "bottom" });
-        this.viewer.scene.postRender.addEventListener(
-            this.postRenderFunc,
-            this
-        );
+        this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
     }
 }
