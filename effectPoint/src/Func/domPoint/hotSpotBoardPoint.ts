@@ -86,16 +86,16 @@ export default class hotSpotBoardPoint extends domPointBase {
         labelBoard!.appendChild(this.#contextDom);
         this.viewer.cesiumWidget.container.appendChild(this.$container);
 
-        hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom.png")`;
-        labelBoard.style.backgroundImage = `url("public/img/hotSpotHead.png")`;
+        hotSpot.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotBottom.png")`;
+        labelBoard.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotHead.png")`;
         this.$container.onmouseover = (e) => {
-            hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom-active.png")`;
-            labelBoard.style.backgroundImage = `url("public/img/hotSpotHead-active.png")`;
+            hotSpot.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotBottom-active.png")`;
+            labelBoard.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotHead-active.png")`;
         };
 
         this.$container.onmouseout = (e) => {
-            hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom.png")`;
-            labelBoard.style.backgroundImage = `url("public/img/hotSpotHead.png")`;
+            hotSpot.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotBottom.png")`;
+            labelBoard.style.backgroundImage = `url("public/img/hotSpotBoardPoint/hotSpotHead.png")`;
         };
     }
 
@@ -104,7 +104,7 @@ export default class hotSpotBoardPoint extends domPointBase {
      * @return {*}
      */
     #addPostRender() {
-        this.postRender({ directionX: "center", directionY: "bottom" });
+        this.postRender({ directionX: "center", directionY: "middle" });
         this.viewer.scene.postRender.addEventListener(
             this.postRenderFunc,
             this
