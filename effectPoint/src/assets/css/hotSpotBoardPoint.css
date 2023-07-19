@@ -1,4 +1,14 @@
+.hotspot-point-container {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    /* pointer-events: none; */
+    cursor: pointer;
+    display: block;
+}
+
 .hot-spot {
+    position: relative;
     user-select: none;
     z-index: 999;
     width: 70px;
@@ -9,7 +19,6 @@
     font-family: "PingFang-SC-Regular", "Helvetica Neue", "PingFang SC", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
-.hot-spot,
 .hot-spot .hot-spot-board {
     position: absolute;
     background-repeat: no-repeat;

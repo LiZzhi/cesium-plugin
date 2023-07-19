@@ -98,6 +98,20 @@ const point4 = new effectPoint.domPoint.gradientLabelPoint(
 
 point4.init()
 
+let dom5 = document.createElement("div");
+dom5.innerHTML = "测试div";
+
+const point5 = new effectPoint.domPoint.hotSpotBoardPoint(
+    viewer,
+    {
+        lon: 106.5,
+        lat: 28.5,
+    },
+    dom5
+);
+
+point5.init()
+
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 })

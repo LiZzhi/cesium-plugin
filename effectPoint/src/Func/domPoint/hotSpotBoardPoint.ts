@@ -2,7 +2,7 @@ import * as Cesium from "cesium";
 import { Viewer } from "cesium";
 import domPointBase from "./domPointBase";
 import type { worldDegreesType } from "../../Type";
-import "../../assets/css/gradientLabelPoint.css";
+import "../../assets/css/hotSpotBoardPoint.css";
 
 export default class hotSpotBoardPoint extends domPointBase {
     #contextDom: HTMLElement;
@@ -72,15 +72,31 @@ export default class hotSpotBoardPoint extends domPointBase {
      */
     #addDom() {
         this.$container.innerHTML = `
-            <div class="gradient-label-point-container">
-                <div class="gradient-label"></div>
-                <div class="gradient-label-line"></div>
+            <div class="hotspot-point-container">
+                <div class="hot-spot">
+                    <div class="hot-spot-board hot-spot-board-medium"></div>
+                    <div class="hot-spot-line hot-spot-line-medium"></div>
+                </div>
             </div>
-
         `;
-        const gradientLabel = this.$container.querySelector(".gradient-label");
-        gradientLabel!.appendChild(this.#contextDom);
+
+        const hotSpot = this.$container.querySelector(".hot-spot") as HTMLElement;
+        const labelBoard = this.$container.querySelector(".hot-spot-board") as HTMLElement;
+
+        labelBoard!.appendChild(this.#contextDom);
         this.viewer.cesiumWidget.container.appendChild(this.$container);
+
+        hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom.png")`;
+        labelBoard.style.backgroundImage = `url("public/img/hotSpotHead.png")`;
+        this.$container.onmouseover = (e) => {
+            hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom-active.png")`;
+            labelBoard.style.backgroundImage = `url("public/img/hotSpotHead-active.png")`;
+        };
+
+        this.$container.onmouseout = (e) => {
+            hotSpot.style.backgroundImage = `url("public/img/hotSpotBottom.png")`;
+            labelBoard.style.backgroundImage = `url("public/img/hotSpotHead.png")`;
+        };
     }
 
     /**
@@ -89,6 +105,9 @@ export default class hotSpotBoardPoint extends domPointBase {
      */
     #addPostRender() {
         this.postRender({ directionX: "center", directionY: "bottom" });
-        this.viewer.scene.postRender.addEventListener(this.postRenderFunc, this);
+        this.viewer.scene.postRender.addEventListener(
+            this.postRenderFunc,
+            this
+        );
     }
 }
