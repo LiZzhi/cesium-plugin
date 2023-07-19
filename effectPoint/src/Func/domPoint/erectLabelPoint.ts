@@ -11,14 +11,14 @@ export default class erectLabelPoint extends domPointBase {
      * @param {Viewer} viewer viewer实例
      * @param {worldDegreesType} worldDegrees 位置，经纬度和高
      * @param {string} contextLabel 插入的文本
-     * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为true
+     * @param {boolean} showEntityPoint (可选)是否显示点实体，默认为false
      * @return {*}
      */
     constructor(
         viewer: Viewer,
         worldDegrees: worldDegreesType,
         contextLabel: string,
-        showEntityPoint: boolean = true
+        showEntityPoint: boolean = false
     ) {
         super(viewer, worldDegrees, showEntityPoint);
         this.#contextLabel = contextLabel;
