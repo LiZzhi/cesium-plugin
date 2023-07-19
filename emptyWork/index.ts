@@ -1,6 +1,6 @@
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import "./src/Style/index.css";
+import "./index.css";
 
 // token
 Cesium.Ion.defaultAccessToken =
