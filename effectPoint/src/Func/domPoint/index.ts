@@ -3,6 +3,7 @@ import dynamicLabelPoint from "./dynamicLabelPoint";
 import erectLabelPoint from "./erectLabelPoint";
 import gradientLabelPoint from "./gradientLabelPoint";
 import hotSpotBoardPoint from "./hotSpotBoardPoint";
+import ledLabelPoint from "./ledLabelPoint";
 
 export default {
     divPoint,
@@ -10,4 +11,5 @@ export default {
     erectLabelPoint,
     gradientLabelPoint,
     hotSpotBoardPoint,
+    ledLabelPoint,
 };

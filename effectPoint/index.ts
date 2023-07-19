@@ -112,6 +112,17 @@ const point5 = new effectPoint.domPoint.hotSpotBoardPoint(
 
 point5.init()
 
+const point6 = new effectPoint.domPoint.ledLabelPoint(
+    viewer,
+    {
+        lon: 106,
+        lat: 28,
+    },
+    "led文本点"
+);
+
+point6.init()
+
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 })
