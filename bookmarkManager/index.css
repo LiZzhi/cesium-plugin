@@ -4,3 +4,72 @@ html,body,#MapContainer{
     margin: 0;
     padding: 0;
 }
+.bookmarkerBox{
+    z-index: 10;
+    position: absolute;
+    width: 15%;
+    height: 50%;
+    border: 1px red solid;
+    background-color:rgba(100, 149, 237, 0.6);
+    top: 40%;
+    left: 70%;
+}
+.bookmarkerTitle{
+    position: relative;
+    top: 2%;
+    font-size: 30px;
+    left: 5%;
+    color: white;
+
+}
+.bookmarkerHeader{
+    position: relative;
+    width: 90%;
+    height: 5%;
+    left: 5%;
+    top: 4%;
+    border: 1px blue solid;
+    display: flex;
+    justify-content: space-around;
+}
+.bookmarkerName{
+    width: 40%
+}
+.bookmarkerBody{
+    position: relative;
+    width: 90%;
+    height: 78%;
+    left: 5%;
+    top: 6%;
+    border: 1px blue solid;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.markItemBox{
+    position: relative;
+    width: calc(100% - 30px);
+    height: 50%;
+    margin: 10px 15px 5px 15px;
+    border: 1px red solid;
+    cursor: pointer;
+}
+.markItemHeader{
+    position: relative;
+    height: 10%;
+    color: white;
+    border: 1px yellowgreen solid;
+}
+.markItemBody{
+    position: relative;
+    top: 2%;
+    height: 85%;
+    color: white;
+    border: 1px yellowgreen solid;
+}
+.markImg{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

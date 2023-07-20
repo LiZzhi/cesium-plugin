@@ -1,3 +1,7 @@
+import { Viewer } from "cesium";
+import type { BookmarkType } from "../type";
+import { destination } from "turf";
+
 // 把字符串内容，保存到本地
 export function saveShareContent(content: string, fileName: string) {
     let downLink = document.createElement('a');
@@ -49,4 +53,32 @@ export function inputVectorData({errFunc, endFunc}: any) {
         };
     };
     $input.click();
+}
+
+export function createBookmarkDom(viewer:Viewer, bookmark: BookmarkType) {
+    let $container = document.createElement("div");
+    $container.classList.add("markItemBox")
+
+    let $header = document.createElement("div");
+    $header.innerHTML = bookmark.name;
+    $header.classList.add("markItemHeader");
+
+    let $body = document.createElement("div");
+    $body.classList.add("markItemBody");
+
+    let $img = document.createElement("img");
+    $img.classList.add("markImg");
+    $img.src = bookmark.img
+
+    $container.onclick = ()=>{
+        viewer.camera.flyTo({
+            destination: bookmark.cameraView.destination,
+            orientation: bookmark.cameraView.orientation,
+        })
+    }
+
+    $body.appendChild($img)
+    $container.appendChild($header)
+    $container.appendChild($body)
+    return $container
 }

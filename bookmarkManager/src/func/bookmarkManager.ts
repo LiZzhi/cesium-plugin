@@ -109,9 +109,9 @@ export default class bookmarkManager {
     /**
      * 读取MarkJsonType格式加入书签列表中
      * @param {CallBackType} callback (可选)第一个参数为MarkJsonType类型的书签, 第二个参数为该书签在读取列表中的存储索引
-     * @returns
+     * @returns {*}
      */
-    loadMark(callback?: any) {
+    loadMark(callback?: any){
         let that = this;
         inputVectorData({
             errFunc: (msg: string) => {
@@ -119,8 +119,8 @@ export default class bookmarkManager {
             },
             endFunc: (res: any) => {
                 res.jsonContext.forEach((e: BookmarkType, i: number) => {
-                    that.add(e);
-                    typeof callback === "function" && callback(e, i);
+                    let status = that.add(e);
+                    typeof callback === "function" && callback(e, i, status);
                 });
             },
         });
