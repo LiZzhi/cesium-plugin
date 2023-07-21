@@ -13,6 +13,7 @@ export default class domPointBase {
     protected $container: HTMLElement;
     protected start: boolean; // 是否调用了init
     protected isDestroy: boolean; // 是否销毁
+    protected visible: boolean;   // 控制dom显隐
     /**
      * @description: dom点基类,不要实例化
      * @param {Viewer} viewer viewer
@@ -35,6 +36,7 @@ export default class domPointBase {
         this.$container.style.position = "absolute";
         this.start = false; // 点位是否创建
         this.isDestroy = false; // 点位是否销毁
+        this.visible = true;    // DOM显隐
     }
 
     /**
@@ -54,7 +56,7 @@ export default class domPointBase {
      * @return {*}
      */
     setVisible(visible: boolean) {
-        this.$container.style.display = visible ? "block" : "none";
+        this.visible = visible;
     }
 
     /**
@@ -62,7 +64,7 @@ export default class domPointBase {
      * @return { boolean } 是否显示
      */
     getVisible() {
-        return this.$container.style.display === "none" ? false : true;
+        return this.visible;
     }
 
     /**
@@ -111,7 +113,7 @@ export default class domPointBase {
                 that.position,
                 windowPosition
             );
-            that.$container.style.display = "block";
+            this.$container.style.display = that.visible ? "block" : "none";
 
             // X方向位置(默认left)
             // @ts-ignore
