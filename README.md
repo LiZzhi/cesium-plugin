@@ -10,6 +10,7 @@
 * layerSplit 卷帘分析
 * gridRender 网格渲染
 * effectPoint 特效点(更新中)
+* cameraLimit 视角限制
 * 持续更新中...
 #### 特殊:
 * emptyWork 为空工程,减少配置麻烦
