@@ -4,3 +4,18 @@ html,body,#MapContainer{
     margin: 0;
     padding: 0;
 }
+.controlPanel{
+    position: absolute;
+    top: 1%;
+    left: 2%;
+}
+.domPointGroup{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    gap: 5px;
+    border: 1px red solid;
+}
+li{
+    list-style: none;
+}
