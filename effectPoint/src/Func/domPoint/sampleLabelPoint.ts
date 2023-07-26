@@ -6,6 +6,7 @@ import "../../assets/css/sampleLabelPoint.css";
 
 export default class sampleLabelPoint extends domPointBase {
     #contextDom: HTMLElement;
+    #boardVisible: boolean;
     /**
      * @description: 简单标注点，显示为可插入DOM的标注框
      * @param {Viewer} viewer viewer实例
@@ -22,6 +23,7 @@ export default class sampleLabelPoint extends domPointBase {
     ) {
         super(viewer, worldDegrees, showEntityPoint);
         this.#contextDom = contextDom;
+        this.#boardVisible = true;  // 控制面板显隐
     }
 
     /**
@@ -49,10 +51,16 @@ export default class sampleLabelPoint extends domPointBase {
     public destroy() {
         if (this.start && !this.isDestroy) {
             this.isDestroy = true;
+            //移除事件监听
             this.viewer.scene.postRender.removeEventListener(
                 this.postRenderFunc,
                 this
-            ); //移除事件监听
+            );
+            //移除DOM点击事件
+            const $pointDiv = this.$container.querySelector(".sample-label-point") as HTMLElement;
+            const $closeBtn = this.$container.querySelector(".sample-label-board-line") as HTMLElement;
+            $pointDiv.onclick = null;
+            $closeBtn.onclick = null;
             this.$container.remove();
             this.viewer.entities.remove(this.pointEntity);
         }
@@ -73,16 +81,42 @@ export default class sampleLabelPoint extends domPointBase {
     #addDom() {
         this.$container.innerHTML = `
             <div class="sample-label-point-container">
-                <div class="sample-label-point">
-                    <div class="sample-label-point-closeBtn">x</div>
-                    <div class="sample-label-point-text"></div>
-                    <div class="sample-label-point-line"></div>
+                <div class="sample-label-point"></div>
+                <div class="sample-label-board">
+                    <div class="sample-label-board-container">
+                        <div class="sample-label-board-closeBtn">×</div>
+                        <div class="sample-label-board-text"></div>
+                    </div>
+                    <div class="sample-label-board-line"></div>
                 </div>
             </div>
         `;
-        const $text = this.$container.querySelector(".sample-label-point-text");
+
+        const $pointDiv = this.$container.querySelector(".sample-label-point") as HTMLElement;
+        $pointDiv.style.backgroundImage = `url("public/img/sampleLabelPoint/point.png")`;
+        $pointDiv.onclick = ()=>{
+            this.#setBoardVisible(!this.#boardVisible);
+        }
+        const $lineDiv = this.$container.querySelector(".sample-label-board-line") as HTMLElement;
+        $lineDiv.style.backgroundImage = `url("public/img/sampleLabelPoint/pedestal.png")`;
+        const $closeBtn = this.$container.querySelector(".sample-label-board-closeBtn") as HTMLElement;
+        $closeBtn.onclick = ()=>{
+            this.#setBoardVisible(false);
+        }
+        const $text = this.$container.querySelector(".sample-label-board-text");
         $text!.appendChild(this.#contextDom);
         this.viewer.cesiumWidget.container.appendChild(this.$container);
+    }
+
+    /**
+     * @description: 控制面板显隐，该面板仅为包含DOM的整个面板，会保留一个点用以控制重新打开
+     * @param {boolean} show 是否显示
+     * @return {*}
+     */
+    #setBoardVisible(show: boolean){
+        const $board = this.$container.querySelector(".sample-label-board") as HTMLElement;
+        $board.style.display = show ? "block" : "none";
+        this.#boardVisible = show;
     }
 
     /**
