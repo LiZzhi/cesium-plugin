@@ -5,6 +5,7 @@
     /* pointer-events: none; */
     cursor: pointer;
     display: block;
+    user-select:none;
 }
 
 .hot-spot {

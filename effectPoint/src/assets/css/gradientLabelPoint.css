@@ -4,6 +4,7 @@
     bottom: 0px;
     pointer-events: none;
     display: block;
+    user-select:none;
 }
 
 .gradient-label {

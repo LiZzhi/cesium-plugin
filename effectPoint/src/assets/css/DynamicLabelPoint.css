@@ -20,6 +20,7 @@
     bottom: 0px;
     pointer-events: none;
     display: block;
+    user-select:none;
 
     --boder-height: 30px;
     --clip-height-1: 40px;

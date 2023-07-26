@@ -16,6 +16,7 @@
     pointer-events: none;
     cursor: pointer;
     display: block;
+    user-select:none;
 }
 
 .label-led-container {
