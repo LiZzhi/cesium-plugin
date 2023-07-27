@@ -35,8 +35,9 @@ export default class flickerPoint{
             this.#worldDegrees.lon,
             this.#worldDegrees.lat
         );
+        const pointHeight = terrainHeight + (this.#worldDegrees.height || 0);
         this.#entity!.position = new Cesium.ConstantPositionProperty (
-            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, terrainHeight)
+            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, pointHeight)
         );
         this.#viewer.entities.add(this.#entity!);
         this.#createPoint();
