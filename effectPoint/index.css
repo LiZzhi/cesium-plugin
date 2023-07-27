@@ -6,15 +6,23 @@ html,body,#MapContainer{
 }
 .controlPanel{
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     top: 1%;
     left: 2%;
 }
-.domPointGroup{
+.controlPanel ul{
     display: flex;
     justify-content: space-around;
     padding: 20px;
     gap: 5px;
+}
+.domPointGroup{
     border: 1px red solid;
+}
+.effectPointGroup{
+    border: 1px blue solid;
 }
 li{
     list-style: none;

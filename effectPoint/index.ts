@@ -42,6 +42,21 @@ domPointList.forEach(v=>{
     }
 })
 
+// 特效点
+const effectPointList = [
+    {label:"闪烁点", name:"flickerPoint", params: [{lon: 107, lat: 28.5}]},
+]
+
+effectPointList.forEach(v=>{
+    // @ts-ignore
+    const point = new effectPoint.effectPoint[v.name](viewer, ...v.params);
+    point.init()
+    let btn = document.querySelector(`#${v.name}`) as HTMLElement;
+    btn.onclick = ()=>{
+        point.setVisible(!point.getVisible());
+    }
+})
+
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000),
 });
