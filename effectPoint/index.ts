@@ -15,6 +15,9 @@ let viewer = new Cesium.Viewer("MapContainer", viewerConfig);
 (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";
 viewer.camera.setView(initViewConfig);
 
+// @ts-ignore
+window.viewer = viewer;
+
 function creatDiv(){
     let dom = document.createElement("div");
     dom.innerHTML = "测试div";
@@ -37,6 +40,7 @@ domPointList.forEach(v=>{
     const point = new effectPoint.domPoint[v.name](viewer, ...v.params);
     point.init()
     let btn = document.querySelector(`#${v.name}`) as HTMLElement;
+    btn.innerHTML = v.label;
     btn.onclick = ()=>{
         point.setVisible(!point.getVisible());
     }
@@ -45,6 +49,7 @@ domPointList.forEach(v=>{
 // 特效点
 const effectPointList = [
     {label:"闪烁点", name:"flickerPoint", params: [{lon: 107, lat: 28.5}]},
+    {label:"浮动点", name:"floatPoint", params: [{lon: 108, lat: 28}]},
 ]
 
 effectPointList.forEach(v=>{
@@ -52,11 +57,12 @@ effectPointList.forEach(v=>{
     const point = new effectPoint.effectPoint[v.name](viewer, ...v.params);
     point.init()
     let btn = document.querySelector(`#${v.name}`) as HTMLElement;
+    btn.innerHTML = v.label;
     btn.onclick = ()=>{
         point.setVisible(!point.getVisible());
     }
 })
 
 viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000),
+    destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 });
