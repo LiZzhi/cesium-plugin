@@ -72,13 +72,21 @@ export default class flickerPoint{
      * @description: 创建特效
      * @return {*}
      */
-    #createPoint(){
+    async #createPoint(){
+        const terrainHeight = await getTerrainMostDetailedHeight(
+            this.#viewer,
+            this.#worldDegrees.lon,
+            this.#worldDegrees.lat
+        );
+        const pointHeight = terrainHeight + (this.#worldDegrees.height || 0);
+        this.#entity!.position = new Cesium.ConstantPositionProperty (
+            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, pointHeight)
+        );
+
         let pointOpacity = 1, colorControl = true;
         let pixelSize = this.#style.pixelSize, sizeControl = true;
         let outLineOpacity = 0.7, outLineControl = true;
-        this.#entity!.position = new Cesium.ConstantPositionProperty (
-            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, this.#worldDegrees.height || 0)
-        );
+
         this.#entity!.point = new Cesium.PointGraphics({
             color: new Cesium.CallbackProperty(() => {
                 if (colorControl) {
@@ -112,7 +120,6 @@ export default class flickerPoint{
             }, false),
             outlineWidth: this.#style.outWidth,
             scaleByDistance: this.#style.nearFarScalar,
-            heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
         })
 
         if (this.#style.iconUrl) {
@@ -120,7 +127,6 @@ export default class flickerPoint{
                 image: this.#style.iconUrl,
                 scaleByDistance: this.#style.nearFarScalar,
                 distanceDisplayCondition: this.#style.distanceDisplayCondition,
-                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
             })
         }
     }
