@@ -18,6 +18,14 @@ export default class flickerPoint{
     #worldDegrees: worldDegreesType;
     #style: styleType;
     #entity: Entity|undefined;
+
+    /**
+     * @description: 闪烁点
+     * @param {Viewer} viewer viewer
+     * @param {worldDegreesType} worldDegrees 位置，经纬度和高
+     * @param {styleType} style (可选)样式
+     * @return {*}
+     */
     constructor(viewer: Viewer, worldDegrees: worldDegreesType, style:styleType={}){
         this.#viewer = viewer;
         this.#worldDegrees = worldDegrees;
@@ -30,15 +38,6 @@ export default class flickerPoint{
      * @return {*}
      */
     async init(){
-        const terrainHeight = await getTerrainMostDetailedHeight(
-            this.#viewer,
-            this.#worldDegrees.lon,
-            this.#worldDegrees.lat
-        );
-        const pointHeight = terrainHeight + (this.#worldDegrees.height || 0);
-        this.#entity!.position = new Cesium.ConstantPositionProperty (
-            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, pointHeight)
-        );
         this.#viewer.entities.add(this.#entity!);
         this.#createPoint();
     }
@@ -77,6 +76,9 @@ export default class flickerPoint{
         let pointOpacity = 1, colorControl = true;
         let pixelSize = this.#style.pixelSize, sizeControl = true;
         let outLineOpacity = 0.7, outLineControl = true;
+        this.#entity!.position = new Cesium.ConstantPositionProperty (
+            Cesium.Cartesian3.fromDegrees(this.#worldDegrees.lon, this.#worldDegrees.lat, this.#worldDegrees.height || 0)
+        );
         this.#entity!.point = new Cesium.PointGraphics({
             color: new Cesium.CallbackProperty(() => {
                 if (colorControl) {
@@ -110,13 +112,15 @@ export default class flickerPoint{
             }, false),
             outlineWidth: this.#style.outWidth,
             scaleByDistance: this.#style.nearFarScalar,
+            heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
         })
 
         if (this.#style.iconUrl) {
             this.#entity!.billboard = new Cesium.BillboardGraphics({
                 image: this.#style.iconUrl,
                 scaleByDistance: this.#style.nearFarScalar,
-                distanceDisplayCondition: this.#style.distanceDisplayCondition
+                distanceDisplayCondition: this.#style.distanceDisplayCondition,
+                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
             })
         }
     }
