@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "cesium": "^1.101.0",
+    "echarts": "^5.4.3",
     "latlon-geohash": "^2.0.0",
     "turf": "^3.0.14"
   }
