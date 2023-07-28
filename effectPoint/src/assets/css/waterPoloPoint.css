@@ -1,0 +1,14 @@
+.waterpolo-point-container {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    pointer-events: none;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+}
+.waterpolo-container {
+    position: relative;
+    height: 80px;
+    width: 80px;
+}

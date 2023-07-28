@@ -5,6 +5,7 @@ import gradientLabelPoint from "./gradientLabelPoint";
 import hotSpotBoardPoint from "./hotSpotBoardPoint";
 import ledLabelPoint from "./ledLabelPoint";
 import sampleLabelPoint from "./sampleLabelPoint";
+import waterPoloPoint from "./waterPoloPoint";
 
 export default {
     divPoint,
@@ -14,4 +15,5 @@ export default {
     hotSpotBoardPoint,
     ledLabelPoint,
     sampleLabelPoint,
+    waterPoloPoint,
 };

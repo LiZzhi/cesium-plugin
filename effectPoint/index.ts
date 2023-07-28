@@ -33,6 +33,7 @@ const domPointList = [
     {label:"热点面板点", name:"hotSpotBoardPoint", params: [{lon: 106.5, lat: 28.5}, creatDiv()]},
     {label:"LED文本点", name:"ledLabelPoint", params: [{lon: 106, lat: 28}, "led文本点"]},
     {label:"简单面板点", name:"sampleLabelPoint", params: [{lon: 108.42533733304246, lat: 28.5}, creatDiv()]},
+    {label:"水球点", name:"waterPoloPoint", params: [{lon: 108.42533733304246, lat: 29.5}, 0.56]},
 ]
 
 domPointList.forEach(v=>{
