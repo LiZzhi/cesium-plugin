@@ -27,4 +27,4 @@ let c = new cameraLimit(
     1
 );
 
-c.setLimit()
+c.setLimit(true)

@@ -17,7 +17,7 @@ export default class cameraLimit {
     constructor(
         viewer: Viewer,
         options: CameraLimitOptionType,
-        duration: number = 1
+        duration: number = 1,
     ) {
         this.#viewer = viewer;
         this.#options = options;
@@ -36,9 +36,10 @@ export default class cameraLimit {
 
     /**
      * @description: 开启相机范围限制
+     * @param {boolean} strict (可选)是否立即回滚，默认为false
      * @return {*}
      */
-    setLimit() {
+    setLimit(strict: boolean = false) {
         if (this.#options.debugExtent) {
             //添加限制范围轮廓
             this.#addLimitEllipsoid();
@@ -48,10 +49,11 @@ export default class cameraLimit {
             // @ts-ignore
             this.#viewer.camera.flyTo(this.#rollbackView);
         }
-        this.#viewer.camera.moveEnd.addEventListener(
-            this.#cameraMoveEndEventHnadle,
-            this
-        );
+        if(!strict){
+            this.#limitView1();
+        }else{
+            this.#limitView2();
+        }
     }
 
     /**
@@ -63,8 +65,26 @@ export default class cameraLimit {
             this.#cameraMoveEndEventHnadle,
             this
         );
+        this.#viewer.camera.changed.removeEventListener(
+            this.#cameraMoveEndEventHnadle,
+            this
+        );
         this.#viewer.entities.remove(this.#ellipsoid);
         this.#rollbackView.destination = this.#options.position;
+    }
+
+    #limitView1(){
+        this.#viewer.camera.moveEnd.addEventListener(
+            this.#cameraMoveEndEventHnadle,
+            this
+        );
+    }
+
+    #limitView2(){
+        this.#viewer.camera.changed.addEventListener(
+            this.#cameraMoveEndEventHnadle,
+            this
+        )
     }
 
     /**
