@@ -1,6 +1,6 @@
 import * as Cesium from "cesium";
 import { Cartesian3, Viewer, Entity } from "cesium";
-import { getTerrainMostDetailedHeight } from "../../Utils/tool";
+import { getTerrainMostDetailedHeight, isVisible } from "../../Utils/tool";
 import type { worldDegreesType, domRenderType } from "../../Type";
 
 export default class domPointBase {
@@ -98,9 +98,7 @@ export default class domPointBase {
             if (!that.$container) return;
 
             // 判断是否在地球背面
-            // @ts-ignore
-            let cameraOccluder = new Cesium.EllipsoidalOccluder(Cesium.Ellipsoid.WGS84, that.viewer.camera.position);
-            let viewerVisible = cameraOccluder.isPointVisible(that.position);
+            let viewerVisible = isVisible(that.position, that.viewer.camera.position, Cesium.Ellipsoid.WGS84)
             if(!viewerVisible){
                 that.$container.style.display = "none";
                 return;
