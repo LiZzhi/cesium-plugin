@@ -1,3 +1,5 @@
+import { Cartesian2, Cartesian3, HeightReference, HorizontalOrigin, VerticalOrigin } from "cesium";
+
 // 经纬度坐标
 export type worldDegreesType = {
     lon: number;

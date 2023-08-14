@@ -51,6 +51,7 @@ domPointList.forEach(v=>{
 const effectPointList = [
     {label:"闪烁点", name:"flickerPoint", params: [{lon: 107, lat: 28.5}]},
     {label:"浮动点", name:"floatPoint", params: [{lon: 108, lat: 28}]},
+    // {label:"聚合点", name:"pointCluster", params: ["public/json/points.json"]},
 ]
 
 effectPointList.forEach(v=>{
@@ -67,3 +68,20 @@ effectPointList.forEach(v=>{
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(108, 30, 1000000)
 });
+
+
+const json = require("./public/json/points.json");
+console.log(json);
+
+const boards:any[] = [];
+json.features.forEach((v:any) =>{
+    boards.push({
+        // @ts-ignore
+        position : Cesium.Cartesian3.fromDegrees(...v.geometry.coordinates),
+        image : './public/img/pointCluster/bluecamera.png',
+        heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+    })
+})
+
+const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
+p.start()
