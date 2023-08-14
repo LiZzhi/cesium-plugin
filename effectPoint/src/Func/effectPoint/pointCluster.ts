@@ -80,16 +80,44 @@ export default class pointCluster {
             console.log("result", result);
             for (let i = 0; i < result.length; i++) {
                 const element = result[i];
-                const board = this.#boards[element.id];
+                const board = this.#boards[element];
 
                 this.#clusterBillboardCollection.add(board);
-                this.#clusterLabelCollection.add({
-                    show: true,
-                    position: board.position,
-                    text: element.size + '',
-                    heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
-                })
+                // this.#clusterLabelCollection.add({
+                //     show: true,
+                //     position: board.position,
+                //     text: element.size + '',
+                //     heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                // })
             }
+        }
+    }
+
+    #computedPixedBox(pixelRange: number){
+        const scene = this.#viewer.scene;
+        // 画布大小
+        const width = scene.canvas.clientWidth;
+        const height = scene.canvas.clientHeight;
+        // 获取画布中心两个像素的坐标（默认地图渲染在画布中心位置）
+        const leftBottom = scene.camera.getPickRay(new Cesium.Cartesian2(width >> 1, height >> 1));
+        const right = scene.camera.getPickRay(new Cesium.Cartesian2(1 + (width >> 1), height >> 1));
+        const top = scene.camera.getPickRay(new Cesium.Cartesian2(width >> 1, 1 + (height >> 1)));
+
+        if (Cesium.defined(leftBottom) && Cesium.defined(right) && Cesium.defined(top)) {
+            const leftBottomPosition = scene.globe.pick(leftBottom!, scene);
+            const rightPosition = scene.globe.pick(right!, scene);
+            const topPosition = scene.globe.pick(top!, scene);
+
+            const leftBottomCartographic = scene.globe.ellipsoid.cartesianToCartographic(leftBottomPosition!);
+            const rightCartographic = scene.globe.ellipsoid.cartesianToCartographic(rightPosition!);
+            const topCartographic = scene.globe.ellipsoid.cartesianToCartographic(topPosition!);
+
+            return {
+                lonDis: rightCartographic.longitude - leftBottomCartographic.longitude,
+                latDis: topCartographic.latitude - leftBottomCartographic.latitude,
+            }
+        } else {
+            return undefined;
         }
     }
 
@@ -196,6 +224,7 @@ export default class pointCluster {
             },
             billboardShow: true,
             labelShow: true,
+            pixelRange: 100,
         };
     }
 }

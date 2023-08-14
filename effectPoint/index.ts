@@ -83,5 +83,5 @@ json.features.forEach((v:any) =>{
     })
 })
 
-const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
-p.start()
+// const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
+// p.start()

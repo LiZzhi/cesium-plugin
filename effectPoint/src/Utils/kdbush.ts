@@ -21,7 +21,7 @@ export default class kdbush {
     /**
      * kdbush
      * @param {number} numItems 总数
-     * @param {number} [nodeSize=64] 节点最小容纳(聚合)点数量
+     * @param {number} [nodeSize=64] 节点数量，当范围内点小于该值时，直接遍历
      * @param {coordArrayConstructorType} [coordArrayConstructor=Float64Array] 坐标数组类型，默认为Float64Array
      */
     constructor(
@@ -73,14 +73,14 @@ export default class kdbush {
     }
 
     /**
-     * 查找指定区域内的点聚合索引
+     * 查找指定区域内的点
      * @param {number} minX
      * @param {number} minY
      * @param {number} maxX
      * @param {number} maxY
      * @returns {number[]} 索引数组
      */
-    range(minX: number, minY: number, maxX: number, maxY: number) {
+    range(minX: number, minY: number, maxX: number, maxY: number): number[] {
         if (!this._finished) throw new Error("索引未构建，请先执行finish方法!");
 
         const { ids, coords, nodeSize } = this;
@@ -94,16 +94,16 @@ export default class kdbush {
             const right = stack.pop() || 0;
             const left = stack.pop() || 0;
 
-            // 节点聚合数量
+            // 节点数量
             let size = right - left;
 
-            // 如果小于节点最小容纳(聚合)数量则不聚合直接线性搜索加入结果中，此处也是循环终止处
+            // 如果小于节点数量则直接线性搜索加入结果中，此处也是循环终止处
             if (size <= nodeSize) {
                 for (let i = left; i <= right; i++) {
                     const x = coords[2 * i];
                     const y = coords[2 * i + 1];
                     if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
-                        result.push({ id: ids[i], size: 1 });
+                        result.push(ids[i]);
                     }
                 }
                 continue;
@@ -116,7 +116,7 @@ export default class kdbush {
             const x = coords[2 * m];
             const y = coords[2 * m + 1];
             if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
-                result.push({ id: ids[m], size: size });
+                result.push(ids[m]);
             }
 
             // 判断左右(上下)划分区域是否在指定范围内
