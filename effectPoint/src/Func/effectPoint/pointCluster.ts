@@ -127,33 +127,46 @@ export default class pointCluster {
                     continue;
                 } else {
                     // 当前点坐标
-                    const p = this.#boards[iterator].position;
+                    let p = this.#boards[iterator].position;
+                    // 坐标深拷贝
+                    let position = p.clone();
                     boards.set(iterator, true);
+                    // 范围查询
                     const radian = Cesium.Cartographic.fromCartesian(p);
                     const minX = radian.longitude - halfLon, minY = radian.latitude - halfLat;
                     const maxX = radian.longitude + halfLon, maxY = radian.latitude + halfLat;
                     const result = this.#kdbush!.range(minX, minY, maxX, maxY);
-                    // 当前点坐标深拷贝
-                    let position = Cesium.clone(p);
-                    // 记录当前聚合的索引
+                    // 聚合的索引数组
                     const clusterIndex = [iterator];
-                    for (let i = 0; i < result.length; i++) {
-                        const element = result[i];
-                        // 上面的遍历点聚合范围内其他点的聚合状态
-                        const clustered2 = boards.get(element);
-                        if (clustered2) {
-                            // 如果已被聚合则跳过
-                            continue;
-                        } else if(clustered2 === undefined) {
-                            // 不存在的点判断一下
-                            continue;
-                        } else {
-                            boards.set(element, true);
-                            clusterIndex.push(element);
-                            // 计算聚合位置
-                            Cesium.Cartesian3.add(position, this.#boards[element].position, position);
+                    if(result.length){
+                        // 记录坐标和，用来算平均数
+                        let sumX = position.x;
+                        let sumY = position.y;
+                        // 记录当前聚合的索引
+                        for (let i = 0; i < result.length; i++) {
+                            const element = result[i];
+                            // 上面的遍历点聚合范围内其他点的聚合状态
+                            const clustered2 = boards.get(element);
+                            if (clustered2) {
+                                // 如果已被聚合则跳过
+                                continue;
+                            } else if(clustered2 === undefined) {
+                                // 不存在的点判断一下
+                                continue;
+                            } else {
+                                boards.set(element, true);
+                                clusterIndex.push(element);
+                                // 计算聚合位置
+                                const p = this.#boards[element].position;
+                                sumX += p.x;
+                                sumY += p.y;
+                            }
                         }
+                        position.x = sumX / clusterIndex.length;
+                        position.y = sumY / clusterIndex.length;
+                        console.log(p);
                     }
+
                     endCluster.push({
                         position: position,
                         index: clusterIndex,
