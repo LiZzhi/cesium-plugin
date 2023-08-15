@@ -79,9 +79,13 @@ json.features.forEach((v:any) =>{
         // @ts-ignore
         position : Cesium.Cartesian3.fromDegrees(...v.geometry.coordinates),
         image : './public/img/pointCluster/bluecamera.png',
-        heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        // scale: 0.01,
+        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
     })
 })
 
-// const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
-// p.start()
+const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
+p.start();
+
+// @ts-ignore
+window.viewer = viewer;

@@ -20,11 +20,9 @@ type optionType = {
     labelShow?: boolean;
 };
 
-type pointsType = {
-    index: number;
-    collection: BillboardCollection | LabelCollection;
-    clustered: boolean;
-    coord: Cartesian2;
+type clusterBoardType = {
+    position: Cartesian3;
+    index: number[];
 };
 
 export default class pointCluster {
@@ -64,7 +62,7 @@ export default class pointCluster {
         this.#kdbush = new kdbush(this.#boards.length, 64, Float32Array);
         this.#boards.forEach((v)=> {
             const {longitude, latitude} = Cesium.Cartographic.fromCartesian(v.position)
-            this.#kdbush!.add(latitude, longitude);
+            this.#kdbush!.add(longitude, latitude);
         })
         this.#kdbush.finish();
     }
@@ -76,20 +74,95 @@ export default class pointCluster {
         this.#clusterLabelCollection.removeAll();
         if(rectBoundary){
             const {north, east, south, west} = rectBoundary;
-            const result = this.#kdbush!.range(south, west, north, east);
-            console.log("result", result);
+            const result = this.#kdbush!.range(west, south, east, north);
+            // console.log("result", result);
+            // 临时board字典，用来记录当前board是否已被聚合
+            const nowBoards: Map<number, boolean> = new Map();
             for (let i = 0; i < result.length; i++) {
-                const element = result[i];
-                const board = this.#boards[element];
+                nowBoards.set(result[i], false);
+            }
 
-                this.#clusterBillboardCollection.add(board);
-                // this.#clusterLabelCollection.add({
-                //     show: true,
-                //     position: board.position,
-                //     text: element.size + '',
-                //     heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+            const endCluster = this.#computedCulster(nowBoards);
+            console.log("endCluster", endCluster);
+            if(endCluster){
+                // this.#clusterBillboardCollection.add(board);
+                for (let i = 0; i < endCluster.length; i++) {
+                    const element = endCluster[i];
+                    if (element.index.length === 1) {
+                        this.#clusterBillboardCollection.add(this.#boards[element.index[0]]);
+                    } else {
+                        this.#clusterBillboardCollection.add({
+                            ...this.#boards[element.index[0]],
+                            position: element.position,
+                            // @ts-ignore
+                            image: this.#options.testImg,
+                        });
+                        this.#clusterLabelCollection.add({
+                            show: true,
+                            position: element.position,
+                            text: element.index.length + '',
+                            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                        })
+                    }
+                }
+                // this.#viewer.camera.flyTo({
+                //     destination: this.#clusterBillboardCollection.get(0).position
                 // })
             }
+        }
+    }
+
+    #computedCulster(boards: Map<number, boolean>){
+        // 计算聚合范围
+        const boxSide = this.#computedPixedBox(this.#options.pixelRange!);
+        if(boxSide){
+            const endCluster: clusterBoardType[] = [];
+            const halfLon = boxSide.lonDis / 2;
+            const halfLat = boxSide.latDis / 2;
+            for (const iterator of boards.keys()) {
+                // 遍历每个点时得聚合状态
+                const clustered = boards.get(iterator);
+                if(clustered){
+                    // 如果已被聚合则跳过
+                    continue;
+                } else {
+                    // 当前点坐标
+                    const p = this.#boards[iterator].position;
+                    boards.set(iterator, true);
+                    const radian = Cesium.Cartographic.fromCartesian(p);
+                    const minX = radian.longitude - halfLon, minY = radian.latitude - halfLat;
+                    const maxX = radian.longitude + halfLon, maxY = radian.latitude + halfLat;
+                    const result = this.#kdbush!.range(minX, minY, maxX, maxY);
+                    // 当前点坐标深拷贝
+                    let position = Cesium.clone(p);
+                    // 记录当前聚合的索引
+                    const clusterIndex = [iterator];
+                    for (let i = 0; i < result.length; i++) {
+                        const element = result[i];
+                        // 上面的遍历点聚合范围内其他点的聚合状态
+                        const clustered2 = boards.get(element);
+                        if (clustered2) {
+                            // 如果已被聚合则跳过
+                            continue;
+                        } else if(clustered2 === undefined) {
+                            // 不存在的点判断一下
+                            continue;
+                        } else {
+                            boards.set(element, true);
+                            clusterIndex.push(element);
+                            // 计算聚合位置
+                            Cesium.Cartesian3.add(position, this.#boards[element].position, position);
+                        }
+                    }
+                    endCluster.push({
+                        position: position,
+                        index: clusterIndex,
+                    })
+                }
+            }
+            return endCluster;
+        } else {
+            return undefined;
         }
     }
 
@@ -101,24 +174,22 @@ export default class pointCluster {
         // 获取画布中心两个像素的坐标（默认地图渲染在画布中心位置）
         const leftBottom = scene.camera.getPickRay(new Cesium.Cartesian2(width >> 1, height >> 1));
         const right = scene.camera.getPickRay(new Cesium.Cartesian2(1 + (width >> 1), height >> 1));
-        const top = scene.camera.getPickRay(new Cesium.Cartesian2(width >> 1, 1 + (height >> 1)));
-
+        const top = scene.camera.getPickRay(new Cesium.Cartesian2(width >> 1, (height >> 1) - 1));
         if (Cesium.defined(leftBottom) && Cesium.defined(right) && Cesium.defined(top)) {
             const leftBottomPosition = scene.globe.pick(leftBottom!, scene);
             const rightPosition = scene.globe.pick(right!, scene);
             const topPosition = scene.globe.pick(top!, scene);
-
-            const leftBottomCartographic = scene.globe.ellipsoid.cartesianToCartographic(leftBottomPosition!);
-            const rightCartographic = scene.globe.ellipsoid.cartesianToCartographic(rightPosition!);
-            const topCartographic = scene.globe.ellipsoid.cartesianToCartographic(topPosition!);
-
-            return {
-                lonDis: rightCartographic.longitude - leftBottomCartographic.longitude,
-                latDis: topCartographic.latitude - leftBottomCartographic.latitude,
+            if (Cesium.defined(leftBottomPosition) && Cesium.defined(rightPosition) && Cesium.defined(topPosition)) {
+                const leftBottomCartographic = scene.globe.ellipsoid.cartesianToCartographic(leftBottomPosition!);
+                const rightCartographic = scene.globe.ellipsoid.cartesianToCartographic(rightPosition!);
+                const topCartographic = scene.globe.ellipsoid.cartesianToCartographic(topPosition!);
+                return {
+                    lonDis: (rightCartographic.longitude - leftBottomCartographic.longitude) * pixelRange,
+                    latDis: (topCartographic.latitude - leftBottomCartographic.latitude) * pixelRange,
+                }
             }
-        } else {
-            return undefined;
         }
+        return undefined;
     }
 
 
@@ -215,16 +286,18 @@ export default class pointCluster {
     get defaultOption(): any {
         return {
             clusterImg: {
-                10: "public/img/pointCluster/board1.png",
-                50: "public/img/pointCluster/board2.png",
-                100: "public/img/pointCluster/board3.png",
-                500: "public/img/pointCluster/board4.png",
-                1000: "public/img/pointCluster/board5.png",
-                5000: "public/img/pointCluster/board6.png",
+                10: "./public/img/pointCluster/board1.png",
+                50: "./public/img/pointCluster/board2.png",
+                100: "./public/img/pointCluster/board3.png",
+                500: "./public/img/pointCluster/board4.png",
+                1000: "./public/img/pointCluster/board5.png",
+                5000: "./public/img/pointCluster/board6.png",
             },
             billboardShow: true,
             labelShow: true,
             pixelRange: 100,
+
+            testImg: "public/img/pointCluster/board1.png"
         };
     }
 }

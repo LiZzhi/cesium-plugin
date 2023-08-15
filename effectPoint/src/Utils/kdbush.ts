@@ -65,10 +65,6 @@ export default class kdbush {
         sort(this.ids, this.coords, this.nodeSize, 0, this.numItems - 1, 0);
 
         this._finished = true;
-        console.log("a");
-        console.log(this.ids);
-        console.log(this.coords);
-
         return this;
     }
 
