@@ -1,4 +1,5 @@
 import * as Cesium from "cesium";
+import { Cartesian3, Cartographic } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./index.css";
 import effectPoint from "./src/Func";
@@ -14,6 +15,8 @@ Cesium.Ion.defaultAccessToken = cesiumToken;
 let viewer = new Cesium.Viewer("MapContainer", viewerConfig);
 (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";
 viewer.camera.setView(initViewConfig);
+// 开启深度监测
+// viewer.scene.globe.depthTestAgainstTerrain = true;
 
 // @ts-ignore
 window.viewer = viewer;
@@ -73,19 +76,11 @@ viewer.camera.flyTo({
 const json = require("./public/json/points.json");
 console.log(json);
 
-const boards:any[] = [];
+const points:Cartographic[] = [];
 json.features.forEach((v:any) =>{
-    boards.push({
-        // @ts-ignore
-        position : Cesium.Cartesian3.fromDegrees(...v.geometry.coordinates),
-        image : './public/img/pointCluster/bluecamera.png',
-        // scale: 0.01,
-        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-    })
+    // @ts-ignore
+    points.push(new Cesium.Cartographic(...v.geometry.coordinates))
 })
 
-const p = new effectPoint.effectPoint.pointCluster(viewer, boards);
+const p = new effectPoint.effectPoint.pointCluster(viewer, points);
 p.start();
-
-// @ts-ignore
-window.viewer = viewer;
