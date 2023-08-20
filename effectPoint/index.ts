@@ -20,6 +20,8 @@ viewer.camera.setView(initViewConfig);
 
 // @ts-ignore
 window.viewer = viewer;
+// @ts-ignore
+window.Cesium = Cesium;
 
 function creatDiv(){
     let dom = document.createElement("div");
@@ -76,10 +78,16 @@ viewer.camera.flyTo({
 const json = require("./public/json/points.json");
 console.log(json);
 
+// const points:Cartesian3[] = [];
+// json.features.forEach((v:any) =>{
+//     // @ts-ignore
+//     points.push(Cesium.Cartesian3.fromDegrees(...v.geometry.coordinates))
+// })
+
 const points:Cartographic[] = [];
 json.features.forEach((v:any) =>{
     // @ts-ignore
-    points.push(new Cesium.Cartographic(...v.geometry.coordinates))
+    points.push(Cesium.Cartographic.fromDegrees(...v.geometry.coordinates))
 })
 
 const p = new effectPoint.effectPoint.pointCluster(viewer, points);
