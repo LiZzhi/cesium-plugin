@@ -39,7 +39,7 @@ export type clusterOptionType = {
     callBack?: (p: callBackParamsType) => void;   // 回调
 };
 
-export default class pointCluster {
+export default class primitiveCluster {
     #viewer: Viewer;
     #cartographicPoints: Cartographic[];
     #cartesianPoints: Cartesian3[];
@@ -51,6 +51,8 @@ export default class pointCluster {
     #kdbush: kdbush | null;
     #antiShake: boolean;
     #isFinish: boolean;
+    #isStart: boolean;
+    #visible: boolean;
     constructor(viewer: Viewer, points: Cartographic[], options?: clusterOptionType) {
         this.#viewer = viewer;
         this.#cartographicPoints = points;
@@ -62,17 +64,22 @@ export default class pointCluster {
         this.#clusterPointCollection = new Cesium.PointPrimitiveCollection();
         // 总集合
         this.#clusterCollection = new Cesium.PrimitiveCollection();
-        this.#clusterCollection.add(this.#clusterBillboardCollection);
-        this.#clusterCollection.add(this.#clusterLabelCollection);
-        this.#clusterCollection.add(this.#clusterPointCollection);
         this.#kdbush = null;
         // 相机事件防抖用, 事件执行会变成true, 结束变回false才允许下一次事件执行
         // 防止上一次没执行完导致下一次执行, 集合removeAll未能正确清空问题
         this.#antiShake = false;
         // 是否构建完索引
         this.#isFinish = false;
+        // 是否构建
+        this.#isStart = false;
+        // 显隐
+        this.#visible = true;
     }
 
+    /**
+     * @description: (异步)构建索引
+     * @return {*}
+     */
     async finish(){
         if(!this.#isFinish){
             this.#kdbush = new kdbush(this.#cartographicPoints.length, 64, Float32Array);
@@ -103,78 +110,93 @@ export default class pointCluster {
         }
     }
 
+    /**
+     * @description: 开启聚合,先执行finish方法可大幅度提高首次聚合速度
+     * @return {*}
+     */
     start() {
-        const primitives = this.#viewer.scene.primitives;
-        primitives.add(this.#clusterCollection);
-        this.#viewer.camera.percentageChanged = this.#options.percentageChanged || 0.2;
-        if(this.#isFinish){
-            this.#createCulsterEvent()
-            this.#viewer.camera.changed.addEventListener(this.#createCulsterEvent, this);
-            // this.#createCulsterEvent2()
-            // this.#viewer.camera.changed.addEventListener(this.#createCulsterEvent2, this);
-        } else {
-            this.finish().then(()=>{
-                this.#createCulsterEvent()
+        if(!this.#isStart){
+            this.#isStart = true;
+            this.destroy();
+            const primitives = this.#viewer.scene.primitives;
+            this.#clusterCollection.add(this.#clusterBillboardCollection);
+            this.#clusterCollection.add(this.#clusterLabelCollection);
+            this.#clusterCollection.add(this.#clusterPointCollection);
+            primitives.add(this.#clusterCollection);
+            this.#viewer.camera.percentageChanged = this.#options.percentageChanged || 0.2;
+            if(this.#isFinish){
+                this.#createCulsterEvent();
                 this.#viewer.camera.changed.addEventListener(this.#createCulsterEvent, this);
-                // this.#createCulsterEvent2()
-                // this.#viewer.camera.changed.addEventListener(this.#createCulsterEvent2, this);
-            }).catch((e:any)=>{
-                console.log(e);
-            })
+            } else {
+                this.finish().then(()=>{
+                    this.#createCulsterEvent();
+                    this.#viewer.camera.changed.addEventListener(this.#createCulsterEvent, this);
+                }).catch((e:any)=>{
+                    console.log(e);
+                })
+            }
         }
     }
 
-    async testTime(){
-        if (!this.#antiShake) {
-            this.#antiShake = true;
-            const scene = this.#viewer.scene;
-            const rectBoundary = scene.camera.computeViewRectangle(scene.globe.ellipsoid);
-            this.#clusterBillboardCollection.removeAll();
-            this.#clusterLabelCollection.removeAll();
-            this.#clusterPointCollection.removeAll();
-            const options = this.#options;
-            if (!(options.clusterBillboards || options.clusterLabels || options.clusterPoints)) {
-                // 都不显示，就不用折腾了
-                this.#antiShake = false;
-                return;
-            }
-            if (rectBoundary) {
-                const { north, east, south, west } = rectBoundary;
-                const result = this.#kdbush!.range(west, south, east, north);
-                // 临时字典，用来记录当前点是否已被聚合
-                const nowPoints: Map<number, boolean> = new Map();
-                for (let i = 0; i < result.length; i++) {
-                    nowPoints.set(result[i], false);
-                }
-                // 计算聚合结果
-                let time1 = Date.now();
-                await this.#computedCulster(nowPoints);
-                let time2 = Date.now();
-                console.log("测试", time2 - time1);
-                // 计算聚合结果
-                let time3 = Date.now();
-                await this.#computedCulster2(result, rectBoundary);
-                let time4 = Date.now();
-                console.log("测试2", time4 - time3);
-            }
+    /**
+     * @description: 销毁
+     * @return {*}
+     */
+    destroy(){
+        if(this.#isStart){
+            this.#viewer.scene.primitives.remove(this.#clusterCollection);
+            this.#viewer.camera.changed.removeEventListener(this.#createCulsterEvent, this);
+            this.#clusterCollection && this.#clusterCollection.removeAll();
+            this.#clusterBillboardCollection && this.#clusterBillboardCollection.removeAll();
+            this.#clusterLabelCollection && this.#clusterLabelCollection.removeAll();
+            this.#clusterPointCollection && this.#clusterPointCollection.removeAll();
+            this.#isStart = false;
             this.#antiShake = false;
         }
     }
 
+    /**
+     * @description: 设置可见性
+     * @param {boolean} visible 是否可见
+     * @return {*}
+     */
+    setVisible(visible: boolean){
+        if(this.#isStart){
+            this.#visible = visible;
+            this.#clusterCollection.show = visible;
+        }
+    }
+
+    /**
+     * @description: 获取可见性
+     * @return {boolean} 是否可见
+     */
+    getVisible(){
+        return this.#visible;
+    }
+
+    /**
+     * @description: 聚合事件(正在使用)
+     * @return {*}
+     */
     async #createCulsterEvent() {
         if (!this.#antiShake) {
             this.#antiShake = true;
             const scene = this.#viewer.scene;
-            const rectBoundary = scene.camera.computeViewRectangle(scene.globe.ellipsoid);
+            const options = this.#options;
             this.#clusterBillboardCollection.removeAll();
             this.#clusterLabelCollection.removeAll();
             this.#clusterPointCollection.removeAll();
-            const options = this.#options;
+            if (!this.#visible) {
+                // 不显示直接跳过
+                return;
+            }
             if (!(options.clusterBillboards || options.clusterLabels || options.clusterPoints)) {
                 // 都不显示，就不用折腾了
                 this.#antiShake = false;
                 return;
             }
+            const rectBoundary = scene.camera.computeViewRectangle(scene.globe.ellipsoid);
             if (rectBoundary) {
                 const { north, east, south, west } = rectBoundary;
                 const result = this.#kdbush!.range(west, south, east, north);
@@ -232,6 +254,11 @@ export default class pointCluster {
         }
     }
 
+    /**
+     * @description: 计算聚合点位
+     * @param {Map<number, boolean>} points 屏幕内点位字典
+     * @return {clusterBoardType[]|undefined} 聚合点
+     */
     async #computedCulster(points: Map<number, boolean>) {
         // 计算聚合范围
         const boxSide = this.#computedPixedBox(this.#options.pixelRange!);
@@ -310,6 +337,10 @@ export default class pointCluster {
         }
     }
 
+    /**
+     * @description: 聚合事件2(未使用)
+     * @return {*}
+     */
     async #createCulsterEvent2() {
         if (!this.#antiShake) {
             this.#antiShake = true;
@@ -376,9 +407,16 @@ export default class pointCluster {
         }
     }
 
+    /**
+     * @description: 聚合事件2使用，将屏幕根据聚合像素分成N个聚合范围
+     * @param {{ lonDis: number; latDis: number; }} boxSide 聚合范围长宽(弧度)
+     * @param {Rectangle} rectBoundary 屏幕范围
+     * @return {Record<number, Record<number, Record<string, number[]>>>} 聚合范围
+     */
     #computedEveryBox(boxSide: { lonDis: number; latDis: number; }, rectBoundary: Rectangle){
         const box:Record<number, Record<number, Record<string, number[]>>> = {};
         let { north, east, south, west } = rectBoundary;
+        console.log(rectBoundary);
         let numX = 0;
         for (let i = west; i < east; i += boxSide.lonDis) {
             box[numX] = {};
@@ -398,6 +436,12 @@ export default class pointCluster {
         return box;
     }
 
+    /**
+     * @description: 聚合事件2使用，计算聚合点位
+     * @param {number[]} points 屏幕内点位索引数组
+     * @param {Rectangle} rectBoundary 屏幕范围
+     * @return {clusterBoardType[]|undefined} 聚合点
+     */
     async #computedCulster2(points: number[], rectBoundary: Rectangle) {
         // 计算聚合范围
         const boxSide = this.#computedPixedBox(this.#options.pixelRange!);
@@ -458,6 +502,11 @@ export default class pointCluster {
         }
     }
 
+    /**
+     * @description: 计算聚合长宽(弧度)
+     * @param {number} pixelRange 聚合像素
+     * @return {{ lonDis: number; latDis: number; }|undefined} 长宽(弧度)
+     */
     #computedPixedBox(pixelRange: number) {
         const scene = this.#viewer.scene;
         // 画布大小
@@ -487,10 +536,14 @@ export default class pointCluster {
         return undefined;
     }
 
+    /**
+     * @description: 默认配置项
+     * @return {clusterOptionType}
+     */
     get defaultOption(): clusterOptionType {
         return {
             enabled: true,  // 是否启用聚合
-            minimumClusterSize: 10,    // 最小聚合数量
+            minimumClusterSize: 2,    // 最小聚合数量
             pixelRange: 100,    // 聚合像素范围
             percentageChanged: 0.15, // 相机灵敏度(0.0 - 1.0)
             clusterBillboards: true,    // 是否显示billboards

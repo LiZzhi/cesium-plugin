@@ -56,7 +56,6 @@ domPointList.forEach(v=>{
 const effectPointList = [
     {label:"闪烁点", name:"flickerPoint", params: [{lon: 107, lat: 28.5}]},
     {label:"浮动点", name:"floatPoint", params: [{lon: 108, lat: 28}]},
-    // {label:"聚合点", name:"pointCluster", params: ["public/json/points.json"]},
 ]
 
 effectPointList.forEach(v=>{
@@ -90,5 +89,9 @@ json.features.forEach((v:any) =>{
     points.push(Cesium.Cartographic.fromDegrees(...v.geometry.coordinates))
 })
 
-const p = new effectPoint.effectPoint.pointCluster(viewer, points);
+const p = new effectPoint.effectPoint.primitiveCluster(viewer, points);
 p.start();
+let btn = document.querySelector(`#pointCluster`) as HTMLElement;
+btn.onclick = ()=>{
+    p.setVisible(!p.getVisible());
+}

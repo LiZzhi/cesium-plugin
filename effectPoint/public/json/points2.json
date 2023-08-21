@@ -1,0 +1,3045 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8975101429937,
+                    27.71572458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302690013204000731",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8976531429937,
+                    27.72695458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302690013204000201",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8816341429937,
+                    27.71481958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000101",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8821301429937,
+                    27.71473658621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000121",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8821961429937,
+                    27.71527358621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000131",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8833241429937,
+                    27.71433358621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000151",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8852391429937,
+                    27.71317858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000201",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8852391429937,
+                    27.71317858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000161",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850152004497,
+                    27.71295810910715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000191",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8804271429937,
+                    27.71549958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000081",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8811531429937,
+                    27.71494158621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "520302610013204000091",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8773811429937,
+                    27.71188258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-1A-08_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8759051429937,
+                    27.71063458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4E-1C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8762121429937,
+                    27.71104258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-B2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8765951429937,
+                    27.71271858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BC-10_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8771581429937,
+                    27.71167558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4E-6E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8811785047605,
+                    27.71241521420411
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-F8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8806476707763,
+                    27.71217887544314
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-1C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8792851429937,
+                    27.71212058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-14_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8772108945799,
+                    27.71059885172488
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-A4-50_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8812653482983,
+                    27.71181804097812
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-5A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8795917955888,
+                    27.71443442469824
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-F2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8800918367922,
+                    27.71264762422649
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-80_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8799171429937,
+                    27.71492258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-4A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8754481429937,
+                    27.71042058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-22_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8792281429937,
+                    27.71420958621714
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-ED-E8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8793371429937,
+                    27.71398958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-ED-84_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8734981429937,
+                    27.70930858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-54_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8778684431137,
+                    27.71291833064989
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-3E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8787931429937,
+                    27.71340958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-86_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8773805010961,
+                    27.71156575533299
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-D6_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8802081429937,
+                    27.71541458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-8A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8777221429937,
+                    27.71226258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-2A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8897487530309,
+                    27.71711198407606
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-19-DE_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8889498652705,
+                    27.71610719479541
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-19-EC_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8882497558553,
+                    27.71410712239269
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-1A-5E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8772621429937,
+                    27.71160258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-1A-60_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8745411429937,
+                    27.71033058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-CA_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8764381429937,
+                    27.71257458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-04_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8790132563683,
+                    27.71005569524745
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-A4-7E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8812973017322,
+                    27.71139995902173
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-02_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8797081429937,
+                    27.71474058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-3A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8931500228131,
+                    27.71120751138417
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-19-F2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8865971429937,
+                    27.71311558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BC-AE_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8864921429937,
+                    27.71403258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "4B-C8-04_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8928498721792,
+                    27.7107079993972
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-19-E6_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8878493847277,
+                    27.71513420870654
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-62-E8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8769531429937,
+                    27.71101558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-7C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8749831429937,
+                    27.71160058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-B2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8754211429937,
+                    27.71170858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-F6_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841876721124,
+                    27.71306017086716
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-CC_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8842971429937,
+                    27.71214058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-D1-08_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8831001429937,
+                    27.71138258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-76_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8833031429937,
+                    27.71152258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-A2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8858351429937,
+                    27.71385258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "4B-C8-3C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8846871429937,
+                    27.71264258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-62-B6_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8824781429937,
+                    27.71138558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-CC_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8810581429937,
+                    27.71326058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-A4-2A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8825931429937,
+                    27.71179858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-F0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8815931429937,
+                    27.71401058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-96_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8820481429937,
+                    27.70929858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-50_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8817221429937,
+                    27.71356058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-E2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8827351429937,
+                    27.71256558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-92_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8808371429937,
+                    27.71264058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6B-D0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8809021429937,
+                    27.71065558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BC-16_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8817651429937,
+                    27.71231258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-F0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8816571429937,
+                    27.71177458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-A4-06_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8818571429937,
+                    27.71095058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-D0-94_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8768331429937,
+                    27.71055958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "B8-AF-F4_11",
+                "CameraDesc": "ZTEGC0EDAB0E",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8765921429937,
+                    27.71086958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "B8-AF-D9_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.877931328561,
+                    27.71268823472367
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FF-68_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8768783290419,
+                    27.71455461680637
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FF-3E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8766071429937,
+                    27.71438858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FF-70_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8854915731366,
+                    27.71339330403105
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4E-48_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8756971429937,
+                    27.71041858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FE-42_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8759121429937,
+                    27.71212558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-86_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8741911429937,
+                    27.71044058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FE-E8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8749221429937,
+                    27.71145858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FF-6E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8869021429937,
+                    27.71410458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-24_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8914497129535,
+                    27.70960735191802
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-62_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841478807287,
+                    27.71102602558085
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-90_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8830255508305,
+                    27.70950945236702
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-F0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8824951429937,
+                    27.71363258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6B-56_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8761231429937,
+                    27.71004458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-A4_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8804349790441,
+                    27.71479940722833
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-54_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8776917397399,
+                    27.71395863752068
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-3A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8779781748928,
+                    27.71372928408377
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-96_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8770720612866,
+                    27.71252819817687
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-2C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8783882640593,
+                    27.71503593576912
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-7A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8778254561522,
+                    27.71421450946383
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-E2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8756229730667,
+                    27.71096262170343
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-D0-9E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8745031383917,
+                    27.71001568434248
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BD-5A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8758106037973,
+                    27.71114444056119
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BC-A2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8785301876908,
+                    27.71125539001409
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-C2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8788106084082,
+                    27.71126905846326
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-CA_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8795579022252,
+                    27.71382540467481
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-8E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.877603082001,
+                    27.71110445544712
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-7E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8805228412084,
+                    27.71390420606265
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-8C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8807772363144,
+                    27.71488097928561
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-00_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.877047290392,
+                    27.70936891505481
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-A0_11",
+                "CameraDesc": "ZTEGC182C3B8",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8789873401873,
+                    27.709544676621
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-80_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8778506554552,
+                    27.70982504566518
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-48_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8789573308741,
+                    27.71081083680848
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-3C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8794882137526,
+                    27.71092720304347
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-28_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8795581015283,
+                    27.71032905822281
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-68_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8795431415751,
+                    27.71017006101678
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-8C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841098877136,
+                    27.71245422162424
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-02_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8954867920246,
+                    27.72343246037142
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-F4_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8825086367526,
+                    27.71096430266453
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-C6_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8796449757997,
+                    27.70929585053788
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-B8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8823478793621,
+                    27.71303972688196
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-1E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8829585806328,
+                    27.71163975411553
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-20_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8825424742368,
+                    27.71247240557567
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-C0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8815406027746,
+                    27.71427792595978
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-1E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8808999946362,
+                    27.71445277858559
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-7A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8798823881352,
+                    27.71080970432023
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-1A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8804629417912,
+                    27.71441433272253
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-30_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8811454675076,
+                    27.71432444703476
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-E4_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8812251429937,
+                    27.71416558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-BA_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.882407864461,
+                    27.71094043630932
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-62_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8814809585398,
+                    27.71035561582936
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-A4-2C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8821265280283,
+                    27.71036075901259
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-54_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8822682155696,
+                    27.71027956017522
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-4C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8830532951824,
+                    27.71287774619929
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-7A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8808872665824,
+                    27.71017537066631
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-9E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8836080123887,
+                    27.70950589068925
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-96_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8801177823098,
+                    27.71264759209586
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-44_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8800049825442,
+                    27.71333580164344
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-7C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8805528658884,
+                    27.71235501281322
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-06_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8828878763277,
+                    27.70928061953942
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-E8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8839222071572,
+                    27.71448569194214
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-B2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8854725056157,
+                    27.71538453267075
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-2E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8835829694448,
+                    27.71485220649786
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-F2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8837296513981,
+                    27.7145159666823
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-AA_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8833525110088,
+                    27.71463950778071
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-FE_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8852171244795,
+                    27.71520989262692
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-49-84_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8858955342462,
+                    27.71460482300294
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-CC_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850753275078,
+                    27.71755733966176
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-3F-36_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8838822369596,
+                    27.7155948595802
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-94_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8753611429937,
+                    27.71272858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-32_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8836531429937,
+                    27.71723458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-C4_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8819271429937,
+                    27.71624058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-7E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8817964650637,
+                    27.71598386617265
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-20_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8857529174855,
+                    27.71390596689228
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-24_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.884612523326,
+                    27.71576483140008
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-9C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8856760025287,
+                    27.71532171396595
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BD-4A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8827348819157,
+                    27.71525742233948
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-48-42_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.883742512631,
+                    27.71639913897697
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-62-7C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8787611429937,
+                    27.71360258621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4E-0C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8890506021719,
+                    27.71620804159285
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "83-1A-4C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8797151429937,
+                    27.71335858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-5E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8782451429937,
+                    27.71446958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-8C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8786251429937,
+                    27.71461058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-ED-7C_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8770709429937,
+                    27.71275058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FE-D0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8777371429937,
+                    27.71334958621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-5A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8774521429937,
+                    27.71609458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E6-38_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8756731429937,
+                    27.71625858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-E5-92_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8786751429937,
+                    27.71535058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-FF-A2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8810651429937,
+                    27.71835458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-EE-74_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8815179250547,
+                    27.71734405207925
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "13-18-10_44QJ_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8814067177927,
+                    27.71741042002645
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-77-92_46QJ_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8814067177927,
+                    27.71741042002645
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3A-77-D2_45QJ_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841721429937,
+                    27.72332458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-33-2A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841721429937,
+                    27.72332458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-6D_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8841721429937,
+                    27.72332458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-67_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8840308653217,
+                    27.72332987640135
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-6A_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8651851429937,
+                    27.71054158621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-33-26_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8651851429937,
+                    27.71054158621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-69_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8651851429937,
+                    27.71054158621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-61_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850039012027,
+                    27.71049473616475
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-33-31_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8888531429937,
+                    27.71841658621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-33-2D_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850039012027,
+                    27.71049473616475
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-7E_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850041429937,
+                    27.71049458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-89_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8850041429937,
+                    27.71049458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-74_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8888531429937,
+                    27.71841658621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-6F_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8888531429937,
+                    27.71841658621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-88_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8888531429937,
+                    27.71841658621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "37-33-59_11",
+                "CameraDesc": "",
+                "CameraType": "3",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8918951429937,
+                    27.72510558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4D-CA_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8872300687949,
+                    27.71819714755364
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "44-6D-88_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8878021429937,
+                    27.71617858621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-BD-90_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8906981429937,
+                    27.72438058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-A4_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8856071429937,
+                    27.72167058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-63-C2_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8816471429937,
+                    27.72521458621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5A-ED-C0_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8881485900799,
+                    27.72145103881411
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "4B-C8-38_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8868916890557,
+                    27.7219400621124
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "4B-C8-0E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.884198363379,
+                    27.71802465841452
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "46-47-4E_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8817281429937,
+                    27.71989558621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "74-5B-22_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8927451429937,
+                    27.72649058621715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "5B-4C-F8_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8869611429937,
+                    27.72506858621714
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "3B-62-90_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    106.8887717441985,
+                    27.72615753776256
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "CameraCode": "4B-C8-3A_11",
+                "CameraDesc": "",
+                "CameraType": "4",
+                "UserID": 0
+            },
+            "type": "Feature"
+        }
+    ]
+}

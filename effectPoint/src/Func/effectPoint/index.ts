@@ -1,9 +1,9 @@
 import flickerPoint from "./flickerPoint";
 import floatPoint from "./floatPoint";
-import pointCluster from "./pointCluster";
+import primitiveCluster from "./primitiveCluster";
 
 export default {
     flickerPoint,
     floatPoint,
-    pointCluster,
+    primitiveCluster,
 }
