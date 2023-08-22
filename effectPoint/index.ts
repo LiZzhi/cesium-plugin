@@ -75,23 +75,25 @@ viewer.camera.flyTo({
 
 // geojson聚合
 // const p = new effectPoint.effectPoint.geojsonCluster(viewer);
-// p.init("./public/json/points.json");
+// p.init("./public/json/points2.json");
 // let btn = document.querySelector(`#pointCluster`) as HTMLElement;
 // btn.onclick = ()=>{
 //     p.setVisible(!p.getVisible());
 // }
 
 // primitive聚合
-// const json = require("./public/json/points.json");
-// const points:Cartographic[] = [];
-// json.features.forEach((v:any) =>{
-//     // @ts-ignore
-//     points.push(Cesium.Cartographic.fromDegrees(...v.geometry.coordinates))
-// })
-// const p = new effectPoint.effectPoint.primitiveCluster(viewer, points);
-// p.start();
-// let btn = document.querySelector(`#pointCluster`) as HTMLElement;
-// btn.onclick = ()=>{
-//     p.setVisible(!p.getVisible());
-// }
+const json = require("./public/json/points2.json");
+const points:Cartographic[] = [];
+json.features.forEach((v:any) =>{
+    // @ts-ignore
+    points.push(Cesium.Cartographic.fromDegrees(...v.geometry.coordinates))
+})
+const p = new effectPoint.effectPoint.primitiveCluster(viewer, points, {
+    minimumClusterSize: 20,
+});
+p.start();
+let btn = document.querySelector(`#pointCluster`) as HTMLElement;
+btn.onclick = ()=>{
+    p.setVisible(!p.getVisible());
+}
 

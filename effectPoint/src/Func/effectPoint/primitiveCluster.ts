@@ -46,6 +46,7 @@ export type clusterOptionType = {
      */
     minimumClusterSize?: number;
     percentageChanged?: number; // 相机灵敏度(0.0 - 1.0)
+    relativeToCround?: boolean; // 是否为地形上的高度
     clusterBillboards?: boolean;    // 是否显示billboards
     clusterLabels?: boolean;    // 是否显示label
     clusterPoints?: boolean;    // 是否显示point
@@ -106,12 +107,15 @@ export default class primitiveCluster {
             const newPositions:Cartographic[] = [];
             for (let i = 0; i < this.#cartographicPoints.length; i++) {
                 const {longitude, latitude, height} = this.#cartographicPoints[i];
-                // 计算地形高
-                const h = await getTerrainMostDetailedHeight(
-                    this.#viewer,
-                    Cesium.Math.toDegrees(longitude),
-                    Cesium.Math.toDegrees(latitude)
-                );
+                let h = 0;
+                if(this.#options.relativeToCround){
+                    // 是否计算地形高
+                    h = await getTerrainMostDetailedHeight(
+                        this.#viewer,
+                        Cesium.Math.toDegrees(longitude),
+                        Cesium.Math.toDegrees(latitude)
+                    );
+                }
                 newPositions.push(new Cesium.Cartographic(longitude, latitude, h + height));
                 // 存储一份笛卡尔坐标用来直接读取位置
                 this.#cartesianPoints.push(
@@ -330,11 +334,15 @@ export default class primitiveCluster {
                             const longitude = sumLon / clusterIndex.length;
                             const latitude = sumLat / clusterIndex.length;
                             // 若聚合, 则重算Z坐标保证贴地
-                            const h = await getTerrainMostDetailedHeight(
-                                this.#viewer,
-                                Cesium.Math.toDegrees(longitude),
-                                Cesium.Math.toDegrees(latitude)
-                            );
+                            let h = 0;
+                            if(this.#options.relativeToCround){
+                                // 是否计算地形高
+                                h = await getTerrainMostDetailedHeight(
+                                    this.#viewer,
+                                    Cesium.Math.toDegrees(longitude),
+                                    Cesium.Math.toDegrees(latitude)
+                                );
+                            }
                             position = Cesium.Cartesian3.fromRadians(
                                 longitude, latitude, h
                             )
@@ -416,6 +424,7 @@ export default class primitiveCluster {
             clusterBillboards: true,    // 是否显示billboards
             clusterLabels: true,    // 是否显示label
             clusterPoints: true,    // 是否显示point
+            relativeToCround: false,    // 是否为地形上的高度
             callBack: undefined,   // 回调
         };
     }
