@@ -1,3 +1,11 @@
+/*
+ * @Author: XingTao xingt@geovis.com.cn
+ * @Date: 2023-08-21 19:09:29
+ * @LastEditors: XingTao xingt@geovis.com.cn
+ * @LastEditTime: 2023-08-22 11:29:20
+ * @FilePath: \cesium-plugin\effectPoint\src\Func\effectPoint\primitiveCluster.ts
+ * @Description: primitive聚合(测试版)
+ */
 import * as Cesium from "cesium";
 import {
     Viewer,
@@ -31,7 +39,12 @@ export type callBackParamsType = {
 export type clusterOptionType = {
     enabled?: boolean;  // 是否启用聚合
     pixelRange?: number;    // 聚合像素范围
-    minimumClusterSize?: number;    // 最小聚合数量
+    /**
+     * 聚合开启临界，当前屏幕内实体数量低于此时无需聚合
+     * 此项非常重要，由于computeViewRectangle获取屏幕范围不准确问题，当点位较为密集时
+     * 聚合可能无法解除，故应找到一个不卡且能正常显示的值，可根据实际情况测试
+     */
+    minimumClusterSize?: number;
     percentageChanged?: number; // 相机灵敏度(0.0 - 1.0)
     clusterBillboards?: boolean;    // 是否显示billboards
     clusterLabels?: boolean;    // 是否显示label
@@ -53,6 +66,13 @@ export default class primitiveCluster {
     #isFinish: boolean;
     #isStart: boolean;
     #visible: boolean;
+    /**
+     * @description: primitive聚合
+     * @param {Viewer} viewer
+     * @param {Cartographic} points 弧度坐标数组
+     * @param {clusterOptionType} options 配置项
+     * @return {*}
+     */
     constructor(viewer: Viewer, points: Cartographic[], options?: clusterOptionType) {
         this.#viewer = viewer;
         this.#cartographicPoints = points;
@@ -116,8 +136,8 @@ export default class primitiveCluster {
      */
     start() {
         if(!this.#isStart){
-            this.#isStart = true;
             this.destroy();
+            this.#isStart = true;
             const primitives = this.#viewer.scene.primitives;
             this.#clusterCollection.add(this.#clusterBillboardCollection);
             this.#clusterCollection.add(this.#clusterLabelCollection);
@@ -187,12 +207,8 @@ export default class primitiveCluster {
             this.#clusterBillboardCollection.removeAll();
             this.#clusterLabelCollection.removeAll();
             this.#clusterPointCollection.removeAll();
-            if (!this.#visible) {
-                // 不显示直接跳过
-                return;
-            }
-            if (!(options.clusterBillboards || options.clusterLabels || options.clusterPoints)) {
-                // 都不显示，就不用折腾了
+            if (!(options.clusterBillboards || options.clusterLabels || options.clusterPoints) || !this.#visible) {
+                // 不显示，就不用折腾了
                 this.#antiShake = false;
                 return;
             }
@@ -200,6 +216,7 @@ export default class primitiveCluster {
             if (rectBoundary) {
                 const { north, east, south, west } = rectBoundary;
                 const result = this.#kdbush!.range(west, south, east, north);
+                console.log("result", result);
                 // 临时字典，用来记录当前点是否已被聚合
                 const nowPoints: Map<number, boolean> = new Map();
                 for (let i = 0; i < result.length; i++) {
@@ -238,7 +255,7 @@ export default class primitiveCluster {
                             });
                         }
                         // 是否聚合
-                        cluster = element.index.length >= (options.minimumClusterSize || 2);
+                        cluster = element.index.length >= 2;
                         // 回调
                         typeof options.callBack === 'function' && options.callBack({
                             cluster,
@@ -266,236 +283,81 @@ export default class primitiveCluster {
             const endCluster: clusterBoardType[] = [];
             const halfLon = boxSide.lonDis / 2;
             const halfLat = boxSide.latDis / 2;
-            for (const iterator of points.keys()) {
-                // 遍历每个点时得聚合状态
-                const clustered = points.get(iterator);
-                if (clustered) {
-                    // 如果已被聚合则跳过
-                    continue;
-                } else {
-                    // 当前点坐标深拷贝
-                    const radian = this.#cartographicPoints[iterator].clone();
-                    points.set(iterator, true);
-                    // 范围查询
-                    const minX = radian.longitude - halfLon, minY = radian.latitude - halfLat;
-                    const maxX = radian.longitude + halfLon, maxY = radian.latitude + halfLat;
-                    const result = this.#kdbush!.range(minX, minY, maxX, maxY);
-                    // 聚合的索引数组
-                    const clusterIndex = [iterator];
-                    // 聚合坐标
-                    let position: Cartesian3;
-                    if (result.length >= (this.#options.minimumClusterSize || 2)) {
-                        points.set(iterator, true);
-                        // 记录坐标和，用来算平均数
-                        let sumLon = radian.longitude;
-                        let sumLat = radian.latitude;
-                        // 记录当前聚合的索引
-                        for (let i = 0; i < result.length; i++) {
-                            const element = result[i];
-                            // 上面的遍历点聚合范围内其他点的聚合状态
-                            const clustered2 = points.get(element);
-                            if (clustered2) {
-                                // 如果已被聚合则跳过
-                                continue;
-                            } else if (clustered2 === undefined) {
-                                // 不存在的点判断一下
-                                continue;
-                            } else {
-                                points.set(element, true);
-                                clusterIndex.push(element);
-                                // 计算聚合位置
-                                const r = this.#cartographicPoints[element];
-                                sumLon += r.longitude;
-                                sumLat += r.latitude;
-                            }
-                        }
-                        radian.longitude = sumLon / clusterIndex.length;
-                        radian.latitude = sumLat / clusterIndex.length;
-
-                        // 若聚合, 则重算Z坐标保证贴地
-                        const h = await getTerrainMostDetailedHeight(
-                            this.#viewer,
-                            Cesium.Math.toDegrees(radian.longitude),
-                            Cesium.Math.toDegrees(radian.latitude)
-                        );
-                        radian.height = h;
-                        position = Cesium.Cartesian3.fromRadians(
-                            radian.longitude, radian.latitude, radian.height
-                        )
+            // 判断是否允许聚合
+            if (points.size > (this.#options.minimumClusterSize || 1)) {
+                for (const iterator of points.keys()) {
+                    // 遍历每个点时得聚合状态
+                    const clustered = points.get(iterator);
+                    if (clustered) {
+                        // 如果已被聚合则跳过
+                        continue;
                     } else {
-                        position = this.#cartesianPoints[iterator];
+                        // 当前点坐标
+                        const radian = this.#cartographicPoints[iterator];
+                        points.set(iterator, true);
+                        // 范围查询
+                        const minX = radian.longitude - halfLon, minY = radian.latitude - halfLat;
+                        const maxX = radian.longitude + halfLon, maxY = radian.latitude + halfLat;
+                        const result = this.#kdbush!.range(minX, minY, maxX, maxY);
+                        // 聚合的索引数组
+                        const clusterIndex = [iterator];
+                        // 聚合坐标
+                        let position: Cartesian3;
+                        if (result.length >= 2) {
+                            // 记录坐标和，用来算平均数
+                            let sumLon = radian.longitude;
+                            let sumLat = radian.latitude;
+                            // 记录当前聚合的索引
+                            for (let i = 0; i < result.length; i++) {
+                                const element = result[i];
+                                // 上面的遍历点聚合范围内其他点的聚合状态
+                                const clustered2 = points.get(element);
+                                if (clustered2) {
+                                    // 如果已被聚合则跳过
+                                    continue;
+                                } else if (clustered2 === undefined) {
+                                    // 不存在的点判断一下
+                                    continue;
+                                } else {
+                                    points.set(element, true);
+                                    clusterIndex.push(element);
+                                    // 计算聚合位置
+                                    const r = this.#cartographicPoints[element];
+                                    sumLon += r.longitude;
+                                    sumLat += r.latitude;
+                                }
+                            }
+                            const longitude = sumLon / clusterIndex.length;
+                            const latitude = sumLat / clusterIndex.length;
+                            // 若聚合, 则重算Z坐标保证贴地
+                            const h = await getTerrainMostDetailedHeight(
+                                this.#viewer,
+                                Cesium.Math.toDegrees(longitude),
+                                Cesium.Math.toDegrees(latitude)
+                            );
+                            position = Cesium.Cartesian3.fromRadians(
+                                longitude, latitude, h
+                            )
+                        } else {
+                            position = this.#cartesianPoints[iterator];
+                        }
+                        endCluster.push({
+                            position: position,
+                            index: clusterIndex,
+                        })
                     }
+                }
+            } else {
+                // 不满足聚合最小数量则直接渲染
+                for (const iterator of points.keys()) {
+                    points.set(iterator, true);
                     endCluster.push({
-                        position: position,
-                        index: clusterIndex,
+                        position: this.#cartesianPoints[iterator],
+                        index: [iterator],
                     })
                 }
             }
-            return endCluster;
-        } else {
-            return undefined;
-        }
-    }
 
-    /**
-     * @description: 聚合事件2(未使用)
-     * @return {*}
-     */
-    async #createCulsterEvent2() {
-        if (!this.#antiShake) {
-            this.#antiShake = true;
-            const scene = this.#viewer.scene;
-            const rectBoundary = scene.camera.computeViewRectangle(scene.globe.ellipsoid);
-            this.#clusterBillboardCollection.removeAll();
-            this.#clusterLabelCollection.removeAll();
-            this.#clusterPointCollection.removeAll();
-            const options = this.#options;
-            if (!(options.clusterBillboards || options.clusterLabels || options.clusterPoints)) {
-                // 都不显示，就不用折腾了
-                this.#antiShake = false;
-                return;
-            }
-            if (rectBoundary) {
-                const { north, east, south, west } = rectBoundary;
-                const result = this.#kdbush!.range(west, south, east, north);
-                // 计算聚合结果
-                const endCluster = await this.#computedCulster2(result, rectBoundary);
-                // 展示聚合结果
-                if (endCluster) {
-                    const offset = new Cesium.Cartesian2(0, -50);
-                    for (let i = 0; i < endCluster.length; i++) {
-                        // 回调参数
-                        const element = endCluster[i];
-                        let cluster, billboard, label, point;
-                        // 创建实体
-                        if (options.clusterBillboards) {
-                            billboard = this.#clusterBillboardCollection.add({
-                                position: element.position,
-                                image: "public/img/pointCluster/bluecamera.png",
-                                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                            });
-                        }
-                        if (options.clusterLabels && element.index.length > 1) {
-                            label = this.#clusterLabelCollection.add({
-                                position: element.position,
-                                text: element.index.length + '',
-                                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-                                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                                pixelOffset: offset,
-
-                            });
-                        }
-                        if (options.clusterPoints) {
-                            this.#clusterPointCollection.add({
-                                position: element.position,
-                            });
-                        }
-                        // 是否聚合
-                        cluster = element.index.length >= (options.minimumClusterSize || 2);
-                        // 回调
-                        typeof options.callBack === 'function' && options.callBack({
-                            cluster,
-                            billboard,
-                            label,
-                            point,
-                            element,
-                        })
-                    }
-                }
-            }
-            this.#antiShake = false;
-        }
-    }
-
-    /**
-     * @description: 聚合事件2使用，将屏幕根据聚合像素分成N个聚合范围
-     * @param {{ lonDis: number; latDis: number; }} boxSide 聚合范围长宽(弧度)
-     * @param {Rectangle} rectBoundary 屏幕范围
-     * @return {Record<number, Record<number, Record<string, number[]>>>} 聚合范围
-     */
-    #computedEveryBox(boxSide: { lonDis: number; latDis: number; }, rectBoundary: Rectangle){
-        const box:Record<number, Record<number, Record<string, number[]>>> = {};
-        let { north, east, south, west } = rectBoundary;
-        console.log(rectBoundary);
-        let numX = 0;
-        for (let i = west; i < east; i += boxSide.lonDis) {
-            box[numX] = {};
-            numX ++;
-        }
-        let numY = 0;
-        for(let i = south; i < north; i += boxSide.latDis){
-            for (const j in box) {
-                box[j][numY] = {
-                    x: [],
-                    y: [],
-                    index: [],
-                };
-            }
-            numY ++;
-        }
-        return box;
-    }
-
-    /**
-     * @description: 聚合事件2使用，计算聚合点位
-     * @param {number[]} points 屏幕内点位索引数组
-     * @param {Rectangle} rectBoundary 屏幕范围
-     * @return {clusterBoardType[]|undefined} 聚合点
-     */
-    async #computedCulster2(points: number[], rectBoundary: Rectangle) {
-        // 计算聚合范围
-        const boxSide = this.#computedPixedBox(this.#options.pixelRange!);
-        if (boxSide) {
-            const endCluster: clusterBoardType[] = [];
-            const box = this.#computedEveryBox(boxSide, rectBoundary)
-            for (let i = 0; i < points.length; i++) {
-                const element = points[i];
-                // 计算每个点的位置
-                const radian = this.#cartographicPoints[element].clone();
-                let indexX = Math.floor((radian.longitude - rectBoundary.west) / boxSide.lonDis);
-                let indexY = Math.floor((radian.latitude - rectBoundary.south) / boxSide.latDis);
-                // 插入聚合数组中
-                const xBox = Reflect.get(box, indexX);
-                if(xBox){
-                    const yBox = Reflect.get(xBox, indexY);
-                    if(yBox){
-                        yBox.x.push(radian.longitude);
-                        yBox.y.push(radian.latitude);
-                        yBox.index.push(element);
-                    }
-                } else {
-                    continue;
-                }
-            }
-
-            for (const i in box) {
-                for (const j in box[i]) {
-                    const element = box[i][j];
-                    const length = element.index.length;
-                    if (length >= (this.#options.minimumClusterSize || 2)){
-                        const lon = element.x.reduce((a, b) => a + b) / length;
-                        const lat = element.y.reduce((a, b) => a + b) / length;
-                        // 若聚合, 则重算Z坐标保证贴地
-                        const h = await getTerrainMostDetailedHeight(
-                            this.#viewer,
-                            Cesium.Math.toDegrees(lon),
-                            Cesium.Math.toDegrees(lat)
-                        );
-                        const position = Cesium.Cartesian3.fromRadians(lon, lat, h);
-                        endCluster.push({
-                            position: position,
-                            index: element.index,
-                        })
-                    } else {
-                        element.index.forEach(v => {
-                            endCluster.push({
-                                position: this.#cartesianPoints[v],
-                                index: [v],
-                            })
-                        })
-                    }
-                }
-            }
             return endCluster;
         } else {
             return undefined;
@@ -543,9 +405,14 @@ export default class primitiveCluster {
     get defaultOption(): clusterOptionType {
         return {
             enabled: true,  // 是否启用聚合
-            minimumClusterSize: 2,    // 最小聚合数量
             pixelRange: 100,    // 聚合像素范围
-            percentageChanged: 0.15, // 相机灵敏度(0.0 - 1.0)
+            percentageChanged: 0.2, // 相机灵敏度(0.0 - 1.0)
+            /**
+             * 聚合开启临界，当前屏幕内实体数量低于此时无需聚合
+             * 此项非常重要，由于computeViewRectangle获取屏幕范围不准确问题，当点位较为密集时
+             * 聚合可能无法解除，故应找到一个不卡且能正常显示的值，可根据实际情况测试
+             */
+            minimumClusterSize: 300,
             clusterBillboards: true,    // 是否显示billboards
             clusterLabels: true,    // 是否显示label
             clusterPoints: true,    // 是否显示point
