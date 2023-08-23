@@ -26,7 +26,7 @@ export default function bigMigrateData() {
                     let cityCenter2 = mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, ''));
                     if (cityCenter1) {
                         if (Math.random() > 0.7) {
-                            curive(cityCenter2, cityCenter1, 50);
+                            curive(cityCenter2, cityCenter1, 50, timeData);
                         }
                         data.push({
                             geometry: {
@@ -79,8 +79,8 @@ export default function bigMigrateData() {
     ];
 }
 
-function curive(fromPoint, endPoint, n) {
-    let timeData = []
+function curive(fromPoint, endPoint, n, timeData) {
+    
     let delLng = (endPoint.lng - fromPoint.lng) / n;
     let delLat = (endPoint.lat - fromPoint.lat) / n;
 
