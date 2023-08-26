@@ -14,18 +14,17 @@ const lines = [
     new Cesium.Cartesian3(-1709648.901559206, 5455193.614325796, 2818696.3690761398),
 ]
 
-let colors = [Cesium.Color.RED, Cesium.Color.AQUA];
-
 const effectLineList = [
     {label:"动态箭头线", name:"polylineArrowMaterial", params: {color: Cesium.Color.AQUA, duration: 800, count: 3}},
     {label:"动态传输线", name:"polylineEnergyTransMaterial", params: {color: Cesium.Color.RED, duration: 2000, count: 3}},
     {label:"发光线", name:"polylineLightingMaterial", params: Cesium.Color.AQUA},
-    {label:"动态脉冲线", name:"polylineLinkPulseMaterial", params: {color: Cesium.Color.RED, duration: 5000}},
+    {label:"脉冲线", name:"polylineLinkPulseMaterial", params: {color: Cesium.Color.RED, duration: 5000}},
     {label:"迁徙线", name:"polylineMigrateMaterial", params: {color: new Cesium.Color(1, 0.79, 0.15, 1), duration: 2000}},
-    // {label:"热点面板点", name:"hotSpotBoardPoint", params: [{lon: 106.5, lat: 28.5}, creatDiv()]},
-    // {label:"LED文本点", name:"ledLabelPoint", params: [{lon: 106, lat: 28}, "led文本点"]},
-    // {label:"简单面板点", name:"sampleLabelPoint", params: [{lon: 108.42533733304246, lat: 28.5}, creatDiv()]},
-    // {label:"水球点", name:"waterPoloPoint", params: [{lon: 108.42533733304246, lat: 29.5}, 0.56]},
+    {label:"精灵线", name:"polylineSpriteMaterial", params: {duration: 2000}},
+    {label:"超级线", name:"polylineSuperMaterial", params: {color: Cesium.Color.RED, duration: 2000}},
+    {label:"尾迹线", name:"polylineTrailMaterial", params: {speed: 5 * Math.random(), color: Cesium.Color.CYAN, percent: 0.5, gradient: 0.01}},
+    {label:"尾迹流动线", name:"polylineTrialFlowMaterial", params: {speed: 6 * Math.random(), color: Cesium.Color.CYAN, percent: 0.1, gradient: 0.1}},
+    {label:"流动管线", name:"polylineVolumeTrialMaterial", params: {color: Cesium.Color.RED, duration: 5000, count: 5}},
 ]
 
 let e:Entity|undefined = undefined;

@@ -1,8 +1,8 @@
 /*
  * @Author: XingTao xingt@geovis.com.cn
  * @Date: 2023-08-22 17:24:02
- * @LastEditors: XingTao xingt@geovis.com.cn
- * @LastEditTime: 2023-08-22 18:14:43
+ * @LastEditors: “Lizhi” “362042734@qq.com”
+ * @LastEditTime: 2023-08-26 17:29:40
  * @FilePath: \cesium-plugin\effectLine\src\func\PolylineMigrateMaterial.js
  * @Description: 迁徙线材质
  */
@@ -15,7 +15,7 @@ export default class PolylineMigrateMaterialProperty {
         this._colorSubscription = undefined;
         this.color = options.color;
         this.duration = options.duration;
-        this.url = options.url;
+        this.url = options.url || 'public/img/迁徙线材质.png';
         this._time = performance.now();
     }
 }
@@ -67,15 +67,7 @@ if (window.Cesium) {
             return material;
         }
     `
-        // 'czm_material czm_getMaterial(czm_materialInput materialInput)\n\
-        //   {\n\
-        //         czm_material material = czm_getDefaultMaterial(materialInput);\n\
-        //         vec2 st = materialInput.st;\n\
-        //         vec4 colorImage = texture(image, vec2(fract(st.s - time), st.t));\n\
-        //         material.alpha = colorImage.a * color.a;\n\
-        //         material.diffuse = color.rgb*1.5;\n\
-        //         return material;\n\
-        // }';
+
     Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineMigrateType, {
 
         fabric: {

@@ -1,8 +1,8 @@
 /*
  * @Author: XingTao xingt@geovis.com.cn
  * @Date: 2023-08-22 17:24:02
- * @LastEditors: XingTao xingt@geovis.com.cn
- * @LastEditTime: 2023-08-22 17:28:35
+ * @LastEditors: “Lizhi” “362042734@qq.com”
+ * @LastEditTime: 2023-08-26 16:51:08
  * @FilePath: \cesium-plugin\effectLine\src\func\PolylineSpriteMaterial.js
  * @Description: 精灵线材质
  */
@@ -11,7 +11,7 @@ export default class PolylineSpriteMaterialProperty {
     constructor(options) {
         this._definitionChanged = new Cesium.Event();
         this.duration = options.duration;
-        this.url = options.url;
+        this.url = options.url || 'public/img/精灵线材质02.png';
         this._time = performance.now();
     }
 }
@@ -39,7 +39,7 @@ if (window.Cesium) {
         if (!Cesium.defined(result)) {
             result = {};
         }
-        result.image = this.url || 'public/img/精灵线材质02.png';
+        result.image = this.url;
         result.time = ((performance.now() - this._time) % this.duration) / this.duration;
         return result;
     };
@@ -51,16 +51,16 @@ if (window.Cesium) {
     };
 
     Cesium.Material.PolylineSpriteType = 'PolylineSprite';
-    Cesium.Material.PolylineSpriteSource =
-        'czm_material czm_getMaterial(czm_materialInput materialInput)\n\
-          {\n\
-                czm_material material = czm_getDefaultMaterial(materialInput);\n\
-                vec2 st = materialInput.st;\n\
-                vec4 colorImage = texture(image, vec2(fract(st.s - time), st.t));\n\
-                material.alpha = colorImage.a;\n\
-                material.diffuse = colorImage.rgb * 1.5 ;\n\
-                return material;\n\
-        }';
+    Cesium.Material.PolylineSpriteSource =`
+        czm_material czm_getMaterial(czm_materialInput materialInput){
+            czm_material material = czm_getDefaultMaterial(materialInput);
+            vec2 st = materialInput.st;
+            vec4 colorImage = texture2D(image, vec2(fract(st.s - time), st.t));
+            material.alpha = colorImage.a;
+            material.diffuse = colorImage.rgb * 1.5 ;
+            return material;
+        }
+    `
     Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineSpriteType, {
 
         fabric: {

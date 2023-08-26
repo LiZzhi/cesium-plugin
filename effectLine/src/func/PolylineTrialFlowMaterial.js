@@ -53,18 +53,19 @@ if (window.Cesium) {
                 Cesium.Property.equals(this._color, other._color));
     };
     Cesium.Material.PolylineTrialFlowType = 'PolylineTrialFlow';
-    Cesium.Material.PolylineTrialFlowSource = 'czm_material czm_getMaterial(czm_materialInput materialInput)\n' +
-        '{\n' +
-        '    czm_material material = czm_getDefaultMaterial(materialInput);\n' +
-        '    vec2 st = materialInput.st;\n' +
-        '    float t = time;\n' +
-        '    t *= 1.03;\n' +
-        '    float alpha = smoothstep(t- 0.1, t, st.s) * step(-t, -st.s);\n' +
-        '    alpha += 0.1;\n' +
-        '    material.diffuse= color.rgb;\n' +
-        '    material.alpha = alpha;\n' +
-        '    return material;\n' +
-        '}\n';
+    Cesium.Material.PolylineTrialFlowSource = `
+        czm_material czm_getMaterial(czm_materialInput materialInput){
+            czm_material material = czm_getDefaultMaterial(materialInput);
+            vec2 st = materialInput.st;
+            float t = time;
+            t *= 1.03;
+            float alpha = smoothstep(t- 0.1, t, st.s) * step(-t, -st.s);
+            alpha += 0.1;
+            material.diffuse= color.rgb;
+            material.alpha = alpha;
+            return material;
+        }
+    `
 
     Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrialFlowType, {
         fabric: {

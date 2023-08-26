@@ -63,13 +63,16 @@ if (window.Cesium) {
     };
 
     Cesium.Material.PolylineSuperType = 'PolylineSuper';
-    Cesium.Material.PolylineSuperSource =
-        'czm_material czm_getMaterial(czm_materialInput materialInput)\n\
-     { czm_material material = czm_getDefaultMaterial(materialInput); vec2 st = materialInput.st;\n\
-        vec4 colorImage = texture(image, vec2(fract( count * st.s - time),fract(st.t)));\n\
-         material.alpha =  colorImage.a * color.a;\n\
-         material.diffuse =  color.rgb * 1.5 ;\n\
-         return material;}';
+    Cesium.Material.PolylineSuperSource =`
+        czm_material czm_getMaterial(czm_materialInput materialInput){
+            czm_material material = czm_getDefaultMaterial(materialInput);
+            vec2 st = materialInput.st;
+            vec4 colorImage = texture2D(image, vec2(fract( count * st.s - time),fract(st.t)));
+            material.alpha =  colorImage.a * color.a;
+            material.diffuse =  color.rgb * 1.5;
+            return material;
+        }
+    `
 
     Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineSuperType, {
         fabric: {
